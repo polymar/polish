@@ -7,7 +7,6 @@
 
 @import <Foundation/CPObject.j>
 @import "AppBuilder.j"
-@import "CPAdditions/CPWindowAdditions.j"
 
 @implementation AppController : CPObject
 {
@@ -24,11 +23,13 @@
 	app = [[AppBuilder alloc] initWithContentView:theWindow];
 	
 	//default stuff... setting background black.
-	[theWindow color:'blackColor'];
-	[theWindow title:'CapWaves experiments'];
+	//[theWindow color:'blackColor'];
+	//[theWindow title:'CapWaves experiments'];
 	[theWindow orderFront:self];
 	
-	[app create_test];
+	[app create:'json string'];
+	stack = [app stack];
+	console.log(stack);
 }
 
 @end
