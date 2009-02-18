@@ -7,6 +7,7 @@
 
 @import "PHStack.j"
 @import "PHButton.j"
+@import "PHText.j"
 
 @implementation PHFactory : CPObject 
 
@@ -16,6 +17,10 @@
 
 + (id) button:(CPView) parent {
 	return [[PHButton alloc] button:parent];
+}
+
++ (id) text:(CPView) parent {
+	return [[PHText alloc] text:parent];
 }
 
 @end

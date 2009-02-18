@@ -58,42 +58,16 @@
 	stack_one = [self create:'stack'];
 	
 	//modification 1
-	c = [CPColor redColor];
+	c = [CPColor grayColor];
 	[stack_one bkg_color:c];
 	[stack_one frame:CGRectMake(50.0, 50.0, 400.0, 400.0)];
 	
 	b = [self create:'button'];
-	[b setTitle:'ciao'];
-	[b setBackgroundColor:[CPColor blueColor]];
+	[b hmargin:20 vmargin:60];
 	[self close];
 	
-	//creation 2
-	stack_two = [self create:'stack', 'width', 10, 'height', 10];
-	
-	//modification 2
-	c = [CPColor whiteColor];
-	[stack_two bkg_color:c];
-	[stack_two width:100.0 height:100.0];
-	[stack_two hmargin:50.0 vmargin:100.0];
-	
-	b = [self create:'button'];
-	[b setTitle:'ciao'];
-	[b setBackgroundColor:[CPColor blueColor]];
-	[self close];
-	
-	//closing 2
-	[self close];
-	
-	//creation 3
-	stack_three = [self create:'stack'];
-	
-	//modification 3
-	c = [CPColor yellowColor];
-	[stack_three bkg_color:c];
-	[stack_three hmargin:250.0 vmargin:100.0];
-	[stack_three width:100.0 height:100.0];
-	
-	//closing 3
+	t = [self create:'text'];
+	[t hmargin:20 vmargin:20];
 	[self close];
 	
 	//closing 1

@@ -11,8 +11,9 @@
 @implementation CPView (Polish) 
 
 - (void) finalize:(CPView) child {
+	console.log(self + ' adding '+child);
 	[self addSubview:child];
-	//[self setNeedsDisplayInRect:[child frame]];
+	[self setNeedsDisplayInRect:[child frame]];
 }
 
 - (void) complete {

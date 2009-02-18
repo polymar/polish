@@ -8,7 +8,7 @@
 @import "../CPAdditions/CPViewAdditions.j"
 
 @implementation PHStack : CPView {
-	CPView _parent;
+	CPView 	_parent;
 }
 
 /*

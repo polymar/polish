@@ -9,6 +9,8 @@
 
 @implementation CPColor (Polish) {
 
+//TODO add more stuff here
+// colors is global
 colors = [CPDictionary dictionaryWithObjects:[[CPColor blackColor], [CPColor redColor], [CPColor blueColor], nil] forKeys:['black', 'red', 'blue', nil]];
 
 + (CPColor) color:(CPString) colorName {

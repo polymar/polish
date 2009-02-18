@@ -15,9 +15,10 @@
 * Init a cpbutton with hmargin and vmargin = 0;
 */
 - (id) button:(CPView) parent {
-	self = [super initWithFrame:CGRectMake(10, 10, [parent frame].size.width / 2, 25.0)];
+	self = [super initWithFrame:CGRectMake(10, 10, ([parent frame].size.width < 70) ? [parent frame].size.width : 70, 20.0)];
 	if(self) {
 		[self parent:parent];
+		[self setBezelStyle:CPHUDBezelStyle];
 	}
 	return self;
 }
@@ -26,9 +27,10 @@
 * Init a cpbutton with the appropriate margin.
 */
 - (id) button:(CPView) parent hmargin:(CGFloat) hmargin vmargin:(CGFloat) vmargin {
-	self = [super initWithFrame:CGRectMake(hmargin, vmargin, [parent frame].size.width, [parent frame].size.height)];
+	self = [super initWithFrame:CGRectMake(hmargin, vmargin, ([parent frame].size.width < 70) ? [parent frame].size.width : 70, 20.0)];
 	if(self) {
 		[self parent:parent];
+		[self setBezelStyle:CPHUDBezelStyle];
 	}
 	return self;
 }
@@ -40,10 +42,5 @@
 - (id) parent {
 	return _parent;
 }
-
-- (void) complete {
-	[[self parent] finalize:self];
-}
-
 
 @end
