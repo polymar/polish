@@ -37,13 +37,11 @@
 /*
 * forward all the not implemented method to polish factory class.
 */
-- (void)forward:(SEL)aSelector :(marg_list)args
+- (id)forward:(SEL)aSelector :(marg_list)args
 {
 	var s = objj_msgSend(POFactory, aSelector);
 	if(s != nil) {
 //		//TODO verify args.. if there are parameters, convert them into 'SEL:obj' and apply to s
-		[s frame:CGRectMake(10,10,70,18)];
-		[s color:'redColor'];
 		[_contentView addSubview:s];
 	}
 	return s;

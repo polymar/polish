@@ -8,7 +8,7 @@
 @import <AppKit/CPTextField.j>
 @import "CPViewAdditions.j"
 
-@implementation PHText : CPTextField {
+@implementation POText : CPTextField {
 	CPView 		_parent;
 	CPString 	_name;
 }
@@ -59,7 +59,7 @@
 /*
 * Init a label with the appropriate margin.
 */
-- (id) label:(CPView) parent parent hmargin:(CGFloat) hmargin vmargin:(CGFloat) vmargin {
+- (id) label_with_hmargin:(CGFloat) hmargin vmargin:(CGFloat) vmargin {
 	self = [super initWithFrame:CGRectMakeZero()];
 	if(self) {
 		[self setFont:[CPFont systemFontOfSize:14]];

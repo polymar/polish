@@ -23,13 +23,26 @@
 	app = [[AppBuilder alloc] initWithContentView:theWindow];
 	
 	//default stuff... setting background black.
-	//[theWindow color:'blackColor'];
-	//[theWindow title:'CapWaves experiments'];
 	[theWindow orderFront:self];
 	
 	[app create:'json string'];
 	stack = [app stack];
 	console.log(stack);
+	[stack frame:CGRectMake(10,10,400,300)];
+	[stack color:'grayColor'];
+	
+	button = [stack button];
+	console.log(button);
+	[button frame:CGRectMake(300,10,70,18.0)];
+	[button title:'click'];
+	
+	text = [stack text];
+	console.log(text);
+	[text frame:CGRectMake(120,10,150.0,18.0)];
+	
+	label = [stack label];
+	console.log(label);
+	[label frame:CGRectMake(10,10,100,18)];
 }
 
 @end

@@ -7,16 +7,15 @@
 
 @import <AppKit/CPView.j>
 @import "POColor.j"
+@import "POFactory.j"
 
 @implementation CPView (Polish) 
 
-- (void) finalize:(CPView) child {
-	[self addSubview:child];
-	[self setNeedsDisplayInRect:[child frame]];
-}
-
-- (void) complete {
-	[[self parent] finalize:self];
+/*
+* Forces the content of the view to redraw.
+*/
+- (void) display {
+	[self setNeedsDisplayInRect:[self frame]];
 }
 
 - (void) bkg_color:(CPColor) color {
@@ -45,13 +44,14 @@
 	[self setFrame:frame];
 }
 
-//- (void)forward:(SEL)aSelector :(marg_list)args
-//{
-//	s = [PHFactory performSelector:aSelector];
-//	if(s != nil) {
-//		//TODO verify args.. if there are parameters, convert them into 'SEL:obj' and apply to s
-//		[self addSubview:s];
-//	}
-//}
+- (id)forward:(SEL)aSelector :(marg_list)args
+{
+	var s = [POFactory performSelector:aSelector];
+	if(s != nil) {
+		//TODO verify args.. if there are parameters, convert them into 'SEL:obj' and apply to s
+		[self addSubview:s];
+	}
+	return s;
+}
 
 @end
