@@ -42,7 +42,25 @@
 	
 	label = [stack label];
 	console.log(label);
-	[label frame:CGRectMake(10,10,100,18)];
+	[label hmargin:10 vmargin:10];
+	
+	progress = [stack progress];
+	console.log(progress);
+	[progress frame:CGRectMake(10, 50, 200, 15.0)];
+	[progress max:100.0];
+	[progress value:33.0];
+	
+	slider = [stack slider];
+	console.log(slider);
+	[slider hmargin:10 vmargin:80];
+	[slider max:100.0];
+	[slider value:33.0];
+	
+	img = [stack image];
+	console.log(img);
+	[img url:'./Resources/img1.png'];
+	[img frame:CGRectMake(10, 120, 100, 100)];
+	
 }
 
 @end

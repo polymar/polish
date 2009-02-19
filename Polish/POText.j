@@ -1,5 +1,5 @@
 /*
- * PHText.j
+ * POText.j
  *
  * Created by Roberto Gamboni on 02/17/2009.
  * Copyright 2008 Roberto Gamboni. All rights reserved.
@@ -9,7 +9,6 @@
 @import "CPViewAdditions.j"
 
 @implementation POText : CPTextField {
-	CPView 		_parent;
 	CPString 	_name;
 }
 

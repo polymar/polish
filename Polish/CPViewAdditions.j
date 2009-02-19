@@ -46,7 +46,7 @@
 
 - (id)forward:(SEL)aSelector :(marg_list)args
 {
-	var s = [POFactory performSelector:aSelector];
+	var s = objj_msgSend(POFactory, aSelector);
 	if(s != nil) {
 		//TODO verify args.. if there are parameters, convert them into 'SEL:obj' and apply to s
 		[self addSubview:s];

@@ -27,10 +27,10 @@
 */
 //keeping open for future.
 - (id) create:(CPString) what, ... {
-	[_mainWindow color:'blackColor'];
-	[_mainWindow title:'CapWaves experiments'];
 	//TODO convert what(JSON) to tuple 'SEL:obj'
 	//TODO perform all the selector to _mainWindow
+	[_mainWindow color:'blackColor'];
+	[_mainWindow title:'CapWaves experiments'];
 	return self;
 }
 
@@ -41,16 +41,16 @@
 {
 	var s = objj_msgSend(POFactory, aSelector);
 	if(s != nil) {
-//		//TODO verify args.. if there are parameters, convert them into 'SEL:obj' and apply to s
+		//TODO verify args.. if there are parameters, convert them into 'SEL:obj' and apply to s
 		[_contentView addSubview:s];
 	}
 	return s;
 }
 
-- (SEL) build_selector:(CPString) method_name {
-	cString = method_name+=':';
-	cSel = CPSelectorFromString(cString);
-	return cSel;
-}
+//- (SEL) build_selector:(CPString) method_name {
+//	cString = method_name+=':';
+//	cSel = CPSelectorFromString(cString);
+//	return cSel;
+//}
 
 @end
