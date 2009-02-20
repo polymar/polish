@@ -10,6 +10,9 @@
 
 @implementation POText : CPTextField {
 	CPString 	_name;
+	var			_begin_function;
+	var 		_change_function;
+	var			_done_function;
 }
 
 /*
@@ -22,6 +25,9 @@
 	    [self setBezelStyle:CPTextFieldSquareBezel];
 	    [self setBezeled:YES];
 	    [self setEditable:YES];
+		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(begin_action:) name: "CPControlTextDidBeginEditingNotification" object: nil];
+		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(change_action:) name: "CPControlTextDidChangeNotification" object: nil];
+		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(done_action:) name: "CPControlTextDidEndEditingNotification" object: nil];
 	}
 	return self;
 }
@@ -36,6 +42,9 @@
 	    [self setBezelStyle:CPTextFieldSquareBezel];
 	    [self setBezeled:YES];
 	    [self setEditable:YES];
+		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(begin_action:) name: "CPControlTextDidBeginEditingNotification" object: _begin_function];
+		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(change_action:) name: "CPControlTextDidChangeNotification" object: _change_function];
+		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(done_action:) name: "CPControlTextDidEndEditingNotification" object: _done_function];
 	}
 	return self;
 }
@@ -69,6 +78,44 @@
 	}
 	return self;
 }
+
+- (void) on_begin:(Function)aFunction {
+	_begin_function = aFunction;
+}
+
+- (void) on_change:(Function)aFunction {
+	_change_function = aFunction;
+}
+
+- (void) on_done:(Function)aFunction {
+	_done_function = aFunction;
+}
+
+/*
+- (void) exec:(CPNotification) notification {
+	console.log(notification);
+	aFunction = [notification userInfo];
+	if(aFunction != nil)
+		aFunction.call();
+}
+*/
+
+
+- (void) begin_action:(CPNotification) notification {
+	if(_begin_function != nil)
+		_begin_function.call();
+}
+
+- (void) change_action:(CPNotification) notification {
+	if(_change_function != nil)
+		_change_function.call();
+}
+
+- (void) done_action:(CPNotification) notification {
+	if(_done_function != nil)
+		_done_function.call();
+}
+
 
 - (void) name:(CPString) n {
 	_name = n;

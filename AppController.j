@@ -77,8 +77,12 @@
 	objj_msgSend(img, 'width:', 100);
 	objj_msgSend(img, 'height:', 100);
 	
-	button = objj_msgSend(stack, 'button:' , {"title" : "Click", "width" : 70.0, "height" : 18.0, "hmargin" : 150, "vmargin" : 50});
+	text = [stack text];
+	objj_msgSend(text, 'on_begin:' , function() { alert('Editing'); } );
+	[text frame:CGRectMake(120,10,150.0,18.0)];
 	
+	button = objj_msgSend(stack, 'button:' , {"title" : "Click", "width" : 70.0, "height" : 18.0, "hmargin" : 150, "vmargin" : 50});
+	objj_msgSend(button, 'on_click:' , function() { [img hmargin:40.0]; [button hmargin:170.0]; } );
 }
 
 @end

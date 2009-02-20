@@ -9,7 +9,8 @@
 @import "CPViewAdditions.j"
 
 @implementation POButton : CPButton {
-	CPString	_name;
+	CPString		_name;
+	var		 		_function;
 }
 
 /*
@@ -19,6 +20,8 @@
 	self = [super initWithFrame:CGRectMakeZero()];
 	if(self) {
 		[self setBezelStyle:CPHUDBezelStyle];
+		[self setTarget:self];
+		[self setAction:@selector(exec)];
 	}
 	return self;
 }
@@ -36,6 +39,15 @@
 
 - (void) title:(CPString) t {
 	[self setTitle:t];
+}
+
+- (void) on_click:(Function)aFunction {
+	_function = aFunction;
+}
+
+- (void) exec {
+	if(_function != nil)
+		_function.call();
 }
 
 @end

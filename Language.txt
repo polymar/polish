@@ -7,7 +7,7 @@
 - title::string
 - width::float
 - height::float
-- color::string (right now matching a message for getting a color in obj-j from CPColor)
+- color::string (right now the string has to match colors method of CPColor in obj-j)
 
 //in progress
 - resizable::BOOL (use obj-c BOOL notation: YES/NO)
