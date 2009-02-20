@@ -17,10 +17,27 @@
 
         <script type = "text/javascript">
             OBJJ_MAIN_FILE = "main.j";
+			POLISH_NOTIFY_ONLOAD = 0;
+			
+			POLISH_NOTIFICATION = new Array();
+			POLISH_NOTIFICATION[0] = function() { 
+				polish_loaded();
+ 			}
         </script>
         
         <script src = "Frameworks/Objective-J/Objective-J.js" type = "text/javascript"></script>
-
+		<script type="text/javascript">
+			function polish_loaded(){
+				objj_msgSend(app, 'create:', {"title" : "CapWaves exps.", "width" : 500, "height" : 500, "color" : "blackColor"}); 
+				stack = objj_msgSend(app, 'stack:' , {"width" : 400, "height" : 300});
+				objj_msgSend(stack, 'hmargin:vmargin:', 10, 10);
+				objj_msgSend(stack, 'color:', 'grayColor') ;
+				objj_msgSend(app, 'create:', {"title" : "CapWaves exps.", "width" : 500, "height" : 500, "color" : "blackColor"});
+				button = objj_msgSend(stack, 'button:' , {"title" : "Click", "width" : 70.0, "height" : 18.0, "hmargin" : 150, "vmargin" : 50});
+				var time = new Date();
+				objj_msgSend(button, 'on_click:', function(){ alert(time); });
+			}
+		</script>
 
     </head>
 

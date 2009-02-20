@@ -78,7 +78,7 @@
 */
 
 + (SEL) sanitize_selector:(SEL) aSelector {
-	//TODO we could remove all the colon ':' and extract only the first method_name.
+	//FIXME we could remove all the colon ':' and extract only the first method_name.
 	p_Sel = aSelector;
 	if(aSelector[ (aSelector.length - 1 )] == ':') {
 		p_Sel = aSelector.substring(0, aSelector.length - 1);

@@ -25,6 +25,8 @@
 	//default stuff... setting background black.
 	[theWindow orderFront:self];
 	
+	POLISH_NOTIFICATION[POLISH_NOTIFY_ONLOAD].call();
+	
 	/*
 	//application example - objective-j style
 	[app create:{"title" : "CapWaves exps.", "width" : 500, "height" : 500, "color" : "blackColor"}];
@@ -65,6 +67,7 @@
 	[img frame:CGRectMake(10, 120, 100, 100)];
 	*/
 	
+	/*
 	//application example - javascript style
 	objj_msgSend(app, 'create:', {"title" : "CapWaves exps.", "width" : 500, "height" : 500, "color" : "blackColor"});
 	stack = objj_msgSend(app, 'stack:' , {"width" : 400, "height" : 300});
@@ -83,6 +86,7 @@
 	
 	button = objj_msgSend(stack, 'button:' , {"title" : "Click", "width" : 70.0, "height" : 18.0, "hmargin" : 150, "vmargin" : 50});
 	objj_msgSend(button, 'on_click:' , function() { [img hmargin:40.0]; [button hmargin:170.0]; } );
+	*/
 }
 
 @end
