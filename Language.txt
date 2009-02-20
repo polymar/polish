@@ -1,0 +1,31 @@
+
+//creating the application.
+[app create:{"name" : "myApp", "title" : "CapWaves exps.", "width" : 500, "height" : 500, "color" : "blackColor"}];
+
+//valid option
+- name::string
+- title::string
+- width::float
+- height::float
+- color::string (right now matching a message for getting a color in obj-j from CPColor)
+
+//in progress
+- resizable::BOOL (use obj-c BOOL notation: YES/NO)
+- floating::BOOL
+
+s = [app stack:{"name" : "myStack"}];
+[s set:{"color" : "blueColor"}];
+
+
+//TODO complete this section
+[xx button];
+
+[xx text];
+
+[xx label];
+
+[xx progress];
+
+[xx slider];
+
+[xx image];

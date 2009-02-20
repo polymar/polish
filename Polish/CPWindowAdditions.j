@@ -14,15 +14,20 @@
 * Set the dimension of the main window.
 */
 - (void) width:(CGFloat) width height:(CGFloat) height {
-	f = [self frame];
+	var f = [self frame];
 	[self setFrame:CGRectMake(f.origin.x, f.origin.y, width, height) display:YES animate:NO];
 }
 
+/*
+* this are boring but they get handy when performing selectors created from parameters list.
+*/
 - (void) width:(CGFloat) width {
+	var f = [self frame];
 	[self setFrame:CGRectMake(f.origin.x, f.origin.y, width, f.size.height) display:NO animate:NO];
 }
 
 - (void) height:(CGFloat) height {
+	var f = [self frame];
 	[self setFrame:CGRectMake(f.origin.x, f.origin.y, f.size.width, height) display:NO animate:NO];
 }
 
@@ -42,7 +47,7 @@
 }
 
 /*
-* Set YES and the the contentView will automatically resize based on the externale frame size.
+* Set YES and the the window will show the resizable indicator on the right-bottom.
 */
 - (void) resizable:(BOOL) flag {
 	[self setShowsResizeIndicator:flag];
@@ -64,7 +69,7 @@
 */
 - (void)forward:(SEL)aSelector :(marg_list)args
 {
-	console.log('PHWindow does not support '+aSelector);
+	console.warn('@#!Polish Warning - app does not support '+aSelector);
 }
 
 @end

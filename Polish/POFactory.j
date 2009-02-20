@@ -43,10 +43,10 @@
 	return [[POImage alloc] image];
 }
 
-//TODO verify why we don't get here.
-//- (void)forward:(SEL)aSelector :(marg_list)args
-//{
-//	console.log('@#!Polish Error -> '+aSelector+' is not a known message.');
-//}
+//Just message to the user in case of invalid selector received.
++ (void)forward:(SEL)aSelector :(marg_list)args
+{
+	console.error('@#!Polish Error -> '+aSelector+' is not a known message.');
+}
 
 @end
