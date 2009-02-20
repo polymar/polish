@@ -25,6 +25,8 @@
 	//default stuff... setting background black.
 	[theWindow orderFront:self];
 	
+	/*
+	//application example - objective-j style
 	[app create:{"title" : "CapWaves exps.", "width" : 500, "height" : 500, "color" : "blackColor"}];
 
 	stack = [app stack:{"width" : 400, "height" : 300}];
@@ -61,6 +63,21 @@
 	//console.log(img);
 	[img url:'./Resources/img1.png'];
 	[img frame:CGRectMake(10, 120, 100, 100)];
+	*/
+	
+	//application example - javascript style
+	objj_msgSend(app, 'create:', {"title" : "CapWaves exps.", "width" : 500, "height" : 500, "color" : "blackColor"});
+	stack = objj_msgSend(app, 'stack:' , {"width" : 400, "height" : 300});
+	objj_msgSend(stack, 'hmargin:vmargin:', 10, 10);
+	objj_msgSend(stack, 'color:', 'grayColor');
+	
+	img = objj_msgSend(stack, 'image');
+	objj_msgSend(img, 'url:', './Resources/img1.png');
+	objj_msgSend(img, 'hmargin:vmargin:', 20, 20);
+	objj_msgSend(img, 'width:', 100);
+	objj_msgSend(img, 'height:', 100);
+	
+	button = objj_msgSend(stack, 'button:' , {"title" : "Click", "width" : 70.0, "height" : 18.0, "hmargin" : 150, "vmargin" : 50});
 	
 }
 
