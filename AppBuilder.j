@@ -42,7 +42,11 @@
 * forward all the not implemented method to polish factory class.
 */
 - (id)forward:(SEL)aSelector :(marg_list)args {
-	//just sanity check... not coming here coz of a wrong create message.
+	return [AppBuilder obj_create:aSelector :args :_contentView];
+}
+
++ (id) obj_create:(SEL)aSelector :(man_list)args :(id) parent {
+	//just sanity check... not coming here coz of a wrong 'create' message.
 	if ((arguments[2] == 'create:') || (arguments[2] == 'create')) {
 		console.error('@#!Polish Error - Valid Syntax: [app create:{json_params}]; ');
 		return;
@@ -63,10 +67,10 @@
 				console.warn('@#!Polish Warning - Variable parameters list not supported yet.');
 			}
 		}
-		[_contentView addSubview:s];
+		[parent addSubview:s];
 	}
 	return s;
-}
+} 
 
 /*
 * sanitize the selector, removing the colon ':' from the selector name.
@@ -74,6 +78,7 @@
 */
 
 + (SEL) sanitize_selector:(SEL) aSelector {
+	//TODO we could remove all the colon ':' and extract only the first method_name.
 	p_Sel = aSelector;
 	if(aSelector[ (aSelector.length - 1 )] == ':') {
 		p_Sel = aSelector.substring(0, aSelector.length - 1);

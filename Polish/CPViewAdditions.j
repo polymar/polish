@@ -67,34 +67,13 @@
 	[self setFrame:CGRectMake(f.origin.x, vmargin, f.size.width, f.size.height)];
 }
 
-//TODO this almost duplicated the AppBuilder forward method.
-//Need a better design.
+/*
+* forward the missing method to polish core.
+* any view can create any object and add it to itself!!
+*/
 - (id)forward:(SEL)aSelector :(marg_list)args
 {
-	//just sanity check... not coming here coz of a wrong create message.
-	if ((arguments[2] == 'create:') || (arguments[2] == 'create')) {
-		console.error('@#!Polish Error - Valid Syntax: [parent_view [stack|button|text|label|...]:{json_params}]; ');
-		return;
-	}
-	polish_selector = objj_msgSend(AppBuilder, 'sanitize_selector:' , aSelector);
-	if(polish_selector.indexOf(':') != -1) {
-		console.error('@#!Polish Error '+aSelector+' is an invalid message.');
-		return;
-	}
-	var s = objj_msgSend(POFactory, polish_selector);
-	if(s != nil) {
-		if(args.length >= 3) {
-			var p_list = args[2];
-			for( var memb in p_list) {
-				objj_msgSend(AppBuilder , 'apply_method:to:with:', memb, s, eval('p_list.'+memb) );
-			}
-			if(args.length > 3) {
-				console.warn('@#!Polish Warning - Variable parameters list not supported yet.');
-			}
-		}
-		[self addSubview:s];
-	}
-	return s;
+	return [AppBuilder obj_create:aSelector :args :self];
 }
 
 @end
