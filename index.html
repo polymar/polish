@@ -30,12 +30,13 @@
 			function polish_loaded(){
 				objj_msgSend(app, 'create:', {"title" : "CapWaves exps.", "width" : 500, "height" : 500, "color" : "blackColor"}); 
 				stack = objj_msgSend(app, 'stack:' , {"width" : 400, "height" : 300});
-				objj_msgSend(stack, 'hmargin:vmargin:', 10, 10);
-				objj_msgSend(stack, 'color:', 'grayColor') ;
-				objj_msgSend(app, 'create:', {"title" : "CapWaves exps.", "width" : 500, "height" : 500, "color" : "blackColor"});
-				button = objj_msgSend(stack, 'button:' , {"title" : "Click", "width" : 70.0, "height" : 18.0, "hmargin" : 150, "vmargin" : 50});
+				stack.location(10, 10);
+				stack.color('grayColor');
+				button = objj_msgSend(stack, 'button:' , {"title" : "Click", "width" : 170.0, "height" : 18.0, "hmargin" : 150, "vmargin" : 50});
+				button.size(100,18);
+				button.location(100,10);
 				var time = new Date();
-				objj_msgSend(button, 'on_click:', function(){ alert(time); });
+				button.on_click(function(){ alert(time); });
 			}
 		</script>
 

@@ -15,20 +15,9 @@
 * Init a stack with hmargin and vmargin = 0;
 */
 - (id) stack {
-	self = [super initWithFrame:CGRectMakeZero()];
+	self = [super init];
 	if(self) {
-	
-	}
-	return self;
-}
-
-/*
-* Init the internal stack with the appropriate margin.
-*/
-- (id) stack_with_hmargin:(CGFloat) hmargin vmargin:(CGFloat) vmargin {
-	self = [super initWithFrame:CGRectMake(hmargin, vmargin, 100.0, 100.0)];
-	if(self) {
-		
+		//TODO maybe we can set a default stack size here;
 	}
 	return self;
 }

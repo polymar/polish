@@ -16,18 +16,7 @@
 * Init an editable text field with hmargin and vmargin = 0;
 */
 - (id) image {
-	self = [super initWithFrame:CGRectMakeZero()];
-	if(self) {
-		
-	}
-	return self;
-}
-
-/*
-* Init an editable text field with the appropriate margin.
-*/
-- (id) image_with_hmargin:(CGFloat) hmargin vmargin:(CGFloat) vmargin {
-	self = [super initWithFrame:CGRectMake(hmargin, vmargin, 64.0 , 64.0)];
+	self = [super init];
 	if(self) {
 		
 	}

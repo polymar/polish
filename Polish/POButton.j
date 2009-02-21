@@ -9,8 +9,8 @@
 @import "CPViewAdditions.j"
 
 @implementation POButton : CPButton {
-  CPString    _name;
-  var       _function;
+  CPString    	_name;
+  var       	_function;
 }
 
 /*
@@ -19,20 +19,10 @@
 - (id) button {
   self = [super init];
   if(self) {
+	[self createJSMethods: ['title:', 'on_click:']];
     [self setBezelStyle:CPHUDBezelStyle];
     [self setTarget:self];
     [self setAction:@selector(exec)];
-  }
-  return self;
-}
-
-/*
-* Init a cpbutton with the appropriate margin.
-*/
-- (id) button_with_hmargin:(CGFloat) hmargin vmargin:(CGFloat) vmargin {
-  self = [super initWithFrame:CGRectMake(hmargin, vmargin, 70.0 , 20.0)];
-  if(self) {
-    [self setBezelStyle:CPHUDBezelStyle];
   }
   return self;
 }
@@ -43,10 +33,6 @@
 
 - (void) on_click:(Function)aFunction {
   _function = aFunction;
-}
-
-function on_click(Function aFunction) {
-	_function = aFunction;
 }
 
 - (void) exec {

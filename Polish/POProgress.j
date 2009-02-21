@@ -16,18 +16,7 @@
 * Init a progress with hmargin and vmargin = 0;
 */
 - (id) progress {
-	self = [super initWithFrame:CGRectMakeZero()];
-	if(self) {
-		
-	}
-	return self;
-}
-
-/*
-* Init a progress with the appropriate margin.
-*/
-- (id) progress_with_hmargin:(CGFloat) hmargin vmargin:(CGFloat) vmargin {
-	self = [super initWithFrame:CGRectMake(hmargin, vmargin, 70.0 , 20.0)];
+	self = [super init];
 	if(self) {
 		
 	}

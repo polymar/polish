@@ -19,7 +19,7 @@
 * Init an editable text field with hmargin and vmargin = 0;
 */
 - (id) text {
-	self = [super initWithFrame:CGRectMakeZero()];
+	self = [super init];
 	if(self) {
 		[self setFont:[CPFont systemFontOfSize:14]];
 	    [self setBezelStyle:CPTextFieldSquareBezel];
@@ -33,27 +33,10 @@
 }
 
 /*
-* Init an editable text field with the appropriate margin.
-*/
-- (id) text_with_hmargin:(CGFloat) hmargin vmargin:(CGFloat) vmargin {
-	self = [super initWithFrame:CGRectMake(hmargin, vmargin, 150.0 , 23.0)];
-	if(self) {
-		[self setFont:[CPFont systemFontOfSize:14]];
-	    [self setBezelStyle:CPTextFieldSquareBezel];
-	    [self setBezeled:YES];
-	    [self setEditable:YES];
-		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(begin_action:) name: "CPControlTextDidBeginEditingNotification" object: _begin_function];
-		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(change_action:) name: "CPControlTextDidChangeNotification" object: _change_function];
-		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(done_action:) name: "CPControlTextDidEndEditingNotification" object: _done_function];
-	}
-	return self;
-}
-
-/*
 * Init a label with hmargin and vmargin = 0
 */
 - (id) label {
-	self = [super initWithFrame:CGRectMakeZero()];
+	self = [super init];
 	if(self) {
 		[self setFont:[CPFont systemFontOfSize:14]];
 	    [self setStringValue:"Email Address:"];

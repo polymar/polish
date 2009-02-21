@@ -24,17 +24,6 @@
 	return self;
 }
 
-/*
-* Init a slider with the appropriate margin.
-*/
-- (id) slider_with_hmargin:(CGFloat) hmargin vmargin:(CGFloat) vmargin {
-	self = [super initWithFrame:CGRectMake(hmargin, vmargin, 200.0 , 20.0)];
-	if(self) {
-		
-	}
-	return self;
-}
-
 //setter for the min value
 - (void) min:(double) v {
 	[self setMinValue:v];
