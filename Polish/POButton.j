@@ -9,45 +9,45 @@
 @import "CPViewAdditions.j"
 
 @implementation POButton : CPButton {
-	CPString		_name;
-	var		 		_function;
+  CPString    _name;
+  var       _function;
 }
 
 /*
 * Init a cpbutton with hmargin and vmargin = 0;
 */
 - (id) button {
-	self = [super initWithFrame:CGRectMakeZero()];
-	if(self) {
-		[self setBezelStyle:CPHUDBezelStyle];
-		[self setTarget:self];
-		[self setAction:@selector(exec)];
-	}
-	return self;
+  self = [super init];
+  if(self) {
+    [self setBezelStyle:CPHUDBezelStyle];
+    [self setTarget:self];
+    [self setAction:@selector(exec)];
+  }
+  return self;
 }
 
 /*
 * Init a cpbutton with the appropriate margin.
 */
 - (id) button_with_hmargin:(CGFloat) hmargin vmargin:(CGFloat) vmargin {
-	self = [super initWithFrame:CGRectMake(hmargin, vmargin, 70.0 , 20.0)];
-	if(self) {
-		[self setBezelStyle:CPHUDBezelStyle];
-	}
-	return self;
+  self = [super initWithFrame:CGRectMake(hmargin, vmargin, 70.0 , 20.0)];
+  if(self) {
+    [self setBezelStyle:CPHUDBezelStyle];
+  }
+  return self;
 }
 
 - (void) title:(CPString) t {
-	[self setTitle:t];
+  [self setTitle:t];
 }
 
 - (void) on_click:(Function)aFunction {
-	_function = aFunction;
+  _function = aFunction;
 }
 
 - (void) exec {
-	if(_function != nil)
-		_function.call();
+  if(_function != nil)
+    _function.call();
 }
 
 @end
