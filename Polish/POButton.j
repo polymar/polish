@@ -45,9 +45,21 @@
 	_function = aFunction;
 }
 
+function on_click(Function aFunction) {
+	_function = aFunction;
+}
+
 - (void) exec {
 	if(_function != nil)
 		_function.call();
+}
+
+- (void) name:(CPString) n {
+	_name = n;
+}
+
+- (CPString) name {
+	return _name;
 }
 
 @end

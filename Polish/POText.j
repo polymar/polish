@@ -91,16 +91,6 @@
 	_done_function = aFunction;
 }
 
-/*
-- (void) exec:(CPNotification) notification {
-	console.log(notification);
-	aFunction = [notification userInfo];
-	if(aFunction != nil)
-		aFunction.call();
-}
-*/
-
-
 - (void) begin_action:(CPNotification) notification {
 	if(_begin_function != nil)
 		_begin_function.call();
@@ -115,7 +105,6 @@
 	if(_done_function != nil)
 		_done_function.call();
 }
-
 
 - (void) name:(CPString) n {
 	_name = n;

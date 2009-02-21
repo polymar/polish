@@ -51,7 +51,6 @@
 }
 
 - (void)imageDidLoad:(CPNotification)aNotification {
-	console.log('image loaded');
 	[self display];
 }
 
