@@ -23,7 +23,7 @@
 }
 
 /*
-* create the app (which is already created) and set the parameters.
+* create the app and set the parameters.
 */
 //keeping open for future.
 - (id) create:(CPObject) what, ... {

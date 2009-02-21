@@ -1,4 +1,3 @@
-
 //creating the application.
 [app create:{"name" : "myApp", "title" : "CapWaves exps.", "width" : 500, "height" : 500, "color" : "blackColor"}];
 

@@ -50,4 +50,12 @@
 	[self setValue:v];
 }
 
+- (void) name:(CPString) n {
+	_name = n;
+}
+
+- (CPString) name {
+	return _name;
+}
+
 @end
