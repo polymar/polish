@@ -17,6 +17,7 @@
 	self = [super init];
 	if(self) {
 		[self createJSMethods: ['create:']];
+		[self createForwardJSMethods: ['stack','text','image','label','button','progress']];
 		_mainWindow = mainWindow;
 		_contentView = [_mainWindow contentView];
 	}
@@ -48,23 +49,19 @@
 
 + (id) obj_create:(SEL)aSelector :(man_list)args :(id) parent {
 	//just sanity check... not coming here coz of a wrong 'create' message.
-	if ((arguments[2] == 'create:') || (arguments[2] == 'create')) {
-		console.error('@#!Polish Error - Valid Syntax: [app create:{json_params}]; ');
+	if ((aSelector == 'create:') || (aSelector == 'create')) {
+		console.error('@#!Polish Error - Valid Syntax: app.create(json_params); ');
 		return;
 	}
 	polish_selector = objj_msgSend(AppBuilder, 'sanitize_selector:' , aSelector);
-	if(polish_selector.indexOf(':') != -1) {
-		console.error('@#!Polish Error '+aSelector+' is an invalid message.');
-		return;
-	}
 	var s = objj_msgSend(POFactory, polish_selector);
 	if(s != nil) {
-		if(args.length >= 3) {
-			var p_list = args[2];
+		if(args.length == 1) {
+			var p_list = args[0];
 			for( var memb in p_list) {
 				objj_msgSend(AppBuilder , 'apply_method:to:with:', memb, s, eval('p_list.'+memb) );
 			}
-			if(args.length > 3) {
+			if(args.length > 1) {
 				console.warn('@#!Polish Warning - Variable parameters list not supported yet.');
 			}
 		}
@@ -79,12 +76,7 @@
 */
 
 + (SEL) sanitize_selector:(SEL) aSelector {
-	//FIXME we could remove all the colon ':' and extract only the first method_name. aSelector.scan(':')[0];
-	p_Sel = aSelector;
-	if(aSelector[ (aSelector.length - 1 )] == ':') {
-		p_Sel = aSelector.substring(0, aSelector.length - 1);
-	}
-	return p_Sel;
+	return aSelector.split(':').shift();
 }
 
 /*

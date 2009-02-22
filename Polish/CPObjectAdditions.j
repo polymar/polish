@@ -11,7 +11,15 @@
 
 - (void) createJSMethods:(CPArray) methods {
   	for(var i=0; i < methods.length ; i++){
-    	method_call = [self constructJSMethod:methods[i]];
+    	method_call = [self constructJSMethod:methods[i]];	
+    	eval(method_call);
+  	}
+}
+
+- (void) createForwardJSMethods:(CPArray) methods {
+	for(var i=0; i < methods.length ; i++){
+		method_name = methods[i].split(':').shift();
+    	method_call = "self."+method_name + " = function() { return objj_msgSend(self, 'forward::', '"+  method_name  +"', arguments); }";
     	eval(method_call);
   	}
 }

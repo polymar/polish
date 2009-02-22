@@ -29,34 +29,32 @@
 		<script type="text/javascript">
 			function polish_loaded(){
 				app.create({"title" : "CapWaves exps.", "width" : 500, "height" : 500, "color" : "blackColor"});
-				//objj_msgSend(app, 'create:', {"title" : "CapWaves exps.", "width" : 500, "height" : 500, "color" : "blackColor"}); 
 				
-				stack = objj_msgSend(app, 'stack:' , {"width" : 400, "height" : 300});
+				stack = app.stack({"width" : 400, "height" : 300});
 				stack.location(10, 10);
 				stack.color('grayColor');
 				
-				text = objj_msgSend(stack, 'text');
-				//text = stack.text();
+				text = stack.text();
 				text.location(10,40);
 				text.size(150, 23);
 				text.value('bravo');
 				
-				button = objj_msgSend(stack, 'button:' , {"title" : "Click", "width" : 170.0, "height" : 18.0, "hmargin" : 150, "vmargin" : 50});
+				button = stack.button({"title" : "Click", "width" : 170.0, "height" : 18.0, "hmargin" : 150, "vmargin" : 50});
 				button.size(100,18);
 				button.location(100,10);
 				var time = new Date();
 				button.on_click(function(){ alert(time); });
 				
-				label = objj_msgSend(stack, 'label');
+				label = stack.label();
 				label.location(10,70);
 
-				progress = objj_msgSend(stack, 'progress');
+				progress = stack.progress();
 				progress.location(10, 100);
 				progress.size(200,15);
 				progress.max(100);
 				progress.value(33);
 
-				img = objj_msgSend(stack, 'image');
+				img = stack.image();
 				img.url('./Resources/img1.png');
 				img.size(100,100);
 				img.location(10, 120);
