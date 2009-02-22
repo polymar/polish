@@ -4,7 +4,7 @@
  * Created by Roberto Gamboni on 02/15/2009.
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
-@import <Foundation/CPObject.j>
+@import "Polish/CPObjectAdditions.j"
 @import "Polish/CPWindowAdditions.j";
 @import "Polish/POFactory.j";
 
@@ -16,6 +16,7 @@
 - (id) initWithContentView:(CPWindow) mainWindow {
 	self = [super init];
 	if(self) {
+		[self createJSMethods: ['create:']];
 		_mainWindow = mainWindow;
 		_contentView = [_mainWindow contentView];
 	}
@@ -78,7 +79,7 @@
 */
 
 + (SEL) sanitize_selector:(SEL) aSelector {
-	//FIXME we could remove all the colon ':' and extract only the first method_name.
+	//FIXME we could remove all the colon ':' and extract only the first method_name. aSelector.scan(':')[0];
 	p_Sel = aSelector;
 	if(aSelector[ (aSelector.length - 1 )] == ':') {
 		p_Sel = aSelector.substring(0, aSelector.length - 1);

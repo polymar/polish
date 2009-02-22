@@ -21,6 +21,7 @@
 - (id) text {
 	self = [super init];
 	if(self) {
+		[self createJSMethods: ['value:']];
 		[self setFont:[CPFont systemFontOfSize:14]];
 	    [self setBezelStyle:CPTextFieldSquareBezel];
 	    [self setBezeled:YES];
@@ -98,7 +99,8 @@
 }
 
 - (void) value:(CPString) v {
-	[self setStringValue:v];
+	if(v != undefined)
+		[self setStringValue:v];
 }
 
 - (CPString) value {

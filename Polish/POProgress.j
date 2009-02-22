@@ -18,24 +18,27 @@
 - (id) progress {
 	self = [super init];
 	if(self) {
-		
+		[self createJSMethods: ['min:', 'max:', 'value:']];
 	}
 	return self;
 }
 
 //setter for the min value
 - (void) min:(double) v {
-	[self setMinValue:v];
+	if(v != undefined)
+		[self setMinValue:v];
 }
 
 //setter for the max value
 - (void) max:(double) v {
-	[self setMaxValue:v];
+	if(v != undefined)
+		[self setMaxValue:v];
 }
 
 //setter for the slider value
 - (void) value:(double) v {
-	[self setDoubleValue:v];
+	if(v != undefined)
+		[self setDoubleValue:v];
 }
 
 - (void) name:(CPString) n {

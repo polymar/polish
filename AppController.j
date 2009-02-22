@@ -5,7 +5,7 @@
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
 
-@import <Foundation/CPObject.j>
+@import "Polish/CPObjectAdditions.j"
 @import "AppBuilder.j"
 
 @implementation AppController : CPObject

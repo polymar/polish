@@ -18,7 +18,8 @@
 - (id) image {
 	self = [super init];
 	if(self) {
-		
+		self.size(64.0, 64.0);
+		[self createJSMethods: ['url:']];
 	}
 	return self;
 }
@@ -32,7 +33,8 @@
 }
 
 - (void) url:(CPString) path {
-	[self setImage:[[CPImage alloc] initWithContentsOfFile:path size:CGSizeMake([self frame].width, [self frame].height)]];
+	if(path != undefined)
+		[self setImage:[[CPImage alloc] initWithContentsOfFile:path size:CGSizeMake([self frame].width, [self frame].height)]];
 }
 
 - (void) url:(CPString) path hsize:(CGFloat) hsize vsize:(CGFloat) vsize { 

@@ -6,8 +6,8 @@
  */
 
 @import <AppKit/CPView.j>
+@import "CPObjectAdditions.j"
 @import "POColor.j"
-@import "../AppBuilder.j"
 
 @implementation CPView (Polish)
 
@@ -16,25 +16,6 @@
  	var polish_methods =  [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:'];
  	[self createJSMethods: polish_methods];
  	return self;
-}
-
-- (void) createJSMethods:(CPArray) methods {
-  	for(var i=0; i < methods.length ; i++){
-    	method_call = [self constructJSMethod:methods[i]];
-    	eval(method_call);
-  	}
-}
-
-- (String) constructJSMethod: (String)method{
-  	var method_frags = method.split(':');
-  	var method_sig = method_frags.shift();
-  	var parameters = new Array();
-  	for(var i=0; i < method_frags.length; i++){
-    	parameters[i] = 'yyyyyy' + i;
-  	}
-  	var joined_params = parameters.join(",");
-  	var objj_params = (joined_params == '')?'':(', ' + joined_params);
-  	return "self." + method_sig + " = " + "function( " + joined_params +" ){ objj_msgSend( self,  '" + method + "' " + objj_params + ");}";
 }
 
 - (void) size:xxx xy:yyy {
