@@ -28,7 +28,10 @@
 }
 
 - (void) title:(CPString) t {
-  [self setTitle:t];
+	if(t != undefined)
+  		[self setTitle:t];
+	else
+		return [self title];
 }
 
 - (void) on_click:(Function)aFunction {

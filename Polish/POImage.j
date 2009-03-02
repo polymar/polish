@@ -34,7 +34,7 @@
 
 - (void) url:(CPString) path {
 	if(path != undefined)
-		[self setImage:[[CPImage alloc] initWithContentsOfFile:path size:CGSizeMake([self frame].width, [self frame].height)]];
+		[self setImage:[[CPImage alloc] initWithContentsOfFile:path size:CGSizeMake([self frame].size.width, [self frame].size.height)]];
 }
 
 - (void) url:(CPString) path hsize:(CGFloat) hsize vsize:(CGFloat) vsize { 

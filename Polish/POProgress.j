@@ -27,18 +27,24 @@
 - (void) min:(double) v {
 	if(v != undefined)
 		[self setMinValue:v];
+	else
+		return [self minValue];
 }
 
 //setter for the max value
 - (void) max:(double) v {
 	if(v != undefined)
 		[self setMaxValue:v];
+	else 
+		return [self maxValue];
 }
 
 //setter for the slider value
 - (void) value:(double) v {
 	if(v != undefined)
 		[self setDoubleValue:v];
+	else
+		return [self doubleValue];
 }
 
 - (void) name:(CPString) n {

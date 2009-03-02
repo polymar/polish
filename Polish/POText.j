@@ -21,7 +21,7 @@
 - (id) text {
 	self = [super init];
 	if(self) {
-		[self createJSMethods: ['value:']];
+		[self createJSMethods: ['value:', 'name:']];
 		[self setFont:[CPFont systemFontOfSize:14]];
 	    [self setBezelStyle:CPTextFieldSquareBezel];
 	    [self setBezeled:YES];
@@ -39,26 +39,11 @@
 - (id) label {
 	self = [super init];
 	if(self) {
+		[self createJSMethods: ['para:', 'name:']];
 		[self setFont:[CPFont systemFontOfSize:14]];
-	    [self setStringValue:"Email Address:"];
 	    [self setTextColor:[CPColor whiteColor]];
 	    [self sizeToFit];
 		[self setFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([self bounds]), CGRectGetHeight([self bounds]))];
-	}
-	return self;
-}
-
-/*
-* Init a label with the appropriate margin.
-*/
-- (id) label_with_hmargin:(CGFloat) hmargin vmargin:(CGFloat) vmargin {
-	self = [super initWithFrame:CGRectMakeZero()];
-	if(self) {
-		[self setFont:[CPFont systemFontOfSize:14]];
-	    [self setStringValue:"Email Address:"];
-	    [self setTextColor:[CPColor whiteColor]];
-	    [self sizeToFit];
-		[self setFrame:CGRectMake(hmargin, vmargin, CGRectGetWidth([self bounds]), CGRectGetHeight([self bounds]))];
 	}
 	return self;
 }
@@ -90,21 +75,25 @@
 		_done_function.call();
 }
 
-- (void) name:(CPString) n {
-	_name = n;
-}
-
-- (CPString) name {
-	return _name;
+- (CPString) name:(CPString) n {
+	if(n != undefined)
+		_name = n;
+	else 
+		return _name;
 }
 
 - (void) value:(CPString) v {
 	if(v != undefined)
 		[self setStringValue:v];
+	else
+		return [self stringValue];
 }
 
-- (CPString) value {
-	return [self stringValue];
+- (void) para:(CPString) v {
+	if(v != undefined)
+		[self setStringValue:v];
+	else
+		return [self stringValue];
 }
 
 @end
