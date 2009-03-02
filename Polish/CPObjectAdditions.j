@@ -33,7 +33,7 @@
   	}
   	var joined_params = parameters.join(",");
   	var objj_params = (joined_params == '')?'':(', ' + joined_params);
-  	return "self." + method_sig + " = " + "function( " + joined_params +" ){ objj_msgSend( self,  '" + method + "' " + objj_params + ");}";
+  	return "self." + method_sig + " = " + "function( " + joined_params +" ){ return objj_msgSend( self,  '" + method + "' " + objj_params + ");}";
 }
 
 @end
