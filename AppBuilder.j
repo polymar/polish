@@ -17,7 +17,7 @@
 	self = [super init];
 	if(self) {
 		[self createJSMethods: ['create:']];
-		[self createForwardJSMethods: ['stack','text','image','label','button','progress']];
+		[self createForwardJSMethods: ['stack','text','image','label','button','progress', 'login', 'form']];
 		_mainWindow = mainWindow;
 		_contentView = [_mainWindow contentView];
 	}
@@ -27,8 +27,8 @@
 /*
 * create the app and set the parameters.
 */
-//keeping open for future.
-- (id) create:(CPObject) what, ... {
+- (id) create:(CPObject) what, ... //keeping open for future.
+{
 	for( var memb in what ) {
 		objj_msgSend(AppBuilder , 'apply_method:to:with:', memb, _mainWindow, eval('what.'+memb) );
 	}

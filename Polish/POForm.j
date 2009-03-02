@@ -6,10 +6,20 @@
  */
 
 @import "CPViewAdditions.j"
+@import "POStack.j"
 
 @implementation POForm : POStack {
-	CPString 	_url;
+	CPString 	_action;
 	CPString 	_method;
+	CPString	_enctype;
+	CPString	_result;
+	
+	//function performed before submitting the form.
+	var 		_preprocess;
+	//function performed after submitting the form.
+	var			_postprocess;
+	
+	CPJSONPConnection connection;
 }
 
 /*
@@ -18,29 +28,112 @@
 - (id) form {
 	self = [super init];
 	if(self) {
-	
+		[self createJSMethods:['action:', 'enctype:', 'pre:', 'post:', 'http_method:', 'result']];
+		_method = 'GET';
+		_enctype = 'TEXT/PLAIN'
 	}
 	return self;
 }
 
-- (void) method:(CPString) m {
-	_method = m;
+- (void) pre:(Function)aFunction {
+	if(aFunction != undefined)
+		_preprocess = aFunction;
 }
 
-- (void) url:(CPString) u {
-	_url = u;
+- (void) post:(Function)aFunction {
+	if(aFunction != undefined)
+		_postprocess = aFunction;
 }
 
-- (CPString) method {
-	return _method;
+- (CPString) result {
+	return _result;
 }
 
-- (CPString) url {
-	return _url;
+- (CPString) http_method:(CPString) m {
+	if(m != undefined)
+		_method = m;
+	else
+		return _method;
 }
 
-- (CPString) serialize {
-	return 'form';
+- (CPString) action:(CPString) u {
+	if(u != undefined)
+		_action = u;
+	else
+		return _action;
+}
+
+- (CPString) enctype:(CPString) e {
+	if(e != undefined)
+		_enctype = e;
+	else
+		return _enctype;
+}
+
+
+- (void) submit_form {
+	//preprocessing
+	if(_preprocess != undefined) {
+		var test = _preprocess.call();
+		if(test == false) {
+			//preprocess failed.
+			return;
+		}
+	}
+		
+	//submit the form
+	if(connection)
+		[connection cancel];
+	connection = [CPJSONPConnection connectionWithRequest:[self generateRequest] callback:@"callback" delegate:self];
+}
+
+- (CPURLRequest) generateRequest {
+	//GET -> creating tag0=value0?tag1=value1
+	if(self.http_method() == 'GET') {
+		var query = [self generateParams];
+		var url = [CPString stringWithFormat:@"%s?%s", _action, encodeURI(query)];
+		var request = [CPURLRequest requestWithURL:url];
+		return request;
+	} 
+	//POST/PUT -> creating application/x-www-form-urlencoded or multipart/form-data
+	else {
+		if(_enctype == 'x-www-form-urlencoded') {
+			//TODO
+		} else {
+			//TODO
+		}
+	}
+}
+
+- (CPString) generateParams {
+	var elements = [self subviews];
+	var index;
+	var params = '';
+	for(index = 0; index < elements.length; index++) {
+		var el = elements[index];
+		//FIXME kind of hack... need to identify which object are serializable.
+		if([el class] != [POSubmit class]) {
+			if(el.name() != '') {
+				params += el.name() + '=' + el.value() + '?';
+			}
+		}
+	}
+	return params;
+}
+
+- (void)connection:(CPJSONPConnection)aConnection didReceiveData:(CPString)data
+{
+	if(data) {
+		_result = data;
+		if(_postprocess != undefined) {
+			_postprocess.call();
+		}
+	}
+}
+
+- (void)connection:(CPJSONPConnection)aConnection didFailWithError:(CPString)error
+{
+	alert(error);
 }
 
 @end

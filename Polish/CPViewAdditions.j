@@ -15,7 +15,7 @@
  	self =  [self initWithFrame:CGRectMakeZero()];
  	var polish_methods =  [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:'];
  	[self createJSMethods: polish_methods];
-	var polish_components = ['button', 'text', 'progress', 'image', 'label'];
+	var polish_components = ['button', 'text', 'progress', 'image', 'label', 'login', 'form', 'submit', 'friend', 'friend_collection'];
 	[self createForwardJSMethods: polish_components];
  	return self;
 }
@@ -31,12 +31,16 @@
 - (void) x:(CGFloat) f {
 	if(f != undefined) {
 		[self hmargin:f];
+	} else {
+		return [self frame].origin.x;
 	}
 }
 
 - (void) y:(CGFloat) f {
 	if(f != undefined) {
 		[self vmargin:f];
+	} else {
+		return [self frame].origin.y;
 	}
 }
 
@@ -56,13 +60,13 @@
 }
 
 - (void) width:(CGFloat) xxx height:(CGFloat) yyy {
-  	f = [self frame];
-  	[self setFrame:CGRectMake(f.origin.x, f.origin.y, xxx, yyy)];
+	var f = [self frame];
+	[self setFrame:CGRectMake(f.origin.x, f.origin.y, xxx, yyy)];
 }
 
 - (void) hmargin:(CGFloat) xxx vmargin:(CGFloat) yyy {
-  	f = [self frame];
-  	[self setFrame:CGRectMake(xxx, yyy, f.size.width, f.size.height)];
+  	var f = [self frame];
+	[self setFrame:CGRectMake(xxx, yyy, f.size.width, f.size.height)];
 }
 
 /*
@@ -70,12 +74,20 @@
 */
 - (void) width:(float) xxx {
   	var f = [self frame];
-  	[self setFrame:CGRectMake(f.origin.x, f.origin.y, xxx, f.size.height)];
+	if(xxx != undefined) {
+  		[self setFrame:CGRectMake(f.origin.x, f.origin.y, xxx, f.size.height)];
+	} else {
+		return f.size.width;
+	}
 }
 
 - (void) height:(CGFloat) xxx {
   	var f = [self frame];
-  	[self setFrame:CGRectMake(f.origin.x, f.origin.y, f.size.width, xxx)];
+	if(xxx != undefined) {
+  		[self setFrame:CGRectMake(f.origin.x, f.origin.y, f.size.width, xxx)];
+	} else {
+		return f.size.height;
+	}
 }
 
 - (void) hmargin:(CGFloat) xxx {
