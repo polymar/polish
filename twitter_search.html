@@ -28,40 +28,43 @@
         <script src = "Frameworks/Objective-J/Objective-J.js" type = "text/javascript"></script>
 		<script type="text/javascript">
 			function polish_loaded(){
-				app.create({"title" : "CapWaves exps.", "width" : 500, "height" : 500, "color" : "blackColor"});
+				app.create({"title" : "Twitter search", "width" : 370, "height" : 530, "color" : "blackColor"});
 				
-				stack = app.stack({"width" : 600, "height" : 500});
-				stack.location(10, 10);
-				stack.color('grayColor');
+				stack = app.stack();
+				stack.location(10,10);
+				stack.size(400,550);
+				stack.color('blackColor');
 				
-				text = stack.text();
-				text.location(10,40);
-				text.size(150, 23);
-				text.value('bravo');
+				form = stack.form();
+				form.action('http://search.twitter.com/search.json');
+				form.pre(function(){ 
+					if(t.value() == '') {
+						alert('Please insert a search term');
+						return false;
+					} 
+					coll.clear();
+				});
+				form.post(function() {
+					var data = form.result().results;
+					for(var i=0; i<data.length; i++) {
+						var json = data[i];
+						coll.add_friend(json);
+					}
+				});
+				form.color('grayColor');
+				form.location(5,10);
+				form.size(300,50);
 				
-				button = stack.button({"title" : "Click", "width" : 170.0, "height" : 18.0, "x" : 150, "y" : 50});
-				button.size(100,18);
-				button.location(100,10);
-				var time = new Date();
-				button.on_click(function(){ alert(time); });
+				t = form.text();
+				t.name('q');
+				t.location(10,15);
+				t.size(160, 18);
 				
-				label = stack.label();
-				label.location(10,70);
-
-				progress = stack.progress();
-				progress.location(10, 100);
-				progress.size(200,15);
-				progress.max(100);
-				progress.value(33);
-
-				img = stack.image();
-				img.url('./Resources/img1.png');
-				img.size(100,100);
-				img.location(10, 120);
+				s = form.submit();
+				s.location(200,15);
+				s.size(80,18);	
 				
-				log = stack.login();
-				log.location(10,200);
-				
+				coll = stack.friend_collection({"width" : 300.0, "height" : 400.0, "x" : 5, "y" : 70});
 			}
 		</script>
 

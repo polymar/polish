@@ -12,41 +12,45 @@
 @import "POSlider.j"
 @import "POProgress.j"
 @import "POImage.j"
+@import "POLogin.j"
+@import "POForm.j"
+@import "POSubmit.j"
+@import "../Misc/FriendView.j"
+@import "../Misc/FriendsCollection.j"
 
 @implementation POFactory : CPObject
-
-+ (id) stack {
-	return [[POStack alloc] stack];
-} 
-
-+ (id) button {
-	return [[POButton alloc] button];
-}
-
-+ (id) text {
-	return [[POText alloc] text];
-}
-
-+ (id) label {
-	return [[POText alloc] label];
-}
-
-+ (id) slider {
-	return [[POSlider alloc] slider];
-}
-
-+ (id) progress {
-	return [[POProgress alloc] progress];
-}
-
-+ (id) image {
-	return [[POImage alloc] image];
-}
 
 //Just message to the user in case of invalid selector received.
 + (void)forward:(SEL)aSelector :(marg_list)args
 {
+	var class_type =  get_class(aSelector);
+	if(class_type != nil) {
+		var cl = [class_type alloc];
+		return [cl performSelector:aSelector];
+	}
 	console.error('@#!Polish Error -> '+aSelector+' is not a known message.');
 }
 
 @end
+
+function load_class() {
+	return {
+		"friend_collection" : FriendsCollection,
+		"friend" 			: FriendView,
+		"form"				: POForm,
+		"login"				: POLogin,
+		"stack"				: POStack,
+		"button"			: POButton,
+		"submit"			: POSubmit,
+		"image"				: POImage,
+		"progress"			: POProgress,
+		"text"				: POText,
+		"label"				: POText,
+		"slider"			: POSlider
+	};
+};
+
+function get_class(sel) {
+	var class_map = load_class();
+	return eval('class_map.' + sel);
+}
