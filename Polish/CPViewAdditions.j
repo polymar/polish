@@ -13,9 +13,9 @@
 
 - (id) init {
  	self =  [self initWithFrame:CGRectMakeZero()];
- 	var polish_methods =  [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:'];
+ 	//var polish_methods =  [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:'];
  	[self createJSMethods: polish_methods];
-	var polish_components = ['button', 'text', 'progress', 'image', 'label', 'login', 'form', 'submit', 'friend', 'friend_collection'];
+	//var polish_components = ['button', 'text', 'progress', 'image', 'label', 'login', 'form', 'submit', 'friend', 'friend_collection'];
 	[self createForwardJSMethods: polish_components];
  	return self;
 }

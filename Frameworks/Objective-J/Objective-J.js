@@ -72,9 +72,228 @@ function objj_printf(string)
     objj_fprintf(alert, string);
 }
 if (window.console && window.console.warn)
-    warning_stream = function(aString) { window.console.warn(aString); }
+    var warning_stream = function(aString) { window.console.warn(aString); }
 else
-    warning_stream = function(){};
+    var warning_stream = function(){};
+var _sprintfFormatRegex = new RegExp("([^%]+|%[\\+\\-\\ \\#0]*[0-9\\*]*(.[0-9\\*]+)?[hlL]?[cbBdieEfgGosuxXpn%@])", "g");
+var _sprintfTagRegex = new RegExp("(%)([\\+\\-\\ \\#0]*)([0-9\\*]*)((.[0-9\\*]+)?)([hlL]?)([cbBdieEfgGosuxXpn%@])");
+function sprintf(format)
+{
+    var format = arguments[0],
+        tokens = format.match(_sprintfFormatRegex),
+        index = 0,
+        result = "",
+        arg = 1;
+    for (var i = 0; i < tokens.length; i++)
+    {
+        var t = tokens[i];
+        if (format.substring(index, index + t.length) != t)
+        {
+            return result;
+        }
+        index += t.length;
+        if (t.charAt(0) != "%")
+        {
+            result += t;
+        }
+        else
+        {
+            var subtokens = t.match(_sprintfTagRegex);
+            if (subtokens.length != 8 || subtokens[0] != t)
+            {
+                return result;
+            }
+            var percentSign = subtokens[1],
+                flags = subtokens[2],
+                widthString = subtokens[3],
+                precisionString = subtokens[4],
+                length = subtokens[6],
+                specifier = subtokens[7];
+            var width = null;
+            if (widthString == "*")
+                width = arguments[arg++];
+            else if (widthString != "")
+                width = Number(widthString);
+            var precision = null;
+            if (precisionString == ".*")
+                precision = arguments[arg++];
+            else if (precisionString != "")
+                precision = Number(precisionString.substring(1));
+            var leftJustify = (flags.indexOf("-") >= 0);
+            var padZeros = (flags.indexOf("0") >= 0);
+            var subresult = "";
+            if (RegExp("[bBdiufeExXo]").test(specifier))
+            {
+                var num = Number(arguments[arg++]);
+                var sign = "";
+                if (num < 0)
+                {
+                    sign = "-";
+                }
+                else
+                {
+                    if (flags.indexOf("+") >= 0)
+                        sign = "+";
+                    else if (flags.indexOf(" ") >= 0)
+                        sign = " ";
+                }
+                if (specifier == "d" || specifier == "i" || specifier == "u")
+                {
+                    var number = String(Math.abs(Math.floor(num)));
+                    subresult = _sprintf_justify(sign, "", number, "", width, leftJustify, padZeros)
+                }
+                if (specifier == "f")
+                {
+                    var number = String((precision != null) ? Math.abs(num).toFixed(precision) : Math.abs(num));
+                    var suffix = (flags.indexOf("#") >= 0 && number.indexOf(".") < 0) ? "." : "";
+                    subresult = _sprintf_justify(sign, "", number, suffix, width, leftJustify, padZeros);
+                }
+                if (specifier == "e" || specifier == "E")
+                {
+                    var number = String(Math.abs(num).toExponential(precision != null ? precision : 21));
+                    var suffix = (flags.indexOf("#") >= 0 && number.indexOf(".") < 0) ? "." : "";
+                    subresult = _sprintf_justify(sign, "", number, suffix, width, leftJustify, padZeros);
+                }
+                if (specifier == "x" || specifier == "X")
+                {
+                    var number = String(Math.abs(num).toString(16));
+                    var prefix = (flags.indexOf("#") >= 0 && num != 0) ? "0x" : "";
+                    subresult = _sprintf_justify(sign, prefix, number, "", width, leftJustify, padZeros);
+                }
+                if (specifier == "b" || specifier == "B")
+                {
+                    var number = String(Math.abs(num).toString(2));
+                    var prefix = (flags.indexOf("#") >= 0 && num != 0) ? "0b" : "";
+                    subresult = _sprintf_justify(sign, prefix, number, "", width, leftJustify, padZeros);
+                }
+                if (specifier == "o")
+                {
+                    var number = String(Math.abs(num).toString(8));
+                    var prefix = (flags.indexOf("#") >= 0 && num != 0) ? "0" : "";
+                    subresult = _sprintf_justify(sign, prefix, number, "", width, leftJustify, padZeros);
+                }
+                if (RegExp("[A-Z]").test(specifier))
+                    subresult = subresult.toUpperCase();
+                else
+                    subresult = subresult.toLowerCase();
+            }
+            else
+            {
+                var subresult = "";
+                if (specifier == "%")
+                    subresult = "%";
+                else if (specifier == "c")
+                    subresult = String(arguments[arg++]).charAt(0);
+                else if (specifier == "s" || specifier == "@")
+                    subresult = String(arguments[arg++]);
+                else if (specifier == "p" || specifier == "n")
+                {
+                    arg++;
+                    subresult = "";
+                }
+                subresult = _sprintf_justify("", "", subresult, "", width, leftJustify, false);
+            }
+            result += subresult;
+        }
+    }
+    return result;
+}
+var _sprintf_justify = function(sign, prefix, string, suffix, width, leftJustify, padZeros)
+{
+    var length = (sign.length + prefix.length + string.length + suffix.length);
+    if (leftJustify)
+    {
+        return sign + prefix + string + suffix + _sprintf_pad(width - length, " ");
+    }
+    else
+    {
+        if (padZeros)
+            return sign + prefix + _sprintf_pad(width - length, "0") + string + suffix;
+        else
+            return _sprintf_pad(width - length, " ") + sign + prefix + string + suffix;
+    }
+}
+var _sprintf_pad = function(n, ch)
+{
+    var result = "";
+    for (var i = 0; i < n; i++)
+        result += ch;
+    return result;
+}
+var base64_map_to = [
+        "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
+        "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",
+        "0","1","2","3","4","5","6","7","8","9","+","/","="],
+    base64_map_from = [];
+for (var i = 0; i < base64_map_to.length; i++)
+    base64_map_from[base64_map_to[i].charCodeAt(0)] = i;
+function base64_decode_to_array(input, strip)
+{
+    if (strip)
+        input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+    var pad = (input[input.length-1] == "=" ? 1 : 0) + (input[input.length-2] == "=" ? 1 : 0),
+        length = input.length,
+        output = [];
+    var i = 0;
+    while (i < length)
+    {
+        var bits = (base64_map_from[input.charCodeAt(i++)] << 18) |
+                    (base64_map_from[input.charCodeAt(i++)] << 12) |
+                    (base64_map_from[input.charCodeAt(i++)] << 6) |
+                    (base64_map_from[input.charCodeAt(i++)]);
+        output.push((bits & 0xFF0000) >> 16);
+        output.push((bits & 0xFF00) >> 8);
+        output.push(bits & 0xFF);
+    }
+    if (pad > 0)
+        return output.slice(0, -1 * pad);
+    return output;
+}
+function base64_encode_array(input)
+{
+    var pad = (3 - (input.length % 3)) % 3,
+        length = input.length + pad,
+        output = [];
+    if (pad > 0) input.push(0);
+    if (pad > 1) input.push(0);
+    var i = 0;
+    while (i < length)
+    {
+        var bits = (input[i++] << 16) |
+                    (input[i++] << 8) |
+                    (input[i++]);
+        output.push(base64_map_to[(bits & 0xFC0000) >> 18]);
+        output.push(base64_map_to[(bits & 0x3F000) >> 12]);
+        output.push(base64_map_to[(bits & 0xFC0) >> 6]);
+        output.push(base64_map_to[bits & 0x3F]);
+    }
+    if (pad > 0)
+    {
+        output[output.length-1] = "=";
+        input.pop();
+    }
+    if (pad > 1)
+    {
+        output[output.length-2] = "=";
+        input.pop();
+    }
+    return output.join("");
+}
+function base64_decode_to_string(input, strip)
+{
+    return bytes_to_string(base64_decode_to_array(input, strip));
+}
+function bytes_to_string(bytes)
+{
+    return String.fromCharCode.apply(null, bytes);
+}
+function base64_encode_string(input)
+{
+    var temp = [];
+    for (var i = 0; i < input.length; i++)
+        temp.push(input.charCodeAt(i));
+    return base64_encode_array(temp);
+}
 var CLS_CLASS = 0x1,
     CLS_META = 0x2,
     CLS_INITIALIZED = 0x4,
@@ -158,7 +377,7 @@ function class_addIvars( aClass, ivars)
     {
         var ivar = ivars[index],
             name = ivar.name;
-        if (typeof thePrototype[name] == "undefined")
+        if (typeof thePrototype[name] === "undefined")
         {
             aClass.ivars.push(ivar);
             thePrototype[name] = NULL;
@@ -176,7 +395,8 @@ function class_addMethod( aClass, aName, anImplementation, aType)
     var method = new objj_method(aName, anImplementation, aType);
     aClass.method_list.push(method);
     aClass.method_dtable[aName] = method;
-    if (!((aClass.info & (CLS_META))) && (((aClass.info & (CLS_META))) ? aClass : aClass.isa).isa == (((aClass.info & (CLS_META))) ? aClass : aClass.isa))
+    method.method_imp.displayName = (((aClass.info & (CLS_META))) ? '+' : '-') + " [" + class_getName(aClass) + ' ' + method_getName(method) + ']';
+    if (!((aClass.info & (CLS_META))) && (((aClass.info & (CLS_META))) ? aClass : aClass.isa).isa === (((aClass.info & (CLS_META))) ? aClass : aClass.isa))
         class_addMethods((((aClass.info & (CLS_META))) ? aClass : aClass.isa), methods);
     return YES;
 }
@@ -193,8 +413,9 @@ function class_addMethods( aClass, methods)
             continue;
         method_list.push(method);
         method_dtable[method.name] = method;
+        method.method_imp.displayName = (((aClass.info & (CLS_META))) ? '+' : '-') + " [" + class_getName(aClass) + ' ' + method_getName(method) + ']';
     }
-    if (!((aClass.info & (CLS_META))) && (((aClass.info & (CLS_META))) ? aClass : aClass.isa).isa == (((aClass.info & (CLS_META))) ? aClass : aClass.isa))
+    if (!((aClass.info & (CLS_META))) && (((aClass.info & (CLS_META))) ? aClass : aClass.isa).isa === (((aClass.info & (CLS_META))) ? aClass : aClass.isa))
         class_addMethods((((aClass.info & (CLS_META))) ? aClass : aClass.isa), methods);
 }
 function class_getInstanceMethod( aClass, aSelector)
@@ -214,6 +435,17 @@ function class_getClassMethod( aClass, aSelector)
 function class_copyMethodList( aClass)
 {
     return aClass.method_list.slice(0);
+}
+function class_replaceMethod( aClass, aSelector, aMethodImplementation)
+{
+    if (!aClass || !aSelector)
+        return NULL;
+    var method = aClass.method_dtable[aSelector],
+        method_imp = NULL;
+    if (method)
+        method_imp = method.method_imp;
+    method.method_imp = aMethodImplementation;
+    return method_imp;
 }
 var _class_initialize = function( aClass)
 {
@@ -238,7 +470,7 @@ function class_getMethodImplementation( aClass, aSelector)
     if (!((((aClass.info & (CLS_META))) ? aClass : aClass.isa).info & (CLS_INITIALIZED))) _class_initialize(aClass); var method = aClass.method_dtable[aSelector]; if (!method) method = _objj_forward; var implementation = method.method_imp;;
     return implementation;
 }
-var GLOBAL_NAMESPACE = this,
+var GLOBAL_NAMESPACE = window,
     REGISTERED_CLASSES = {};
 function objj_allocateClassPair( superclass, aName)
 {
@@ -349,6 +581,15 @@ function objj_msgSend( aReceiver, aSelector)
     if (aReceiver == nil)
         return nil;
     if (!((((aReceiver.isa.info & (CLS_META))) ? aReceiver.isa : aReceiver.isa.isa).info & (CLS_INITIALIZED))) _class_initialize(aReceiver.isa); var method = aReceiver.isa.method_dtable[aSelector]; if (!method) method = _objj_forward; var implementation = method.method_imp;;
+    switch(arguments.length)
+    {
+        case 2:
+            return implementation(aReceiver, aSelector);
+        case 3:
+            return implementation(aReceiver, aSelector, arguments[2]);
+        case 4:
+            return implementation(aReceiver, aSelector, arguments[2], arguments[3]);
+    }
     return implementation.apply(aReceiver, arguments);
 }
 function objj_msgSendSuper( aSuper, aSelector)
@@ -389,7 +630,7 @@ function sel_getUid( aName)
 }
 function sel_isEqual( lhs, rhs)
 {
-    return lhs == rhs;
+    return lhs === rhs;
 }
 function sel_registerName(aName)
 {
@@ -452,17 +693,18 @@ function dictionary_replaceValue(aDictionary, aKey, aValue)
 }
 function dictionary_description(aDictionary)
 {
-    str = "{ ";
+    var str = "{ ";
     for ( x in aDictionary._buckets)
         str += x + ":" + aDictionary._buckets[x] + ",";
     str += " }";
     return str;
 }
-kCFPropertyListOpenStepFormat = 1;
-kCFPropertyListXMLFormat_v1_0 = 100;
-kCFPropertyListBinaryFormat_v1_0 = 200;
-kCFPropertyList280NorthFormat_v1_0 = -1000;
-OBJJPlistParseException = "OBJJPlistParseException";
+var kCFPropertyListOpenStepFormat = 1,
+    kCFPropertyListXMLFormat_v1_0 = 100,
+    kCFPropertyListBinaryFormat_v1_0 = 200,
+    kCFPropertyList280NorthFormat_v1_0 = -1000;
+var OBJJPlistParseException = "OBJJPlistParseException",
+    OBJJPlistSerializeException = "OBJJPlistSerializeException";
 var kCFPropertyList280NorthMagicNumber = "280NPLIST";
 function objj_data()
 {
@@ -580,7 +822,7 @@ var XML_XML = "xml",
     PLIST_BOOLEAN_TRUE = "true",
     PLIST_BOOLEAN_FALSE = "false",
     PLIST_NUMBER_REAL = "real",
-    PLIST_NUMBER_INTEGER = "integer";
+    PLIST_NUMBER_INTEGER = "integer",
     PLIST_DATA = "data";
 var _plist_traverseNextNode = function(anXMLNode, stayWithin, stack)
 {
@@ -588,7 +830,7 @@ var _plist_traverseNextNode = function(anXMLNode, stayWithin, stack)
     node = (node.firstChild); if (node != NULL && ((node.nodeType) == 8 || (node.nodeType) == 3)) while ((node = (node.nextSibling)) && ((node.nodeType) == 8 || (node.nodeType) == 3)) ;;
     if (node)
         return node;
-    if ((anXMLNode.nodeName) == PLIST_ARRAY || (anXMLNode.nodeName) == PLIST_DICTIONARY)
+    if ((String(anXMLNode.nodeName)) == PLIST_ARRAY || (String(anXMLNode.nodeName)) == PLIST_DICTIONARY)
         stack.pop();
     else
     {
@@ -626,11 +868,11 @@ function CPPropertyListCreateFromXMLData(XMLNodeOrData)
         else
             XMLNode = (new DOMParser().parseFromString(XMLNodeOrData.string, "text/xml").documentElement);
     }
-    while (((XMLNode.nodeName) == XML_DOCUMENT) || ((XMLNode.nodeName) == XML_XML))
+    while (((String(XMLNode.nodeName)) == XML_DOCUMENT) || ((String(XMLNode.nodeName)) == XML_XML))
         XMLNode = (XMLNode.firstChild); if (XMLNode != NULL && ((XMLNode.nodeType) == 8 || (XMLNode.nodeType) == 3)) while ((XMLNode = (XMLNode.nextSibling)) && ((XMLNode.nodeType) == 8 || (XMLNode.nodeType) == 3)) ;;
     if (((XMLNode.nodeType) == 10))
         while ((XMLNode = (XMLNode.nextSibling)) && ((XMLNode.nodeType) == 8 || (XMLNode.nodeType) == 3)) ;;
-    if (!((XMLNode.nodeName) == PLIST_PLIST))
+    if (!((String(XMLNode.nodeName)) == PLIST_PLIST))
         return NULL;
     var key = "",
         object = NULL,
@@ -643,12 +885,12 @@ function CPPropertyListCreateFromXMLData(XMLNodeOrData)
         var count = containers.length;
         if (count)
             currentContainer = containers[count - 1];
-        if ((XMLNode.nodeName) == PLIST_KEY)
+        if ((String(XMLNode.nodeName)) == PLIST_KEY)
         {
-            key = (((XMLNode.firstChild).nodeValue));
+            key = ((String((XMLNode.firstChild).nodeValue)));
             while ((XMLNode = (XMLNode.nextSibling)) && ((XMLNode.nodeType) == 8 || (XMLNode.nodeType) == 3)) ;;
         }
-        switch (String((XMLNode.nodeName)))
+        switch (String((String(XMLNode.nodeName))))
         {
             case PLIST_ARRAY: object = []
                                         containers.push(object);
@@ -656,19 +898,20 @@ function CPPropertyListCreateFromXMLData(XMLNodeOrData)
             case PLIST_DICTIONARY: object = new objj_dictionary();
                                         containers.push(object);
                                         break;
-            case PLIST_NUMBER_REAL: object = parseFloat((((XMLNode.firstChild).nodeValue)));
+            case PLIST_NUMBER_REAL: object = parseFloat(((String((XMLNode.firstChild).nodeValue))));
                                         break;
-            case PLIST_NUMBER_INTEGER: object = parseInt((((XMLNode.firstChild).nodeValue)));
+            case PLIST_NUMBER_INTEGER: object = parseInt(((String((XMLNode.firstChild).nodeValue))));
                                         break;
-            case PLIST_STRING: object = _decodeHTMLComponent((XMLNode.firstChild) ? (((XMLNode.firstChild).nodeValue)) : "");
+            case PLIST_STRING: object = _decodeHTMLComponent((XMLNode.firstChild) ? ((String((XMLNode.firstChild).nodeValue))) : "");
                                         break;
             case PLIST_BOOLEAN_TRUE: object = true;
                                         break;
             case PLIST_BOOLEAN_FALSE: object = false;
                                         break;
-            case PLIST_DATA: object = (XMLNode.firstChild) ? (((XMLNode.firstChild).nodeValue)) : "";
+            case PLIST_DATA: object = new objj_data();
+                                        object.bytes = (XMLNode.firstChild) ? base64_decode_to_array(((String((XMLNode.firstChild).nodeValue))), true) : [];
                                         break;
-            default: objj_exception_throw(new objj_exception(OBJJPlistParseException, "*** " + (XMLNode.nodeName) + " tag not recognized in Plist."));
+            default: objj_exception_throw(new objj_exception(OBJJPlistParseException, "*** " + (String(XMLNode.nodeName)) + " tag not recognized in Plist."));
         }
         if (!plistObject)
             plistObject = object;
@@ -747,8 +990,10 @@ var _CPPropertyListAppendXMLData = function(XMLData, aPlist)
     }
     else if (aPlist.slice)
         _CPArrayAppendXMLData(XMLData, aPlist);
-    else
+    else if (aPlist._keys)
         _CPDictionaryAppendXMLData(XMLData, aPlist);
+    else
+        objj_exception_throw(new objj_exception(OBJJPlistSerializeException, "*** unknown plist ("+aPlist+") type: " + type));
 }
 var ARRAY_MARKER = "A",
     DICTIONARY_MARKER = "D",
@@ -770,7 +1015,7 @@ function CPPropertyListCreateFrom280NorthData(aData)
         currentContainer = NULL;
     while (marker = stream.getMarker())
     {
-        if (marker == END_MARKER)
+        if (marker === END_MARKER)
         {
             containers.pop();
             continue;
@@ -778,7 +1023,7 @@ function CPPropertyListCreateFrom280NorthData(aData)
         var count = containers.length;
         if (count)
             currentContainer = containers[count - 1];
-        if (marker == KEY_MARKER)
+        if (marker === KEY_MARKER)
         {
             key = stream.getString();
             marker = stream.getMarker();
@@ -861,15 +1106,16 @@ _CPPropertyList280NorthSerializers["dictionary"] = function(aDictionary, seriali
     }
     return string + END_MARKER + ';';
 }
-OBJJFileNotFoundException = "OBJJFileNotFoundException";
-OBJJExecutableNotFoundException = "OBJJExecutableNotFoundException";
+var OBJJ_PLATFORMS = ["browser", "objj"];
+var OBJJFileNotFoundException = "OBJJFileNotFoundException",
+    OBJJExecutableNotFoundException = "OBJJExecutableNotFoundException";
 var objj_files = { },
     objj_bundles = { },
     objj_bundlesForClass = { },
     objj_searches = { };
 var OBJJ_NO_FILE = {};
-if (!window.OBJJ_INCLUDE_PATHS)
-    var OBJJ_INCLUDE_PATHS = ["Frameworks", "SomethingElse"];
+if (typeof OBJJ_INCLUDE_PATHS === "undefined")
+    OBJJ_INCLUDE_PATHS = ["Frameworks", "SomethingElse"];
 var OBJJ_BASE_URI = "";
 if (window.opera) {
 var DOMBaseElement = document.getElementsByTagName("base")[0];
@@ -893,6 +1139,10 @@ function objj_bundle()
 function objj_getBundleWithPath(aPath)
 {
     return objj_bundles[aPath];
+}
+function objj_setBundleForPath(aPath, aBundle)
+{
+    objj_bundles[aPath] = aBundle;
 }
 function objj_bundleForClass(aClass)
 {
@@ -925,8 +1175,8 @@ objj_search.prototype.nextSearchPath = function()
 }
 objj_search.prototype.attemptNextSearchPath = function()
 {
-    var searchPath = this.nextSearchPath(),
-        file = objj_files[searchPath];
+    var searchPath = this.nextSearchPath();
+    file = objj_files[searchPath];
     objj_alert("Will attempt to find " + this.filePath + " at " + searchPath);
     if (file)
     {
@@ -943,7 +1193,7 @@ objj_search.prototype.attemptNextSearchPath = function()
         return;
     }
     this.searchedPaths.push(this.searchPath = searchPath);
-    var infoPath = objj_standardize_path((searchPath).substr(0, (searchPath).lastIndexOf('/') + 1) + "Info.plist")
+    var infoPath = objj_standardize_path((searchPath).substr(0, (searchPath).lastIndexOf('/') + 1) + "Info.plist"),
         bundle = objj_bundles[infoPath];
     if (bundle)
     {
@@ -1090,6 +1340,23 @@ objj_search.prototype.didReceiveBundleResponse = function(aResponse)
     var executablePath = ((bundle.info)._buckets["CPBundleExecutable"]);
     if (executablePath)
     {
+        var platform = NULL,
+            platforms = ((bundle.info)._buckets["CPBundlePlatforms"]),
+            index = 0,
+            count = OBJJ_PLATFORMS.length,
+            innerCount = platforms.length;
+        for(; index < count; ++index)
+        {
+            var innerIndex = 0,
+                currentPlatform = OBJJ_PLATFORMS[index];
+            for (; innerIndex < innerCount; ++innerIndex)
+                if(currentPlatform === platforms[innerIndex])
+                {
+                    platform = currentPlatform;
+                    break;
+                }
+        }
+        executablePath = platform + ".platform/" + executablePath;
         this.request((aResponse.filePath).substr(0, (aResponse.filePath).lastIndexOf('/') + 1) + executablePath, this.didReceiveExecutableResponse);
         var directory = (aResponse.filePath).substr(0, (aResponse.filePath).lastIndexOf('/') + 1),
             replacedFiles = ((bundle.info)._buckets["CPBundleReplacedFiles"]),
@@ -1168,14 +1435,14 @@ function objj_standardize_path(aPath)
     return components.join('/');
 }
 if (window.ActiveXObject) {
-objj_standardize_xml = function(aRequest)
+var objj_standardize_xml = function(aRequest)
 {
     var XMLData = new ActiveXObject("Microsoft.XMLDOM");
     XMLData.loadXML(aRequest.responseText.substr(aRequest.responseText.indexOf(".dtd\">") + 6));
     return XMLData;
 }
 } else {
-objj_standardize_xml = function(aRequest)
+var objj_standardize_xml = function(aRequest)
 {
     return aRequest.responseXML;
 }
@@ -1185,7 +1452,7 @@ function objj_response_xmlhttp()
     return new Object;
 }
 if (window.XMLHttpRequest) {
-objj_request_xmlhttp = function()
+var objj_request_xmlhttp = function()
 {
     return new XMLHttpRequest();
 }
@@ -1206,10 +1473,66 @@ while (index--)
 var MSXML_XMLHTTP = MSXML_XMLHTTP_OBJECTS[index];
 delete index;
 delete MSXML_XMLHTTP_OBJECTS;
-objj_request_xmlhttp = function()
+var objj_request_xmlhttp = function()
 {
     return new ActiveXObject(MSXML_XMLHTTP);
 }
+}
+var OBJJUnrecognizedFormatException = "OBJJUnrecognizedFormatException";
+var STATIC_MAGIC_NUMBER = "@STATIC",
+    MARKER_PATH = "p",
+    MARKER_CODE = "c",
+    MARKER_BUNDLE = "b",
+    MARKER_TEXT = "t",
+    MARKER_IMPORT_STD = 'I',
+    MARKER_IMPORT_LOCAL = 'i';
+var STATIC_EXTENSION = "sj";
+function objj_decompile(aString, bundle)
+{
+    var stream = new objj_markedStream(aString);
+    if (stream.magicNumber() != STATIC_MAGIC_NUMBER)
+        objj_exception_throw(new objj_exception(OBJJUnrecognizedFormatException, "*** Could not recognize executable code format."));
+    if (stream.version() != 1.0)
+        objj_exception_throw(new objj_exception(OBJJUnrecognizedFormatException, "*** Could not recognize executable code format."));
+    var file = NULL,
+        files = [],
+        marker;
+    while (marker = stream.getMarker())
+    {
+        var text = stream.getString();
+        switch (marker)
+        {
+            case MARKER_PATH: if (file && file.contents && file.path === file.bundle.path)
+                                            file.bundle.info = CPPropertyListCreateWithData({string:file.contents});
+                                        file = new objj_file();
+                                        file.path = (bundle.path).substr(0, (bundle.path).lastIndexOf('/') + 1) + text;
+                                        file.bundle = bundle;
+                                        file.fragments = [];
+                                        files.push(file);
+                                        objj_files[file.path] = file;
+                                        break;
+            case MARKER_BUNDLE: var bundlePath = (bundle.path).substr(0, (bundle.path).lastIndexOf('/') + 1) + '/' + text;
+                                        file.bundle = objj_getBundleWithPath(bundlePath);
+                                        if (!file.bundle)
+                                        {
+                                            file.bundle = new objj_bundle();
+                                            file.bundle.path = bundlePath;
+                                            objj_setBundleForPath(file.bundle, bundlePath);
+                                        }
+                                        break;
+            case MARKER_TEXT: file.contents = text;
+                                        break;
+            case MARKER_CODE: file.fragments.push(fragment_create_code(text, bundle, file));
+                                        break;
+            case MARKER_IMPORT_STD: file.fragments.push(fragment_create_file(text, bundle, NO, file));
+                                        break;
+            case MARKER_IMPORT_LOCAL: file.fragments.push(fragment_create_file(text, bundle, YES, file));
+                                        break;
+        }
+    }
+    if (file && file.contents && file.path === file.bundle.path)
+        file.bundle.info = CPPropertyListCreateWithData({string:file.contents});
+    return files;
 }
 var OBJJ_EXCEPTION_OUTPUT_STREAM = NULL;
 function objj_exception(aName, aReason, aUserInfo)
@@ -1237,12 +1560,12 @@ function objj_exception_setOutputStream(aStream)
     OBJJ_EXCEPTION_OUTPUT_STREAM = aStream;
 }
 objj_exception_setOutputStream(function(aString) { });
-OBJJ_PREPROCESSOR_DEBUG_SYMBOLS = 1 << 0;
+var OBJJ_PREPROCESSOR_DEBUG_SYMBOLS = 1 << 0;
 function objj_preprocess( aString, aBundle, aSourceFile, flags)
 {
     try
     {
-        return new objj_preprocessor(aString, aSourceFile, aBundle, flags).fragments();
+        return new objj_preprocessor(aString.replace(/^#[^\n]+\n/, "\n"), aSourceFile, aBundle, flags).fragments();
     }
     catch (anException)
     {
@@ -1250,8 +1573,8 @@ function objj_preprocess( aString, aBundle, aSourceFile, flags)
     }
     return [];
 }
-OBJJParseException = "OBJJParseException";
-OBJJClassNotFoundException = "OBJJClassNotFoundException";
+var OBJJParseException = "OBJJParseException",
+    OBJJClassNotFoundException = "OBJJClassNotFoundException";
 var TOKEN_ACCESSORS = "accessors",
     TOKEN_CLASS = "class",
     TOKEN_END = "end",
@@ -1468,8 +1791,9 @@ objj_preprocessor.prototype.directive = function(tokens, aStringBuffer, allowedD
 objj_preprocessor.prototype.fragment = function()
 {
     var preprocessed = this._preprocessed.toString();
-    if ((/[^\s]/).test(preprocessed))
+    if ((/[^\s]/).test(preprocessed)) {
         this._fragments.push(fragment_create_code(preprocessed, this._bundle, this._file));
+	}
     this._preprocessed.clear();
 }
 objj_preprocessor.prototype.implementation = function(tokens, aStringBuffer)
@@ -1794,6 +2118,8 @@ objj_preprocessor.prototype.preprocess = function(tokens, aStringBuffer, termina
         else
             buffer.atoms[buffer.atoms.length] = token;
     }
+    if (tuple)
+        objj_exception_throw(new objj_exception(OBJJParseException, "*** Expected ']' - Unterminated message send or array."));
     if (!aStringBuffer)
         return buffer;
 }
@@ -1802,7 +2128,7 @@ objj_preprocessor.prototype.selector = function(tokens, aStringBuffer)
     var buffer = aStringBuffer ? aStringBuffer : new objj_stringBuffer();
     buffer.atoms[buffer.atoms.length] = "sel_getUid(\"";
     if (tokens.skip_whitespace() != TOKEN_OPEN_PARENTHESIS)
-        objj_exception_throw(new objj_exception(OBJJParseException, "*** Expected ')'"));
+        objj_exception_throw(new objj_exception(OBJJParseException, "*** Expected '('"));
     var selector = tokens.skip_whitespace();
     if (selector == TOKEN_CLOSE_PARENTHESIS)
         objj_exception_throw(new objj_exception(OBJJParseException, "*** Unexpected ')', can't have empty @selector()"));
@@ -1845,6 +2171,11 @@ function objj_context()
     this.fragments = [];
     this.scheduled = NO;
     this.blocked = NO;
+}
+objj_fragment.prototype.toMarkedString = function()
+{
+    return (this.type & FRAGMENT_FILE) ? ((this.type & FRAGMENT_LOCAL) ? MARKER_IMPORT_LOCAL : MARKER_IMPORT_STD) + ';' + this.info.length + ';' + this.info :
+                            MARKER_CODE + ';' + this.info.length + ';' + this.info;
 }
 function fragment_create_code(aCode, aBundle, aFile)
 {
@@ -1906,6 +2237,7 @@ function fragment_evaluate_code(aFragment)
     try
     {
         compiled = new Function(aFragment.info);
+        compiled.displayName = aFragment.file.path;
     }
     catch(anException)
     {
@@ -1954,49 +2286,18 @@ function fragment_evaluate_file(aFragment)
     });
     return requiresSleep;
 }
-function objj_import(aPath, isLocal, didCompleteCallback)
+function objj_import( pathOrPaths, isLocal, didCompleteCallback)
 {
-    var context = new objj_context();
+    var context = new objj_context(),
+        paths = pathOrPaths;
+    if (typeof paths === "string")
+        paths = [paths];
+    var index = 0,
+        count = paths.length;
+    for (; index < count; ++index)
+        context.pushFragment(fragment_create_file(paths[index], new objj_bundle(""), isLocal, NULL));
     context.didCompleteCallback = didCompleteCallback;
-    context.pushFragment(fragment_create_file(aPath, new objj_bundle(""), isLocal, NULL));
     context.evaluate();
-}
-OBJJUnrecognizedFormatException = "OBJJUnrecognizedFormatException";
-var STATIC_MAGIC_NUMBER = "@STATIC",
-    MARKER_PATH = "p",
-    MARKER_CODE = "c",
-    MARKER_IMPORT_STD = 'I',
-    MARKER_IMPORT_LOCAL = 'i';
-var STATIC_EXTENSION = "sj";
-function objj_decompile(aString, bundle)
-{
-    var stream = new objj_markedStream(aString);
-    if (stream.magicNumber() != STATIC_MAGIC_NUMBER)
-        objj_exception_throw(new objj_exception(OBJJUnrecognizedFormatException, "*** Could not recognize executable code format."));
-    if (stream.version() != 1.0)
-        objj_exception_throw(new objj_exception(OBJJUnrecognizedFormatException, "*** Could not recognize executable code format."));
-    var file = NULL,
-        files = [];
-    while (marker = stream.getMarker())
-    {
-        var text = stream.getString();
-        switch (marker)
-        {
-            case MARKER_PATH: file = new objj_file();
-                                        file.path = (bundle.path).substr(0, (bundle.path).lastIndexOf('/') + 1) + text;
-                                        file.bundle = bundle;
-                                        file.fragments = [];
-                                        files.push(file);
-                                        break;
-            case MARKER_CODE: file.fragments.push(fragment_create_code(text, bundle, file));
-                                        break;
-            case MARKER_IMPORT_STD: file.fragments.push(fragment_create_file(text, bundle, NO, file));
-                                        break;
-            case MARKER_IMPORT_LOCAL: file.fragments.push(fragment_create_file(text, bundle, YES, file));
-                                        break;
-        }
-    }
-    return files;
 }
 function objj_backtrace_format(aReceiver, aSelector)
 {
@@ -2091,7 +2392,7 @@ function objj_backtrace_set_enabled(enabled)
 }
 function objj_debug_print_backtrace()
 {
-    CPLog.trace(objj_debug_backtrace_string());
+    print(objj_debug_backtrace_string());
 }
 function objj_debug_backtrace_string()
 {

@@ -1,8 +1,9 @@
 /*
- * main.j
+ * AppController.j
+ * capp_subfolder_issue
  *
- * Created by Roberto Gamboni on 02/13/2009.
- * Copyright 2008 Roberto Gamboni. All rights reserved.
+ * Created by You on May 21, 2009.
+ * Copyright 2009, Your Company All rights reserved.
  */
 
 @import <Foundation/Foundation.j>

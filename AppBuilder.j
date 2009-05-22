@@ -4,9 +4,12 @@
  * Created by Roberto Gamboni on 02/15/2009.
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
-@import "Polish/CPObjectAdditions.j"
-@import "Polish/CPWindowAdditions.j";
-@import "Polish/POFactory.j";
+
+@import "Polish/POFactory.j"
+
+polish_methods 		=	[ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:'];
+polish_components 	= 	['stack', 'button', 'text', 'progress', 'image', 'video', 'label', 'login', 'form', 'submit', 'friend', 'friend_collection'];
+//polish_events 		=	['animate:', 'click:']	
 
 @implementation AppBuilder : CPObject {
 	CPWindow 		_mainWindow;
@@ -17,7 +20,7 @@
 	self = [super init];
 	if(self) {
 		[self createJSMethods: ['create:']];
-		[self createForwardJSMethods: ['stack','text','image','label','button','progress', 'login', 'form']];
+		[self createForwardJSMethods: polish_components];
 		_mainWindow = mainWindow;
 		_contentView = [_mainWindow contentView];
 	}

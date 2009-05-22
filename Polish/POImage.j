@@ -13,7 +13,13 @@
 }
 
 /*
-* Init an editable text field with hmargin and vmargin = 0;
+var image = [[CPImageView alloc] initWithFrame:CGRectMake(10,200,60,60)];
+var img = [[CPImage alloc] initWithContentsOfFile:@"Resources/img1.png" size:CGSizeMake(60,60)];
+[img setDelegate:self];
+[image setImage:img];
+*/
+/*
+* Init an image with hmargin and vmargin = 0;
 */
 - (id) image {
 	self = [super init];
@@ -33,16 +39,24 @@
 }
 
 - (void) url:(CPString) path {
-	if(path != undefined)
-		[self setImage:[[CPImage alloc] initWithContentsOfFile:path size:CGSizeMake([self frame].size.width, [self frame].size.height)]];
+	console.debug('setting url '+ path);
+	if(path != undefined) {
+		debugger;
+		//var img = [[CPImage alloc] initWithContentsOfFile:path size:CGSizeMake([self frame].size.width, [self frame].size.height)];
+		// [img setDelegate:self];
+		//[self setImage:img];
+	}
 }
 
 - (void) url:(CPString) path hsize:(CGFloat) hsize vsize:(CGFloat) vsize { 
 	[self setImage:[[CPImage alloc] initWithContentsOfFile:path size:CGSizeMake(hsize, vsize)]];
 }
 
+
 - (void)imageDidLoad:(CPNotification)aNotification {
-	[self display];
+	console.debug('image loaded');
+	//[self display];
 }
+
 
 @end

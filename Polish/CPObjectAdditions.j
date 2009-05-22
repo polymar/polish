@@ -5,7 +5,7 @@
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
 
-@import <Foundation/CPObject.j>
+//@import <Foundation/CPObject.j>
 
 @implementation CPObject (Polish)
 

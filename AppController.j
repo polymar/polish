@@ -1,92 +1,112 @@
 /*
  * AppController.j
+ * capp_subfolder_issue
  *
- * Created by Roberto Gamboni on 02/15/2009.
- * Copyright 2008 Roberto Gamboni. All rights reserved.
+ * Created by You on May 21, 2009.
+ * Copyright 2009, Your Company All rights reserved.
  */
 
-@import "Polish/CPObjectAdditions.j"
+@import <Foundation/CPObject.j>
 @import "AppBuilder.j"
-
+@import "Polish/CPObjectAdditions.j"
+@import "Polish/CPWindowAdditions.j"
+/*
+@import <AppKit/CPButton.j>
+@import <AppKit/CPColor.j>
+@import <AppKit/CPImageView.j>
+@import <AppKit/CPProgressIndicator.j>
+@import <AppKit/CPSlider.j>
+@import <AppKit/CPTextField.j>
+@import <AppKit/CPFlashView.j>
+@import <AppKit/CPFlashMovie.j>
+@import <AppKit/CPTabView.j>
+@import <AppKit/CPSplitView.j>
+@import <AppKit/CPView.j>
+@import <AppKit/CPWebView.j>
+@import <AppKit/CPAlert.j>
+*/
 @implementation AppController : CPObject
 {
-	
 }
 
 - (void)applicationDidFinishLaunching:(CPNotification)aNotification
 {
-	//this is the mainWindow. For modify this object there are utilities methods in app.
-    theWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPHUDBackgroundWindowMask | CPResizableWindowMask];
+    var theWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPBorderlessBridgeWindowMask],
+        contentView = [theWindow contentView];
 
-	//app is visible outside using objj syntax.
-	//js can interact with app using objj_msgSend(app, message, params..);
-	app = [[AppBuilder alloc] initWithContentView:theWindow];
+    	//app is visible outside using objj syntax.
+		//js can interact with app using objj_msgSend(app, message, params..);
+		app = [[AppBuilder alloc] initWithContentView:theWindow];
+		
+		/*
+		var view1 = [[CPView alloc] initWithFrame:CGRectMake(10,10,400,300)];
+		[view1 setBackgroundColor:[CPColor blackColor]];
+		
+		var button1 = [[CPButton alloc] initWithFrame:CGRectMake(10,10,120,25)];
+		[button1 setTitle:@"Click"];
+		[button1 setTarget:self];
+	    [button1 setAction:@selector(exec)]; 
 	
-	//default stuff... setting background black.
-	[theWindow orderFront:self];
-	
-	POLISH_NOTIFICATION[POLISH_NOTIFY_ONLOAD].call();
-	
-	/*
-	//application example - objective-j style
-	[app create:{"title" : "CapWaves exps.", "width" : 500, "height" : 500, "color" : "blackColor"}];
+		var text1 = [CPTextField textFieldWithStringValue:@"" placeholder:@"write here" width:175];
+		[text1 setEditable:true];
+		[text1 setFrame:CGRectMake(10, 60, 175, 30)];
+		
+		var text2 = [CPTextField roundedTextFieldWithStringValue:@"" placeholder:@"write here" width:175];
+		[text2 setEditable:true];
+		[text2 setFrame:CGRectMake(10, 100, 175, 30)];
+		
+		var text3 = [CPTextField labelWithTitle:@"this is a label"];
+		[text3 setTextColor:[CPColor redColor]];
+		[text3 setFrame:CGRectMake(10, 140, 175, 30)];
+		
+		var image = [[CPImageView alloc] initWithFrame:CGRectMake(10,200,60,60)];
+		var img = [[CPImage alloc] initWithContentsOfFile:@"Resources/img1.png" size:CGSizeMake(60,60)];
+		[img setDelegate:self];
+		[image setImage:img];
+		
+		var web = [[CPWebView alloc] initWithFrame:CGRectMake(500, 10, 400, 600)];
+		[web setMainFrameURL:@"http://www.google.com"];
+		
+		[view1 addSubview:button1];
+		[view1 addSubview:text1];
+		[view1 addSubview:text2];
+		[view1 addSubview:text3];
+		[view1 addSubview:image];
+		
+		[contentView addSubview:view1];
+		[contentView addSubview:web];
+		
+		*/
+		//default stuff... setting background black.
+		[theWindow orderFront:self];
 
-	stack = [app stack:{"width" : 400, "height" : 300}];
-	//console.log(stack);
-	[stack hmargin:10 vmargin:10];
-	[stack color:'grayColor'];
-	
-	button = [stack button:{"width" : 70.0, "height" : 18.0}];
-	//console.log(button);
-	[button hmargin:300 vmargin:10];
-	[button title:'click'];
-	
-	text = [stack text];
-	//console.log(text);
-	[text frame:CGRectMake(120,10,150.0,18.0)];
-	
-	label = [stack label];
-	//console.log(label);
-	[label hmargin:10 vmargin:10];
-	
-	progress = [stack progress];
-	//console.log(progress);
-	[progress frame:CGRectMake(10, 50, 200, 15.0)];
-	[progress max:100.0];
-	[progress value:33.0];
-	
-	slider = [stack slider];
-	//console.log(slider);
-	[slider hmargin:10 vmargin:80];
-	[slider max:100.0];
-	[slider value:33.0];
-	
-	img = [stack image];
-	//console.log(img);
-	[img url:'./Resources/img1.png'];
-	[img frame:CGRectMake(10, 120, 100, 100)];
-	*/
-	
-	/*
-	//application example - javascript style
-	objj_msgSend(app, 'create:', {"title" : "CapWaves exps.", "width" : 500, "height" : 500, "color" : "blackColor"});
-	stack = objj_msgSend(app, 'stack:' , {"width" : 400, "height" : 300});
-	objj_msgSend(stack, 'hmargin:vmargin:', 10, 10);
-	objj_msgSend(stack, 'color:', 'grayColor');
-	
-	img = objj_msgSend(stack, 'image');
-	objj_msgSend(img, 'url:', './Resources/img1.png');
-	objj_msgSend(img, 'hmargin:vmargin:', 20, 20);
-	objj_msgSend(img, 'width:', 100);
-	objj_msgSend(img, 'height:', 100);
-	
-	text = [stack text];
-	objj_msgSend(text, 'on_begin:' , function() { alert('Editing'); } );
-	[text frame:CGRectMake(120,10,150.0,18.0)];
-	
-	button = objj_msgSend(stack, 'button:' , {"title" : "Click", "width" : 70.0, "height" : 18.0, "hmargin" : 150, "vmargin" : 50});
-	objj_msgSend(button, 'on_click:' , function() { [img hmargin:40.0]; [button hmargin:170.0]; } );
-	*/
+		POLISH_NOTIFICATION[POLISH_NOTIFY_ONLOAD].call();
 }
+
+/*
+-(void)imageDidLoad:(CPImage)image {
+	console.log("imageDidLoad");
+}
+
+-(void)imageDidError:(CPImage)image {
+	console.log("imageDidError");
+}
+
+- (void) exec {
+	var alert = [[CPAlert alloc] init];
+	//[alert setWindowStyle:CPHUDBackgroundWindowMask];
+	[alert setAlertStyle:CPInformationalAlertStyle];//CPWarningAlertStyle//CPCriticalAlertStyle//CPInformationalAlertStyle
+	[alert setTitle:@"alert_test"];
+	[alert setMessageText:@"something is wrong on the internet."];
+	[alert setDelegate:self];
+	[alert addButtonWithTitle:@"button1"];
+	[alert addButtonWithTitle:@"button2"];
+	[alert runModal];
+}
+
+-(void)alertDidEnd:(CPAlert)theAlert returnCode:(int)returnCode {
+	console.log(returnCode);
+}
+*/
 
 @end

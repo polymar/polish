@@ -15,8 +15,9 @@
 @import "POLogin.j"
 @import "POForm.j"
 @import "POSubmit.j"
-@import "../Misc/FriendView.j"
-@import "../Misc/FriendsCollection.j"
+@import	"POVideo.j"
+//@import "../Misc/FriendView.j"
+//@import "../Misc/FriendsCollection.j"
 
 @implementation POFactory : CPObject
 
@@ -35,8 +36,8 @@
 
 function load_class() {
 	return {
-		"friend_collection" : FriendsCollection,
-		"friend" 			: FriendView,
+		//"friend_collection" : FriendsCollection,
+		//"friend" 			: FriendView,
 		"form"				: POForm,
 		"login"				: POLogin,
 		"stack"				: POStack,
@@ -46,7 +47,8 @@ function load_class() {
 		"progress"			: POProgress,
 		"text"				: POText,
 		"label"				: POText,
-		"slider"			: POSlider
+		"slider"			: POSlider,
+		"video"				: POVideo
 	};
 };
 
