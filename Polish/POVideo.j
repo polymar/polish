@@ -7,7 +7,6 @@
 
 @import <AppKit/CPFlashView.j>
 @import <AppKit/CPFlashMovie.j>
-@import "CPViewAdditions.j"
 
 @implementation POVideo : CPFlashView {
 	CPString 	_name;
@@ -17,7 +16,7 @@
 * Init an editable video with hmargin and vmargin = 0;
 */
 - (id) video {
-	self = [super init];
+	self = [super create];
 	if(self) {
 		self.size(64.0, 64.0);
 		[self createJSMethods: ['url:']];

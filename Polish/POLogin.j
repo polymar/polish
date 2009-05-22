@@ -5,7 +5,6 @@
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
 
-@import "CPViewAdditions.j"
 @import "POForm.j"
 
 @implementation POLogin : POForm {
@@ -22,7 +21,7 @@
 * Init a form with hmargin and vmargin = 0;
 */
 - (id) login {
-	self = [super init];
+	self = [super create];
 	if(self) {
 		[self size:400 xy:180];
 		[self location:0 xy:0];

@@ -6,16 +6,16 @@
  */
 
 @import <Foundation/CPObject.j>
-@import "POStack.j"
-@import "POButton.j"
-@import "POText.j"
-@import "POSlider.j"
-@import "POProgress.j"
-@import "POImage.j"
-@import "POLogin.j"
-@import "POForm.j"
-@import "POSubmit.j"
-@import	"POVideo.j"
+@import "Controls/POStack.j"
+@import "Controls/POButton.j"
+//@import "POText.j"
+//@import "POSlider.j"
+//@import "POProgress.j"
+//@import "POImage.j"
+//@import "POLogin.j"
+//@import "POForm.j"
+//@import "POSubmit.j"
+//@import	"POVideo.j"
 //@import "../Misc/FriendView.j"
 //@import "../Misc/FriendsCollection.j"
 
@@ -38,17 +38,17 @@ function load_class() {
 	return {
 		//"friend_collection" : FriendsCollection,
 		//"friend" 			: FriendView,
-		"form"				: POForm,
-		"login"				: POLogin,
+		//"form"				: POForm,
+		//"login"				: POLogin,
 		"stack"				: POStack,
 		"button"			: POButton,
-		"submit"			: POSubmit,
-		"image"				: POImage,
-		"progress"			: POProgress,
-		"text"				: POText,
-		"label"				: POText,
-		"slider"			: POSlider,
-		"video"				: POVideo
+		//"submit"			: POSubmit,
+		//"imageview"			: POImage,
+		//"progress"			: POProgress,
+		//"text"				: POText,
+		//"label"				: POText,
+		//"slider"			: POSlider,
+		//"video"				: POVideo
 	};
 };
 

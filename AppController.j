@@ -9,29 +9,16 @@
 @import <Foundation/CPObject.j>
 @import "AppBuilder.j"
 @import "Polish/CPObjectAdditions.j"
+@import "Polish/CPViewAdditions.j"
 @import "Polish/CPWindowAdditions.j"
-/*
-@import <AppKit/CPButton.j>
-@import <AppKit/CPColor.j>
-@import <AppKit/CPImageView.j>
-@import <AppKit/CPProgressIndicator.j>
-@import <AppKit/CPSlider.j>
-@import <AppKit/CPTextField.j>
-@import <AppKit/CPFlashView.j>
-@import <AppKit/CPFlashMovie.j>
-@import <AppKit/CPTabView.j>
-@import <AppKit/CPSplitView.j>
-@import <AppKit/CPView.j>
-@import <AppKit/CPWebView.j>
-@import <AppKit/CPAlert.j>
-*/
+
 @implementation AppController : CPObject
 {
 }
 
 - (void)applicationDidFinishLaunching:(CPNotification)aNotification
 {
-    var theWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPBorderlessBridgeWindowMask],
+        var theWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPBorderlessBridgeWindowMask];
         contentView = [theWindow contentView];
 
     	//app is visible outside using objj syntax.

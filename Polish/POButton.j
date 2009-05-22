@@ -17,7 +17,7 @@
 * Init a cpbutton with hmargin and vmargin = 0;
 */
 - (id) button {
-  self = [super init];
+  self = [super create];
   if(self) {
 	[self createJSMethods: ['title:', 'on_click:']];
     [self setBezelStyle:CPHUDBezelStyle];

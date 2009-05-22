@@ -5,8 +5,6 @@
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
 
-//@import <Foundation/CPObject.j>
-
 @implementation CPObject (Polish)
 
 - (void) createJSMethods:(CPArray) methods {
@@ -29,11 +27,13 @@
   	var method_sig = method_frags.shift();
   	var parameters = new Array();
   	for(var i=0; i < method_frags.length; i++){
-    	parameters[i] = 'yyyyyy' + i;
+    	parameters[i] = '__argument' + i;
   	}
   	var joined_params = parameters.join(",");
   	var objj_params = (joined_params == '')?'':(', ' + joined_params);
-  	return "self." + method_sig + " = " + "function( " + joined_params +" ){ return objj_msgSend( self,  '" + method + "' " + objj_params + ");}";
+  	//return "self." + method_sig + " = " + "function( " + joined_params +" ){ return objj_msgSend( self,  '" + method + "' " + objj_params + ");}";
+//  switch to this when all object are ready	
+	return "self." + method_sig + " = " + "function( " + joined_params +" ){ return objj_msgSend( __delegate,  '" + method + "' " + objj_params + ");}";
 }
 
 @end

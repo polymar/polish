@@ -6,7 +6,6 @@
  */
 
 @import <AppKit/CPSlider.j>
-@import "CPViewAdditions.j"
 
 //FIXME this class is bugged.. cause i cannot create a slider with size 0 using init method.
 @implementation POSlider : CPSlider {
@@ -17,7 +16,7 @@
 * Init a slider with hmargin and vmargin = 0;
 */
 - (id) slider {
-	self = [super initWithFrame:CGRectMake(0,0,200,20)];
+	self = [super createWithFrame:CGRectMake(0,0,200,20)];
 	if(self) {
 		//looks like it's not possible to create a slider with size 0 or too small.
 		//self.size(200.0, 20.0);

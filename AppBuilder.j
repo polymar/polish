@@ -7,9 +7,7 @@
 
 @import "Polish/POFactory.j"
 
-polish_methods 		=	[ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:'];
-polish_components 	= 	['stack', 'button', 'text', 'progress', 'image', 'video', 'label', 'login', 'form', 'submit', 'friend', 'friend_collection'];
-//polish_events 		=	['animate:', 'click:']	
+polish_components 	= 	['stack', 'button', 'text', 'progress', 'imageview', 'video', 'label', 'login', 'form', 'submit', 'friend', 'friend_collection'];
 
 @implementation AppBuilder : CPObject {
 	CPWindow 		_mainWindow;

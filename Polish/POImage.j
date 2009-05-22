@@ -6,7 +6,6 @@
  */
 
 @import <AppKit/CPImageView.j>
-@import "CPViewAdditions.j"
 
 @implementation POImage : CPImageView {
 	CPString 	_name;
@@ -21,10 +20,10 @@ var img = [[CPImage alloc] initWithContentsOfFile:@"Resources/img1.png" size:CGS
 /*
 * Init an image with hmargin and vmargin = 0;
 */
-- (id) image {
-	self = [super init];
+- (id) imageview {
+	self = [super createWithFrame:CGRectMake(10,200,60,60)];
 	if(self) {
-		self.size(64.0, 64.0);
+		//self.size(64.0, 64.0);
 		[self createJSMethods: ['url:']];
 	}
 	return self;
@@ -39,23 +38,15 @@ var img = [[CPImage alloc] initWithContentsOfFile:@"Resources/img1.png" size:CGS
 }
 
 - (void) url:(CPString) path {
-	console.debug('setting url '+ path);
 	if(path != undefined) {
-		debugger;
-		//var img = [[CPImage alloc] initWithContentsOfFile:path size:CGSizeMake([self frame].size.width, [self frame].size.height)];
-		// [img setDelegate:self];
-		//[self setImage:img];
+		var img = [[CPImage alloc] initWithContentsOfFile:path size:CGSizeMake([self frame].size.width, [self frame].size.height)];
+		[img setDelegate:self];
+		[self setImage:img];
 	}
 }
 
-- (void) url:(CPString) path hsize:(CGFloat) hsize vsize:(CGFloat) vsize { 
-	[self setImage:[[CPImage alloc] initWithContentsOfFile:path size:CGSizeMake(hsize, vsize)]];
-}
-
-
 - (void)imageDidLoad:(CPNotification)aNotification {
-	console.debug('image loaded');
-	//[self display];
+	[self display];
 }
 
 

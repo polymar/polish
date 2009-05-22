@@ -6,7 +6,6 @@
  */
 
 @import "POButton.j"
-@import "CPViewAdditions.j"
 
 @implementation POSubmit : POButton {
  
@@ -16,7 +15,7 @@
 * Init a cpbutton with hmargin and vmargin = 0;
 */
 - (id) submit {
-  self = [super init];
+  self = [super create];
   if(self) {
     [self setBezelStyle:CPHUDBezelStyle];
 	[self setTitle:'Submit'];

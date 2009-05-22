@@ -6,7 +6,6 @@
  */
 
 @import <AppKit/CPTextField.j>
-@import "CPViewAdditions.j"
 
 @implementation POText : CPTextField {
 	CPString 	_name;
@@ -19,7 +18,7 @@
 * Init an editable text field with hmargin and vmargin = 0;
 */
 - (id) text {
-	self = [super init];
+	self = [super create];
 	if(self) {
 		[self createJSMethods: ['value:', 'name:']];
 		[self setFont:[CPFont systemFontOfSize:14]];
@@ -37,7 +36,7 @@
 * Init a label with hmargin and vmargin = 0
 */
 - (id) label {
-	self = [super init];
+	self = [super create];
 	if(self) {
 		[self createJSMethods: ['para:', 'name:']];
 		[self setFont:[CPFont systemFontOfSize:14]];

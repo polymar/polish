@@ -6,7 +6,6 @@
  */
 
 @import <AppKit/CPProgressIndicator.j>
-@import "CPViewAdditions.j"
 
 @implementation POProgress : CPProgressIndicator {
 	CPString	_name;
@@ -16,7 +15,7 @@
 * Init a progress with hmargin and vmargin = 0;
 */
 - (id) progress {
-	self = [super init];
+	self = [super create];
 	if(self) {
 		[self createJSMethods: ['min:', 'max:', 'value:']];
 	}

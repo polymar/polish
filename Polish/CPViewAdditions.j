@@ -6,16 +6,20 @@
  */
 
 @import <AppKit/CPView.j>
-@import "CPObjectAdditions.j"
 @import "POColor.j"
+
+polish_methods 		=	[ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:'];
 
 @implementation CPView (Polish)
 
-- (id) init {
- 	self =  [self initWithFrame:CGRectMakeZero()];
- 	//var polish_methods =  [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:'];
- 	[self createJSMethods: polish_methods];
-	//var polish_components = ['button', 'text', 'progress', 'image', 'label', 'login', 'form', 'submit', 'friend', 'friend_collection'];
+- (id) create {
+ 	self =  [self createWithFrame:CGRectMakeZero()];
+ 	return self;
+}
+
+- (id) createWithFrame:(CGRect) frame {
+	self = [self initWithFrame:frame];
+	[self createJSMethods: polish_methods];
 	[self createForwardJSMethods: polish_components];
  	return self;
 }

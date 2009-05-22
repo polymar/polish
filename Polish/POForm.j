@@ -5,9 +5,6 @@
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
 
-@import "CPViewAdditions.j"
-@import "POStack.j"
-
 @implementation POForm : POStack {
 	CPString 	_action;
 	CPString 	_method;
@@ -26,7 +23,7 @@
 * Init a form with hmargin and vmargin = 0;
 */
 - (id) form {
-	self = [super init];
+	self = [super create];
 	if(self) {
 		[self createJSMethods:['action:', 'enctype:', 'pre:', 'post:', 'http_method:', 'result']];
 		_method = 'GET';
