@@ -10,3 +10,5 @@
 @import "Polish/Controls/POProgress.j"
 @import "Polish/Images/POImage.j"
 @import "Polish/Images/POVideo.j"
+@import "Polish/Controls/POText.j"
+
