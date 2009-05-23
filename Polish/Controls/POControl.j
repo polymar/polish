@@ -19,6 +19,10 @@ polish_methods 		=	[ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'loc
 	return self;
 }
 
+- (void) addSubview:(CPView) v {
+	[__delegate addSubview:v];
+}
+
 - (id) view {
 	return __delegate;
 }
@@ -108,8 +112,7 @@ polish_methods 		=	[ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'loc
 */
 - (id)forward:(SEL)aSelector :(marg_list)args
 {
-  //TODO - debugging this.
-  return objj_msgSend( __delegate, aSelector, args);
+	return [AppBuilder obj_create:aSelector :args :self];
 }
 
 @end

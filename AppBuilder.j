@@ -47,6 +47,9 @@ polish_components 	= 	['stack', 'button', 'text', 'progress', 'imageview', 'vide
 }
 
 + (id) obj_create:(SEL)aSelector :(man_list)args :(id) parent {
+	console.log(aSelector);
+	console.log(args);
+	console.log(parent);
 	//just sanity check... not coming here coz of a wrong 'create' message.
 	if ((aSelector == 'create:') || (aSelector == 'create')) {
 		console.error('@#!Polish Error - Valid Syntax: app.create(json_params); ');

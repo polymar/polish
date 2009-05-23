@@ -17,7 +17,6 @@
 	if(self) {
 		__delegate = [[CPView alloc] initWithFrame:CGRectMakeZero()];
 		[self createForwardJSMethods: polish_components];
-		//TODO maybe we can set a default stack size here;
 	}
 	//console.debug(self);
 	return self;
