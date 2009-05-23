@@ -18,16 +18,7 @@
 		__delegate = [[CPView alloc] initWithFrame:CGRectMakeZero()];
 		[self createForwardJSMethods: polish_components];
 	}
-	//console.debug(self);
 	return self;
-}
-
-- (void) name:(CPString) n {
-	_name = n;
-}
-
-- (CPString) name {
-	return _name;
 }
 
 @end

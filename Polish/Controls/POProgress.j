@@ -57,12 +57,4 @@
 		return [__delegate doubleValue];
 }
 
-- (void) name:(CPString) n {
-	_name = n;
-}
-
-- (CPString) name {
-	return _name;
-}
-
 @end

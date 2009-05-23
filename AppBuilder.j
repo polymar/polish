@@ -64,7 +64,7 @@ polish_components 	= 	['stack', 'button', 'text', 'progress', 'image', 'video', 
 				console.warn('@#!Polish Warning - Variable parameters list not supported yet.');
 			}
 		}
-		[parent addSubview:objj_msgSend(s, 'view')];
+		objj_msgSend( parent, 'addSubview:', objj_msgSend(s, 'view'));
 	}
 	return s;
 } 

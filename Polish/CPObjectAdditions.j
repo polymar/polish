@@ -30,9 +30,7 @@
     	parameters[i] = '__argument' + i;
   	}
   	var joined_params = parameters.join(",");
-  	var objj_params = (joined_params == '')?'':(', ' + joined_params);
-  	//return "self." + method_sig + " = " + "function( " + joined_params +" ){ return objj_msgSend( self,  '" + method + "' " + objj_params + ");}";
-//  switch to this when all object are ready	
+  	var objj_params = (joined_params == '')?'':(', ' + joined_params);	
 	return "self." + method_sig + " = " + "function( " + joined_params +" ){ return objj_msgSend( self,  '" + method + "' " + objj_params + ");}";
 }
 

@@ -8,7 +8,8 @@
 polish_methods 		=	[ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:'];
 
 @implementation POControl : CPObject {
-	id __delegate;
+	id 			__delegate;
+	CPString	_name;
 }
 
 - (id) init {
@@ -17,6 +18,16 @@ polish_methods 		=	[ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'loc
 		[self createJSMethods: polish_methods];
 	}
 	return self;
+}
+- (void) name:(CPString) n {
+	if(n != undefined)
+		_name = n;
+	else
+		return _name;
+}
+
+- (CPString) name {
+	return _name;
 }
 
 - (void) addSubview:(CPView) v {

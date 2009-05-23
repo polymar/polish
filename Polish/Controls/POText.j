@@ -18,22 +18,26 @@
 * Init an editable text field with hmargin and vmargin = 0;
 */
 - (id) text {
-  self = [super init];
-  __delegate = [CPTextField textFieldWithStringValue:@"" placeholder: @"" width:100];
-  [self createJSMethods: ['value:', 'name:', 'placeholder:']];
-  [__delegate setFont:[CPFont systemFontOfSize:14]];
-  [__delegate setBezelStyle:CPTextFieldSquareBezel];
-  [__delegate setBezeled:YES];
-  [__delegate setEditable:YES];
-  [[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(begin_action:) name: "CPControlTextDidBeginEditingNotification" object: nil];
-  [[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(change_action:) name: "CPControlTextDidChangeNotification" object: nil];
-  [[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(done_action:) name: "CPControlTextDidEndEditingNotification" object: nil];
-  return self;
+  	self = [super init];
+	if(self) {
+		__delegate = [CPTextField textFieldWithStringValue:@"" placeholder: @"" width:100];
+		[self createJSMethods: ['value:', 'name:', 'placeholder:']];
+		[__delegate setFont:[CPFont systemFontOfSize:14]];
+		[__delegate setBezelStyle:CPTextFieldSquareBezel];
+		[__delegate setBezeled:YES];
+		[__delegate setEditable:YES];
+		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(begin_action:) name: "CPControlTextDidBeginEditingNotification" object: nil];
+		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(change_action:) name: "CPControlTextDidChangeNotification" object: nil];
+		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(done_action:) name: "CPControlTextDidEndEditingNotification" object: nil];
+	}
+  	return self;
 }
 
 /*
 * Init a label with hmargin and vmargin = 0
 */
+//TODO
+/*
 - (id) label {
   self = [super create];
   if(self) {
@@ -45,6 +49,7 @@
   }
   return self;
 }
+*/
 
 - (void) on_begin:(Function)aFunction {
   _begin_function = aFunction;
@@ -73,16 +78,8 @@
     _done_function.call();
 }
 
-- (CPString) name:(CPString) n {
-  if(n != undefined)
-    _name = n;
-  else
-    return _name;
-}
-
-- (void) placeholder:(CPString)aString
-{
-  [__delegate setPlaceholderString:aString];
+- (void) placeholder:(CPString)aString {
+ 	[__delegate setPlaceholderString:aString];
 }
 
 - (void) value:(CPString) v {
