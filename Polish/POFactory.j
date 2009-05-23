@@ -31,12 +31,12 @@ function load_class() {
 		"stack"				: POStack,
 		"button"			: POButton,
 		//"submit"			: POSubmit,
-		//"imageview"			: POImage,
-		//"progress"			: POProgress,
+		"image"			: POImage,
+		"progress"			: POProgress,
 		//"text"				: POText,
 		//"label"				: POText,
 		//"slider"			: POSlider,
-		//"video"				: POVideo
+		"video"				: POVideo
 	};
 };
 

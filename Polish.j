@@ -7,3 +7,6 @@
 @import "Polish/Controls/POControl.j"
 @import "Polish/Controls/POButton.j"
 @import "Polish/Controls/POStack.j"
+@import "Polish/Controls/POProgress.j"
+@import "Polish/Images/POImage.j"
+@import "Polish/Images/POVideo.j"
