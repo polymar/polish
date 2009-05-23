@@ -12,35 +12,35 @@
 //Just message to the user in case of invalid selector received.
 + (void)forward:(SEL)aSelector :(marg_list)args
 {
-	var class_type =  get_class(aSelector);
-	if(class_type != nil) {
-		var cl = [class_type alloc];
-		return [cl performSelector:aSelector];
-	}
-	console.error('@#!Polish Error -> '+aSelector+' is not a known message.');
+  var class_type =  get_class(aSelector);
+  if(class_type != nil) {
+    var cl = [class_type alloc];
+    return [cl performSelector:aSelector];
+  }
+  console.error('@#!Polish Error -> '+aSelector+' is not a known message.');
 }
 
 @end
 
 function load_class() {
-	return {
-		//"friend_collection" : FriendsCollection,
-		//"friend" 			: FriendView,
-		//"form"				: POForm,
-		//"login"				: POLogin,
-		"stack"				: POStack,
-		"button"			: POButton,
-		//"submit"			: POSubmit,
-		//"imageview"			: POImage,
-		//"progress"			: POProgress,
-		//"text"				: POText,
-		//"label"				: POText,
-		//"slider"			: POSlider,
-		//"video"				: POVideo
-	};
+  return {
+    //"friend_collection" : FriendsCollection,
+    //"friend"      : FriendView,
+    //"form"        : POForm,
+    //"login"       : POLogin,
+    "stack"       : POStack,
+    "button"      : POButton,
+    //"submit"      : POSubmit,
+    //"imageview"     : POImage,
+    //"progress"      : POProgress,
+      "text"        : POText
+    //"label"       : POText,
+    //"slider"      : POSlider,
+    //"video"       : POVideo
+  };
 };
 
 function get_class(sel) {
-	var class_map = load_class();
-	return eval('class_map.' + sel);
+  var class_map = load_class();
+  return eval('class_map.' + sel);
 }
