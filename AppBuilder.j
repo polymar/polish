@@ -5,8 +5,6 @@
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
 
-@import "Polish/POFactory.j"
-
 polish_components 	= 	['stack', 'button', 'text', 'progress', 'imageview', 'video', 'label', 'login', 'form', 'submit', 'friend', 'friend_collection'];
 
 @implementation AppBuilder : CPObject {
@@ -66,7 +64,7 @@ polish_components 	= 	['stack', 'button', 'text', 'progress', 'imageview', 'vide
 				console.warn('@#!Polish Warning - Variable parameters list not supported yet.');
 			}
 		}
-		[parent addSubview:s];
+		[parent addSubview:objj_msgSend(s, 'view')];
 	}
 	return s;
 } 

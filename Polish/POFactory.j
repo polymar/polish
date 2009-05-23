@@ -6,18 +6,6 @@
  */
 
 @import <Foundation/CPObject.j>
-@import "Controls/POStack.j"
-@import "Controls/POButton.j"
-//@import "POText.j"
-//@import "POSlider.j"
-//@import "POProgress.j"
-//@import "POImage.j"
-//@import "POLogin.j"
-//@import "POForm.j"
-//@import "POSubmit.j"
-//@import	"POVideo.j"
-//@import "../Misc/FriendView.j"
-//@import "../Misc/FriendsCollection.j"
 
 @implementation POFactory : CPObject
 

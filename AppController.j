@@ -7,10 +7,7 @@
  */
 
 @import <Foundation/CPObject.j>
-@import "AppBuilder.j"
-@import "Polish/CPObjectAdditions.j"
-@import "Polish/CPViewAdditions.j"
-@import "Polish/CPWindowAdditions.j"
+@import "Polish.j"
 
 @implementation AppController : CPObject
 {

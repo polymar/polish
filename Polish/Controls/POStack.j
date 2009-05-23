@@ -5,8 +5,6 @@
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
 
-@import "POControl.j"
-
 @implementation POStack : POControl {
 	CPString	_name;
 }
@@ -17,10 +15,11 @@
 - (id) stack {
 	self = [super init];
 	if(self) {
-		__delegate = [[CPView alloc] createWithFrame:CGRectMakeZero()];
+		__delegate = [[CPView alloc] initWithFrame:CGRectMakeZero()];
+		[self createForwardJSMethods: polish_components];
 		//TODO maybe we can set a default stack size here;
 	}
-	console.debug(self);
+	//console.debug(self);
 	return self;
 }
 
@@ -29,12 +28,7 @@
 }
 
 - (CPString) name {
-	console.debug(__delegate);
 	return _name;
-}
-
-- (id) test {
-	return __delegate;
 }
 
 @end

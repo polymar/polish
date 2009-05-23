@@ -19,7 +19,7 @@
 - (id) button {
   self = [super init];
   if(self) {
-	__delegate = [[CPButton alloc] create];
+	__delegate = [[CPButton alloc] initWithFrame:CGRectMakeZero()];
 	[self createJSMethods: ['title:', 'on_click:']];
     [__delegate setBezelStyle:CPHUDBezelStyle];
     [__delegate setTarget:self];

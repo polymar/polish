@@ -6,7 +6,6 @@
  */
 
 @import <AppKit/CPWindow.j>
-@import "POColor.j"
 
 @implementation CPWindow (Polish) 
 
