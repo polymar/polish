@@ -8,7 +8,6 @@
 @import <AppKit/CPTextField.j>
 
 @implementation POText : POControl {
-  CPString  _name;
   var     _begin_function;
   var     _change_function;
   var     _done_function;
@@ -65,17 +64,17 @@
 
 - (void) begin_action:(CPNotification) notification {
   if(_begin_function != nil)
-    _begin_function.call();
+    _begin_function();
 }
 
 - (void) change_action:(CPNotification) notification {
   if(_change_function != nil)
-    _change_function.call();
+    _change_function();
 }
 
 - (void) done_action:(CPNotification) notification {
   if(_done_function != nil)
-    _done_function.call();
+    _done_function();
 }
 
 - (void) placeholder:(CPString)aString {

@@ -1,5 +1,5 @@
 /*
- * AppBuilder.j
+ * POControl.j
  *
  * Created by Roberto Gamboni on 02/15/2009.
  * Copyright 2008 Roberto Gamboni. All rights reserved.
@@ -69,7 +69,11 @@ polish_methods 		=	[ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'loc
   [__delegate setNeedsDisplayInRect:[__delegate frame]];
 }
 
-- (void) color:(CPString) colorName {
+- (void) color:(id) colorName {
+  if (colorName.isa.name == 'CPColor') {
+	[__delegate setBackgroundColor:colorName];
+	return;
+  }
   c = [POColor color:colorName];
   if(c != nil)
     [__delegate setBackgroundColor:c];

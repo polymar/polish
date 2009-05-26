@@ -9,7 +9,6 @@
 @import "POControl.j"
 
 @implementation POButton : POControl {
-  CPString    	_name;
   var       	_function;
 }
 
@@ -41,7 +40,7 @@
 
 - (void) exec {
   if(_function != nil)
-    _function.call();
+    _function();
 }
 
 @end

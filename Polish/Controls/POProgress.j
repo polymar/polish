@@ -1,5 +1,5 @@
 /*
- * POSlider.j
+ * POProgress.j
  *
  * Created by Roberto Gamboni on 02/18/2009.
  * Copyright 2008 Roberto Gamboni. All rights reserved.
@@ -8,7 +8,7 @@
 @import <AppKit/CPProgressIndicator.j>
 
 @implementation POProgress : POControl {
-	CPString	_name;
+
 }
 
 /*
