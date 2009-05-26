@@ -22,7 +22,7 @@
   	}
 }
 
-- (String) constructJSMethod: (String)method{
+- (String) constructJSMethod: (String)method {
   	var method_frags = method.split(':');
   	var method_sig = method_frags.shift();
   	var parameters = new Array();
