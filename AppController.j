@@ -17,14 +17,14 @@
 {
         var theWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPBorderlessBridgeWindowMask];
 
-    	//app is visible outside using objj syntax.
-		//js can interact with app using objj_msgSend(app, message, params..);
-		app = [[AppBuilder alloc] initWithContentView:theWindow];
-		
-		//default stuff... setting background black.
-		[theWindow orderFront:self];
+      //app is visible outside using objj syntax.
+    //js can interact with app using objj_msgSend(app, message, params..);
+    app = [[AppBuilder alloc] initWithContentView:theWindow];
 
-		POLISH_NOTIFICATION[POLISH_NOTIFY_ONLOAD].call();
+    //default stuff... setting background black.
+    [theWindow orderFront:self];
+
+    POLISH_NOTIFICATION.call();
 }
 
 @end
