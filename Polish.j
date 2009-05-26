@@ -15,3 +15,8 @@
 
 @import "Polish/Colors/POColor.j"
 
+@import "Polish/Dialogs/PODialog.j"
+@import "Polish/Dialogs/POAlert.j"
+@import "Polish/Dialogs/POConfirm.j"
+@import "Polish/Dialogs/POAskColor.j"
+
