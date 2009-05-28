@@ -5,6 +5,17 @@
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
 
+function alert(x) {
+	alert(x, 'alert');
+}
+
+function alert(x, t) {
+	var a = [[POAlert alloc] alert];
+	a.message(x);
+	a.title(t);
+	objj_msgSend(a, 'view');
+}
+
 @implementation POAlert : PODialog {
 	id 			__delegate;
 }

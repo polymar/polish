@@ -15,7 +15,7 @@
 
 - (void)applicationDidFinishLaunching:(CPNotification)aNotification
 {
-        var theWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPBorderlessBridgeWindowMask];
+    var theWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPBorderlessBridgeWindowMask];
 
       //app is visible outside using objj syntax.
     //js can interact with app using objj_msgSend(app, message, params..);

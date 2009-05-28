@@ -9,6 +9,8 @@
 @import "Polish/Controls/POStack.j"
 @import "Polish/Controls/POProgress.j"
 @import "Polish/Controls/POText.j"
+@import "Polish/Controls/POCheck.j"
+@import "Polish/Controls/PORadio.j"
 
 @import "Polish/Images/POImage.j"
 @import "Polish/Images/POVideo.j"

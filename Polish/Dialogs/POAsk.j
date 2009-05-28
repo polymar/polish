@@ -5,11 +5,12 @@
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
 
+//TODO need to implement this. no cpalert with a text field
+
 @implementation POAsk : PODialog {
 	id 			__delegate;
 }
 
-//TODO
 - (id) ask {
 	self = [super init];
 	if(self) {

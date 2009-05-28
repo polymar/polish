@@ -34,12 +34,14 @@ function load_class() {
 		"image"				: POImage,
 		"progress"			: POProgress,
 		"text"				: POText,
-		//"label"				: POText,
+		"label"				: POText,
 		//"slider"			: POSlider,
 		"video"				: POVideo,
 		"alert"				: POAlert,
 		"confirm"			: POConfirm,
-		"ask_color"			: POAskColor
+		"ask_color"			: POAskColor,
+		"check"				: POCheck,
+		"radio"				: PORadio 
 	};
 };
 
