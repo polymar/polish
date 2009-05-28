@@ -74,7 +74,11 @@ polish_methods 		=	[ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'loc
 	[__delegate setBackgroundColor:colorName];
 	return;
   }
-  c = [POColor color:colorName];
+  if (colorName.isa.name == 'POColor') {
+	[__delegate setBackgroundColor:[colorName color]];
+	return;
+  }
+  c = [POColor colorWithName:colorName];
   if(c != nil)
     [__delegate setBackgroundColor:c];
   else
