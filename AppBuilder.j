@@ -4,7 +4,7 @@
  * Created by Roberto Gamboni on 02/15/2009.
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
-polish_components   =   ['stack', 'ask_color', 'confirm', 'alert', 'button', 'text', 'progress', 'image', 'video', 'label', 'login', 'form', 'submit', 'friend', 'friend_collection'];
+polish_components   =   ['stack', 'ask_color', 'confirm', 'alert', 'button', 'check', 'radio', 'text', 'progress', 'image', 'video', 'label', 'login', 'form', 'submit', 'friend', 'friend_collection'];
 
 @implementation AppBuilder : CPObject {
   CPWindow    _mainWindow;
@@ -59,9 +59,9 @@ polish_components   =   ['stack', 'ask_color', 'confirm', 'alert', 'button', 'te
       for( var memb in p_list) {
         objj_msgSend(AppBuilder , 'apply_method:to:with:', memb, s, eval('p_list.'+memb) );
       }
-      if(args.length > 1) {
+    }
+    if(args.length > 1) {
         console.warn('@#!Polish Warning - Variable parameters list not supported yet.');
-      }
     }
     var view = objj_msgSend(s, 'view');
 	if(view != nil)

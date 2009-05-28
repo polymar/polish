@@ -56,7 +56,15 @@
 * Change the background color of the main window.
 */
 - (void) color:(CPString) colorName {
-	c = [POColor color:colorName];
+	if (colorName.isa.name == 'CPColor') {
+		[self setBackgroundColor:colorName];
+		return;
+	}
+	if (colorName.isa.name == 'POColor') {
+		[self setBackgroundColor:[colorName color]];
+		return;
+	}
+	c = [POColor colorWithName:colorName];
 	if(c != nil)
 		[self setBackgroundColor:c];
 	else
