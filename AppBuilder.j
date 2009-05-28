@@ -54,13 +54,23 @@ polish_components   =   ['stack', 'button', 'text', 'progress', 'image', 'video'
   polish_selector = objj_msgSend(AppBuilder, 'sanitize_selector:' , aSelector);
   var s = objj_msgSend(POFactory, polish_selector);
   if(s != nil) {
-    if(args.length == 1) {
+    if(args.length > 2) {
+      console.warn('@#!Polish Warning - Variable parameters list not supported yet.');
+    }
+    if(args.length > 0) {
       var p_list = args[0];
+
+      if(args.length > 1){
+        if(typeof args[1] == 'function')
+          s['afterInit'] = args[1]; //add the function to call after initializing the object.
+        else
+          console.warn('second argument is not a function');
+      }
       for( var memb in p_list) {
         objj_msgSend(AppBuilder , 'apply_method:to:with:', memb, s, eval('p_list.'+memb) );
       }
-      if(args.length > 1) {
-        console.warn('@#!Polish Warning - Variable parameters list not supported yet.');
+      if(s.afterInit){
+        s.afterInit();
       }
     }
     objj_msgSend( parent, 'addSubview:', objj_msgSend(s, 'view'));
