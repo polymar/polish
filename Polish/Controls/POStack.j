@@ -6,7 +6,7 @@
  */
 
 @implementation POStack : POControl {
-	CPString	_name;
+	
 }
 
 /*

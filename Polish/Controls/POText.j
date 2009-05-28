@@ -8,7 +8,6 @@
 @import <AppKit/CPTextField.j>
 
 @implementation POText : POControl {
-  CPString  _name;
   var     _begin_function;
   var     _change_function;
   var     _done_function;
@@ -33,23 +32,83 @@
   	return self;
 }
 
+- (id) password {
+	self = [super init];
+	if(self) {
+		//TODO
+	}
+	return self;
+}
+
+- (id) link {
+	self = [super init];
+	if(self) {
+		//TODO
+	}
+	return self;
+}
+
+- (id) caption {
+	self = [self label];
+	return self;
+}
+
+- (id) banner {
+	self = [self label];
+	if(self) {
+		[__delegate setFont:[CPFont systemFontOfSize:48]];
+		[__delegate sizeToFit];
+	    [__delegate setFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([__delegate bounds]), CGRectGetHeight([__delegate bounds]))];
+	}
+	return self;
+}
+
+- (id) subtitle {
+	self = [self label];
+	if(self) {
+		[__delegate setFont:[CPFont systemFontOfSize:34]];
+		[__delegate sizeToFit];
+	    [__delegate setFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([__delegate bounds]), CGRectGetHeight([__delegate bounds]))];
+	}
+	return self;
+}
+
+- (id) subtitle {
+	self = [self label];
+	if(self) {
+		[__delegate setFont:[CPFont systemFontOfSize:26]];
+		[__delegate sizeToFit];
+	    [__delegate setFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([__delegate bounds]), CGRectGetHeight([__delegate bounds]))];
+	}
+	return self;
+}
+
+- (id) para {
+	self = [self label];
+	if(self) {
+		[__delegate setFont:[CPFont systemFontOfSize:12]];
+		[__delegate sizeToFit];
+	    [__delegate setFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([__delegate bounds]), CGRectGetHeight([__delegate bounds]))];
+	}
+	return self;
+}
+
 /*
 * Init a label with hmargin and vmargin = 0
 */
-//TODO
-/*
 - (id) label {
-  self = [super create];
+  self = [super init];
   if(self) {
-    [self createJSMethods: ['para:', 'name:']];
-    [self setFont:[CPFont systemFontOfSize:14]];
-      [self setTextColor:[CPColor whiteColor]];
-      [self sizeToFit];
-    [self setFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([self bounds]), CGRectGetHeight([self bounds]))];
+	  __delegate = [CPTextField labelWithTitle:@""];
+      [self createJSMethods: ['value:', 'name:']];
+      [__delegate setFont:[CPFont systemFontOfSize:14]];
+      [__delegate setTextColor:[CPColor whiteColor]];
+      [__delegate setEditable:NO];
+      [__delegate sizeToFit];
+      [__delegate setFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([__delegate bounds]), CGRectGetHeight([__delegate bounds]))];
   }
   return self;
 }
-*/
 
 - (void) on_begin:(Function)aFunction {
   _begin_function = aFunction;
@@ -65,17 +124,17 @@
 
 - (void) begin_action:(CPNotification) notification {
   if(_begin_function != nil)
-    _begin_function.call();
+    _begin_function();
 }
 
 - (void) change_action:(CPNotification) notification {
   if(_change_function != nil)
-    _change_function.call();
+    _change_function();
 }
 
 - (void) done_action:(CPNotification) notification {
   if(_done_function != nil)
-    _done_function.call();
+    _done_function();
 }
 
 - (void) placeholder:(CPString)aString {
@@ -89,11 +148,13 @@
     return [__delegate stringValue];
 }
 
+/*
 - (void) para:(CPString) v {
   if(v != undefined)
-    [self setStringValue:v];
+    [__delegate setStringValue:v];
   else
-    return [self stringValue];
+    return [__delegate stringValue];
 }
+*/
 
 @end
