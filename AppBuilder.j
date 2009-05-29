@@ -59,23 +59,26 @@ polish_components   =   ['stack', 'ask_color', 'confirm', 'alert', 'button', 'ch
     }
     if(args.length > 0) {
       var p_list = args[0];
-
+      /*
       if(args.length > 1){
         if(typeof args[1] == 'function')
           s['afterInit'] = args[1]; //add the function to call after initializing the object.
         else
           console.warn('second argument is not a function');
       }
+	  */ 
       for( var memb in p_list) {
         objj_msgSend(AppBuilder , 'apply_method:to:with:', memb, s, eval('p_list.'+memb) );
       }
+   	  /*
       if(s.afterInit){
         s.afterInit();
       }
+	  */
     }
     var view = objj_msgSend(s, 'view');
-  if(view != nil)
-    objj_msgSend( parent, 'addSubview:', view);
+  	if(view != nil)
+    	objj_msgSend( parent, 'addSubview:', view);
   }
   return s;
 }
