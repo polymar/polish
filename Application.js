@@ -1,4 +1,4 @@
-  app.create({"title" : "CapWaves exps.", "width" : 620, "height" : 580, "color" : red()} , function(){ alert('inside'); });
+  app.create({"title" : "CapWaves exps.", "width" : 620, "height" : 580, "color" : red() });
 
   stack = app.stack({"width" : 550, "height" : 500});
   stack.location(10, 10);
@@ -31,11 +31,27 @@
   col = stack.ask_color();
   col.on_choose(function(x) {stack.color(x)});
 
-  rad = stack.radio({title : "radio button", width : 20.0, height : 20.0, x : 20, y : 120});
+  rad1 = stack.radio({title : "radio button", width : 20.0, height : 20.0, x : 20, y : 120, group : 'sample'});
+  rad2 = stack.radio({title : "radio button", width : 20.0, height : 20.0, x : 20, y : 145, group : 'sample'});
+
+
   label = stack.label();
   label.location(200, 50);
   label.value('Bank account numbers please');
   label.size(200, 30);
+
+  t = stack.text({x : 100, y: 255, width : 100, height : 30});
+  p = stack.password( { x : 100, y: 330, width : 200, height : 30 } );
+  p.on_change( function(x) { t.value(x); } );
+  
+  s = stack.slider();
+  s.location(100,300);
+  s.on_change(function(x) {t.value(x);} );
+
+  list = stack.list_box({items : ['1', '2', '3']});
+  list.location(100,150);
+  list.size(200,22);
+  list.on_select( function(x) {alert(x);} );
   /*
   app { 
 	title: "CapWaves", width: 620, height: 580, color: red, load: alert { text: 'inside' }

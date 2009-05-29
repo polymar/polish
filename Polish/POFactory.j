@@ -35,13 +35,15 @@ function load_class() {
 		"progress"			: POProgress,
 		"text"				: POText,
 		"label"				: POText,
-		//"slider"			: POSlider,
+		"password"			: POText,
 		"video"				: POVideo,
 		"alert"				: POAlert,
 		"confirm"			: POConfirm,
 		"ask_color"			: POAskColor,
 		"check"				: POCheck,
-		"radio"				: PORadio 
+		"radio"				: PORadio,
+		"slider"			: POSlider,
+		"list_box"			: POList 
 	};
 };
 

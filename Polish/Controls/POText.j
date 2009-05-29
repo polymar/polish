@@ -20,7 +20,7 @@
   	self = [super init];
 	if(self) {
 		__delegate = [CPTextField textFieldWithStringValue:@"" placeholder: @"" width:100];
-		[self createJSMethods: ['value:', 'name:', 'placeholder:']];
+		[self createJSMethods: ['value:', 'placeholder:', 'on_begin:', 'on_change:', 'on_done:']];
 		[__delegate setFont:[CPFont systemFontOfSize:14]];
 		[__delegate setBezelStyle:CPTextFieldSquareBezel];
 		[__delegate setBezeled:YES];
@@ -35,7 +35,15 @@
 - (id) password {
 	self = [super init];
 	if(self) {
-		//TODO
+		__delegate = [[CPSecureTextField alloc] initWithFrame:CGRectMakeZero()];
+		[self createJSMethods: ['value:', 'placeholder:', 'on_begin:', 'on_change:', 'on_done:']];
+		[__delegate setFont:[CPFont systemFontOfSize:14]];
+		[__delegate setBezelStyle:CPTextFieldSquareBezel];
+		[__delegate setBezeled:YES];
+		[__delegate setEditable:YES];
+		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(begin_action:) name: "CPControlTextDidBeginEditingNotification" object: nil];
+		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(change_action:) name: "CPControlTextDidChangeNotification" object: nil];
+		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(done_action:) name: "CPControlTextDidEndEditingNotification" object: nil];
 	}
 	return self;
 }
@@ -63,7 +71,7 @@
 	return self;
 }
 
-- (id) subtitle {
+- (id) title {
 	self = [self label];
 	if(self) {
 		[__delegate setFont:[CPFont systemFontOfSize:34]];
@@ -100,7 +108,7 @@
   self = [super init];
   if(self) {
 	  __delegate = [CPTextField labelWithTitle:@""];
-      [self createJSMethods: ['value:', 'name:']];
+      [self createJSMethods: ['value:']];
       [__delegate setFont:[CPFont systemFontOfSize:14]];
       [__delegate setTextColor:[CPColor whiteColor]];
       [__delegate setEditable:NO];
@@ -123,18 +131,21 @@
 }
 
 - (void) begin_action:(CPNotification) notification {
-  if(_begin_function != nil)
-    _begin_function();
+	if([notification object] != __delegate) { return; }
+    if(_begin_function != nil)
+    	_begin_function();
 }
 
 - (void) change_action:(CPNotification) notification {
-  if(_change_function != nil)
-    _change_function();
+	if([notification object] != __delegate) { return; }
+    if(_change_function != nil)
+    	_change_function( objj_msgSend(__delegate, 'stringValue') );
 }
 
 - (void) done_action:(CPNotification) notification {
-  if(_done_function != nil)
-    _done_function();
+	if([notification object] != __delegate) { return; }
+    if(_done_function != nil)
+    	_done_function();
 }
 
 - (void) placeholder:(CPString)aString {

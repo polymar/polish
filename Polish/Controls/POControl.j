@@ -5,7 +5,7 @@
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
 
-polish_methods 		=	[ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:'];
+polish_methods 		=	[ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:', 'name:'];
 
 @implementation POControl : CPObject {
 	id 			__delegate;

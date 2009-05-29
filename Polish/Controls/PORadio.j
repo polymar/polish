@@ -8,9 +8,20 @@
 @import <AppKit/CPButton.j>
 @import "POControl.j"
 
+var			_groups = {}; 
+radiogroup = function(name) {
+	if(_groups[name] == nil) { 
+		g = [CPRadioGroup new]; 
+		_groups[name] = g;
+		return g;
+	}
+	return _groups[name];
+}
+
 @implementation PORadio : POControl {
     var       	_select_function;
 	var			_unselect_function;
+	
 }
 
 /*
@@ -20,12 +31,23 @@
   self = [super init];
   if(self) {
 	__delegate = [CPRadio radioWithTitle:@""];
-	[self createJSMethods: ['title:', 'on_select:', 'on_deselect', 'enabled:']];
+	[self createJSMethods: ['title:', 'on_select:', 'on_deselect', 'enabled:', 'group:']];
     [__delegate setBezelStyle:CPHUDBezelStyle];
     [__delegate setTarget:self];
     [__delegate setAction:@selector(exec)];
+	[self group:'default'];
   }
   return self;
+}
+
+- (void) group:(CPString) g {
+	if(g != undefined) {
+		gr = radiogroup(g);
+		objj_msgSend( __delegate, 'setRadioGroup:', gr);
+	} else {
+		var rg = objj_msgSend( __delegate, 'radioGroup');
+		return rg;
+	}
 }
 
 - (void) title:(CPString) t {
