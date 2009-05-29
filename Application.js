@@ -11,12 +11,12 @@
   
   var time = new Date();
 
-  time_button = stack.button({title : "Date", width : 100.0, height : 18.0, x : 150, y : 50, on_click : function() {alert(time); }});
+  time_button = stack.button({title : "Date", width : 100.0, height : 20.0, x : 150, y : 50, on_click : function() {alert(time); }});
   
   time_button.location(100,10);
   //time_button.on_click(function() {alert(time); });
 
-  confirm_button = stack.button({title : "Confirm", width : 100.0, height : 18.0, x : 220, y : 10});
+  confirm_button = stack.button({title : "Confirm", width : 100.0, height : 20.0, x : 220, y : 10});
   confirm_button.on_click(function(){ 
 	c = app.confirm({title : "title", message : "click yes or no"});
 	  c.on_yes(function() {console.log('yes')} );
@@ -33,7 +33,6 @@
 
   rad1 = stack.radio({title : "radio button", width : 20.0, height : 20.0, x : 20, y : 120, group : 'sample'});
   rad2 = stack.radio({title : "radio button", width : 20.0, height : 20.0, x : 20, y : 145, group : 'sample'});
-
 
   label = stack.label();
   label.location(200, 50);
@@ -52,6 +51,8 @@
   list.location(100,150);
   list.size(200,22);
   list.on_select( function(x) {alert(x);} );
+
+  stack.login().color(lightgray());
   /*
   app { 
 	title: "CapWaves", width: 620, height: 580, color: red, load: alert { text: 'inside' }

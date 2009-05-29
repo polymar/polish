@@ -27,7 +27,7 @@ function load_class() {
 		//"friend_collection" : FriendsCollection,
 		//"friend" 			: FriendView,
 		//"form"				: POForm,
-		//"login"				: POLogin,
+		"login"				: POLogin,
 		"stack"				: POStack,
 		"button"			: POButton,
 		//"submit"			: POSubmit,
