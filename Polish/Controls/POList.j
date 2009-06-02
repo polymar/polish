@@ -6,7 +6,6 @@
  */
 
 @import <AppKit/CPButton.j>
-@import "POControl.j"
 
 @implementation POList : POControl {
     var       	_select_function;
@@ -19,7 +18,7 @@
   self = [super init];
   if(self) {
 	__delegate = [[CPPopUpButton alloc] initWithFrame:CGRectMakeZero() pullsDown:NO];
-	[self createJSMethods: ['title:', 'on_select:', 'items:']];
+	[self createJSMethods: ['title:', 'on_select:', 'items:', 'value']];
     [__delegate setBezelStyle:CPHUDBezelStyle];
     [__delegate setTarget:self];
     [__delegate setAction:@selector(exec:)];
@@ -51,6 +50,10 @@
 	if(_select_function != nil) {
 		_select_function(v);
 	}  
+}
+
+- (CPString) value {
+	
 }
 
 @end

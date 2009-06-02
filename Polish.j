@@ -24,5 +24,7 @@
 @import "Polish/Dialogs/POConfirm.j"
 @import "Polish/Dialogs/POAskColor.j"
 
+@import "Polish/Extras/POSubmit.j"
+@import "Polish/Extras/POForm.j"
 @import "Polish/Extras/POLogin.j"
 

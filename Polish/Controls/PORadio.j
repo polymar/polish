@@ -6,7 +6,6 @@
  */
 
 @import <AppKit/CPButton.j>
-@import "POControl.j"
 
 var			_groups = {}; 
 radiogroup = function(name) {

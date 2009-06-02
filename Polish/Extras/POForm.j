@@ -5,88 +5,90 @@
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
 
-@implementation POForm : POStack {
+@implementation POForm : POControl {
+	
 	CPString 	_action;
 	CPString 	_method;
 	CPString	_enctype;
-	CPString	_result;
-	
+
 	//function performed before submitting the form.
 	var 		_preprocess;
 	//function performed after submitting the form.
 	var			_postprocess;
+	//function performed in case of error.
+	var			_form_error;
 	
-	CPJSONPConnection connection;
+	var			_children;
+	
+	//FIX THIS - now this is specific for JSON API
+	//CPURLConnection		_connection;
+	CPJSONPConnection 		_connection;
 }
 
 /*
 * Init a form with hmargin and vmargin = 0;
 */
 - (id) form {
-	self = [super create];
+	self = [super init];
 	if(self) {
-		[self createJSMethods:['action:', 'enctype:', 'pre:', 'post:', 'http_method:', 'result']];
-		_method = 'GET';
-		_enctype = 'TEXT/PLAIN'
+		__delegate = [[CPForm alloc] init];
+		[self createForwardJSMethods: polish_components];
+		[self initForm];
 	}
 	return self;
 }
 
-- (void) pre:(Function)aFunction {
-	if(aFunction != undefined)
-		_preprocess = aFunction;
+- (void) initForm {
+	[self createJSMethods:['action:', 'enctype:', 'pre:', 'post:', 'form_error:', 'http_method:']];
+	_children = [];
+	objj_msgSend(__delegate, 'setDelegate:', self);
+	_method = 'GET';
+	_enctype = 'TEXT/PLAIN';
 }
 
-- (void) post:(Function)aFunction {
-	if(aFunction != undefined)
-		_postprocess = aFunction;
+- (void) addChild:(POControl) child {
+	[super addChild:child];
+	_children.push(child);
 }
 
-- (CPString) result {
-	return _result;
-}
-
-- (CPString) http_method:(CPString) m {
-	if(m != undefined)
-		_method = m;
-	else
-		return _method;
-}
-
-- (CPString) action:(CPString) u {
-	if(u != undefined)
-		_action = u;
-	else
-		return _action;
-}
-
-- (CPString) enctype:(CPString) e {
-	if(e != undefined)
-		_enctype = e;
-	else
-		return _enctype;
-}
-
-
-- (void) submit_form {
-	//preprocessing
+- (void) didSubmit:(id) sender {
 	if(_preprocess != undefined) {
-		var test = _preprocess.call();
-		if(test == false) {
-			//preprocess failed.
+		var t = _preprocess();
+		if(t == false) {
 			return;
 		}
 	}
-		
-	//submit the form
-	if(connection)
-		[connection cancel];
-	connection = [CPJSONPConnection connectionWithRequest:[self generateRequest] callback:@"callback" delegate:self];
+	if(_connection) {
+		[_connection cancel];	
+	}
+	var req = [self generateRequest];
+	if(req != nil) {
+		console.log('starting request');
+		_connection = [CPJSONPConnection connectionWithRequest:req callback:'callback' delegate:self];
+	}
+}
+
+- (void)connection:(CPJSONPConnection)aConnection didReceiveData:(CPString)data {
+	if(data) {
+		if(_postprocess != undefined) {
+			_postprocess(data);
+		}
+	}
+}
+
+- (void)connection:(CPJSONPConnection)aConnection didFailWithError:(CPString)error {
+	if(_form_error != undefined) {
+		_form_error(error);
+	}
 }
 
 - (CPURLRequest) generateRequest {
+	if(_action == undefined) {
+		console.log('unable to submit a form without action');
+		return nil;
+	}
 	//GET -> creating tag0=value0?tag1=value1
-	if(self.http_method() == 'GET') {
+	if(_method == 'GET') {
 		var query = [self generateParams];
 		var url = [CPString stringWithFormat:@"%s?%s", _action, encodeURI(query)];
 		var request = [CPURLRequest requestWithURL:url];
@@ -103,34 +105,72 @@
 }
 
 - (CPString) generateParams {
-	var elements = [self subviews];
 	var index;
 	var params = '';
-	for(index = 0; index < elements.length; index++) {
-		var el = elements[index];
+	for(index = 0; index < _children.length; index++) {
+		var el = _children[index];
 		//FIXME kind of hack... need to identify which object are serializable.
 		if([el class] != [POSubmit class]) {
 			if(el.name() != '') {
-				params += el.name() + '=' + el.value() + '?';
+				params += el.name() + '=' + el.value() + '&';
 			}
 		}
 	}
 	return params;
 }
 
-- (void)connection:(CPJSONPConnection)aConnection didReceiveData:(CPString)data
-{
-	if(data) {
-		_result = data;
-		if(_postprocess != undefined) {
-			_postprocess.call();
-		}
+- (void) form_error:(Function)aFunction {
+	_form_error = aFunction;
+}
+
+- (void) pre:(Function)aFunction {
+	_preprocess = aFunction;
+}
+
+- (void) post:(Function)aFunction {
+	_postprocess = aFunction;
+}
+
+- (void) http_method:(CPString) m {
+	if(m != undefined) {
+		_method = m;
+	} else {
+		return _method;
 	}
 }
 
-- (void)connection:(CPJSONPConnection)aConnection didFailWithError:(CPString)error
-{
-	alert(error);
+- (void) action:(CPString) u {
+	if(u != undefined) {
+		_action = u;
+	} else {
+		return _action;
+	}
+}
+
+- (void) enctype:(CPString) e {
+	if(e != undefined) {
+		_enctype = e;
+	} else {
+		return _enctype;
+	}
+}
+
+@end
+
+@implementation CPForm : CPView {
+	
+	var			_delegate;
+	
+}
+
+- (void) setDelegate:(id) del {
+	_delegate = del;
+}
+
+- (void) submit_form {
+	if(_delegate != nil) {
+		objj_msgSend(_delegate, 'didSubmit:', self);
+	}
 }
 
 @end

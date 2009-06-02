@@ -6,7 +6,6 @@
  */
 
 @import <AppKit/CPButton.j>
-@import "POControl.j"
 
 @implementation POButton : POControl {
   var       	_function;
@@ -20,6 +19,7 @@
   if(self) {
 	__delegate = [CPButton buttonWithTitle:@""];
 	[self createJSMethods: ['title:', 'on_click:']];
+	self.size(80,20);
     [__delegate setBezelStyle:CPHUDBezelStyle];
     [__delegate setTarget:self];
     [__delegate setAction:@selector(exec)];

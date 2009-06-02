@@ -5,6 +5,12 @@
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
 
+function ask_color() {
+	var a = [[POAskColor alloc] ask_color];
+	objj_msgSend(a, 'view');
+	return a;
+}
+
 @implementation POAskColor : PODialog {
 	id 			__delegate;
 	var			_choose_function;
@@ -15,8 +21,6 @@
 	if(self) {	
 		__delegate = [CPColorPanel sharedColorPanel];
 		[self createJSMethods: ['on_choose:']];
-		//objj_msgSend(__delegate, 'setTarget:', self);
-		//[__delegate setAction:@selector(exec)];
 		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(didSelectColor:) name: "CPColorPanelColorDidChangeNotification" object: nil];
 	}
 	return self;

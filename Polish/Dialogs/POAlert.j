@@ -14,6 +14,7 @@ function alert(x, t) {
 	a.message(x);
 	a.title(t);
 	objj_msgSend(a, 'view');
+	return a;
 }
 
 @implementation POAlert : PODialog {
@@ -33,7 +34,7 @@ function alert(x, t) {
 }
 
 -(void)alertDidEnd:(CPAlert)theAlert returnCode:(int)returnCode {
-	console.log('didPressAlert '+ returnCode);
+	//console.log('didPressAlert '+ returnCode);
 }
 
 - (void) type:(CPString) t {

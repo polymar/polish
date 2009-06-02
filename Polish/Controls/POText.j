@@ -108,7 +108,7 @@
   self = [super init];
   if(self) {
 	  __delegate = [CPTextField labelWithTitle:@""];
-      [self createJSMethods: ['value:']];
+      [self createJSMethods: ['value:', 'font:', 'textcolor:']];
       [__delegate setFont:[CPFont systemFontOfSize:14]];
       [__delegate setTextColor:[CPColor whiteColor]];
       [__delegate setEditable:NO];
@@ -159,13 +159,17 @@
     return [__delegate stringValue];
 }
 
-/*
-- (void) para:(CPString) v {
-  if(v != undefined)
-    [__delegate setStringValue:v];
-  else
-    return [__delegate stringValue];
+- (void) font:(int) f {
+	if(f != undefined) {
+		[__delegate setFont:[CPFont systemFontOfSize:f]];
+	} 
 }
-*/
+
+- (void) textcolor:(id) colorName {
+	var c = [self sintetize_color:colorName];
+	if(c != nil) {
+		[__delegate setTextColor:c];
+	}
+}
 
 @end
