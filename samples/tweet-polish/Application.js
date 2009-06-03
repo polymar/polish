@@ -22,3 +22,5 @@ search_form.text({name : 'q', x : 5, y : 5, width : 210, height : 40});
 search_form.submit({x : 222, y : 14, width : 70, height : 24});
 
 search_res = app.stack({x : 665, y : 300, width : 300, height : 320, color : lightgray()});
+
+test = public_stack.photo_collection( { photos : [ 'Resources/sample.jpg', 'Resources/sample2.jpg', 'Resources/sample3.jpg', 'Resources/sample4.jpg'] , color : red() } );
