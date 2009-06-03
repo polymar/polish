@@ -4,11 +4,16 @@
  * Created by Roberto Gamboni on 02/15/2009.
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
-polish_components   =   ['stack', 'ask_color', 'confirm', 'alert', 'button', 'check', 'radio', 'text', 'progress', 'image', 'video', 'label', 'login', 'form', 'submit', 'friend', 'friend_collection'];
+polish_components   =   ['stack', 'ask_color', 'link', 'confirm', 'alert', 'button', 'check', 'radio', 'text', 'progress', 'image', 'video', 'label', 'login', 'form', 'submit', 'friend', 'friend_collection'];
 
 @implementation AppBuilder : CPObject {
   CPWindow    _mainWindow;
   CPView      _contentView;
+}
+
+- (id) init
+{
+  return [self initWithContentView: nil];
 }
 
 - (id) initWithContentView:(CPWindow) mainWindow {
@@ -23,13 +28,22 @@ polish_components   =   ['stack', 'ask_color', 'confirm', 'alert', 'button', 'ch
 }
 
 /*
+
 * create the app and set the parameters.
 */
 - (id) create:(CPObject) what, ... //keeping open for future.
 {
+  if (_mainWindow == nil)
+    {
+      _mainWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:(CPTitledWindowMask | CPClosableWindowMask | CPResizableWindowMask)];
+      _contentView = [_mainWindow contentView];
+      [_mainWindow orderFront:self];
+    }
+
   for( var memb in what ) {
     objj_msgSend(AppBuilder , 'apply_method:to:with:', memb, _mainWindow, eval('what.'+memb) );
   }
+
   if(arguments.length > 3) {
     console.warn('@#!Polish Warning - Variable parameters list not supported yet.');
   }
@@ -39,7 +53,7 @@ polish_components   =   ['stack', 'ask_color', 'confirm', 'alert', 'button', 'ch
 }
 
 /*
-* forward all the not implemented method to polish factory class.
+* forward all the not implemented methods to polish factory class.
 */
 - (id)forward:(SEL)aSelector :(marg_list)args {
   return [AppBuilder obj_create:aSelector :args :_contentView];
@@ -51,32 +65,17 @@ polish_components   =   ['stack', 'ask_color', 'confirm', 'alert', 'button', 'ch
     console.error('@#!Polish Error - Valid Syntax: app.create(json_params); ');
     return;
   }
-  polish_selector = objj_msgSend(AppBuilder, 'sanitize_selector:' , aSelector);
-  var s = objj_msgSend(POFactory, polish_selector);
-  if(s != nil) {
-    if(args.length > 2) {
-      console.warn('@#!Polish Warning - Variable parameters list not supported yet.');
-    }
-    if(args.length > 0) {
-      var p_list = args[0];
 
-      if(args.length > 1){
-        if(typeof args[1] == 'function')
-          s['afterInit'] = args[1]; //add the function to call after initializing the object.
-        else
-          console.warn('second argument is not a function');
-      }
-      for( var memb in p_list) {
-        objj_msgSend(AppBuilder , 'apply_method:to:with:', memb, s, eval('p_list.'+memb) );
-      }
-      if(s.afterInit){
-        s.afterInit();
-      }
-    }
-    var view = objj_msgSend(s, 'view');
+
+  polish_control = [AppBuilder sanitize_selector:aSelector];
+
+  //Object created.
+  var s = [POFactory withControl: polish_control withArgs: args];
+  //  params = s.parse_params(params)
+  var view = [s view];
   if(view != nil)
     objj_msgSend( parent, 'addSubview:', view);
-  }
+
   return s;
 }
 

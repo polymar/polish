@@ -15,11 +15,13 @@
 
 - (void)applicationDidFinishLaunching:(CPNotification)aNotification
 {
-    var theWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPBorderlessBridgeWindowMask];
+  Polish = new Object();
+  var theWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPBorderlessBridgeWindowMask];
 
       //app is visible outside using objj syntax.
     //js can interact with app using objj_msgSend(app, message, params..);
     app = [[AppBuilder alloc] initWithContentView:theWindow];
+    newWindow = [[AppBuilder alloc] init];
 
     //default stuff... setting background black.
     [theWindow orderFront:self];
