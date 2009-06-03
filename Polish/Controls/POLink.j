@@ -31,27 +31,29 @@
 */
 - (id) link: (id)aHref
 {
-  self = [super init];
-   __delegate = [POLinkImpl withTextValue: aHref href: aHref];
-  [self createJSMethods: ['href:', 'on_click:', 'text:']];
-  return self;
+  	self = [super init];
+	if(self) {
+		__delegate = [POLinkImpl linkWithTextValue: aHref href: aHref];
+		[self createJSMethods: ['href:', 'on_click:', 'text:']];
+	}
+    return self;
 }
-
 
 - (void) text:(CPString) aText {
     [__delegate text: aText];
-  }
-- (void) href:(CPString) aLink {
+}
 
+- (void) href:(CPString) aLink {
+	[__delegate href: aLink];
 }
 
 - (void) on_click:(Function)aFunction {
-  _function = aFunction;
+  	_function = aFunction;
 }
 
 - (void) exec {
   if(_function != nil)
-    _function();
+    	_function();
 }
 
 @end

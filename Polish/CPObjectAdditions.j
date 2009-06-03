@@ -17,7 +17,7 @@
 - (void) createForwardJSMethods:(CPArray) methods {
   for(var i=0; i < methods.length ; i++){
     method_name = methods[i].split(':').shift();
-      method_call = "self."+method_name + " = function() { console.debug( "+ method_name + " ); return objj_msgSend(self, 'forward::', '"+  method_name  +"', arguments); }";
+      method_call = "self."+method_name + " = function() { return objj_msgSend(self, 'forward::', '"+  method_name  +"', arguments); }";
       eval(method_call);
     }
 }

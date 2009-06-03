@@ -40,30 +40,27 @@
 
 function load_class() {
   return {
-    //"friend_collection" : FriendsCollection,
-    //"friend"      : FriendView,
-    "form"        : POForm,
-    "login"       : POLogin,
-    "stack"       : POStack,
-    "button"      : POButton,
-    "submit"      : POSubmit,
-    "image"       : POImage,
-    "progress"      : POProgress,
-    "text"        : POText,
-    "label"       : POText,
-    "subtitle"      : POText,
-    "password"      : POText,
-    "video"       : POVideo,
-    "alert"       : POAlert,
-    "confirm"     : POConfirm,
-    "ask_color"     : POAskColor,
-    "check"       : POCheck,
-
-    "radio"       : PORadio,
-    "slider"      : POSlider,
-      "list_box"      : POList,
-      "link"        : POLink
-
+    "form"        			: POForm,
+    "login"       			: POLogin,
+    "stack"       			: POStack,
+    "button"      			: POButton,
+    "submit"      			: POSubmit,
+    "image"       			: POImage,
+    "progress"    			: POProgress,
+    "text"        			: POText,
+    "label"       			: POText,
+    "subtitle"    			: POText,
+    "password"    			: POText,
+    "video"      			: POVideo,
+    "alert"       			: POAlert,
+    "confirm"     			: POConfirm,
+    "ask_color"   			: POAskColor,
+    "check"       			: POCheck,
+    "radio"       			: PORadio,
+    "slider"      			: POSlider,
+    "list_box"    			: POList,
+    "link"        			: POLink,
+	"photo_collection"		: POPhotoCollection
   };
 };
 

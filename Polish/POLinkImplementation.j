@@ -3,33 +3,31 @@
 {
   CPString       _href;
   CPString       _text;
-  DOMElement      FIXME_link;
-  DOMElement        _LINK_TEXTElement;
+  DOMElement     FIXME_link;
+  DOMElement     _LINK_TEXTElement;
 
-  id              _delegate;
+  id             _delegate;
 
-  CPScrollView    _scrollView;
-  CPView          _contentView;
+  CPScrollView   _scrollView;
+  CPView         _contentView;
 
-  JSObject        _existingSelectStart;
+  JSObject       _existingSelectStart;
 
-  BOOL            _alreadyFired;
+  BOOL           _alreadyFired;
 }
 
 
 
-+(id)withTextValue:(CPString)aText href:(CPString)aHref
++ (id)linkWithTextValue:(CPString)aText href:(CPString)aHref
 {
   var link = [[POLinkImpl alloc] initWithFrame:CGRectMakeZero()];
   link._text = link._href = aHref;
   [link sizeToFit];
 
-  //   console.debug(size);
-
    link.FIXME_link = document.createElement("a");
 
    link.FIXME_link.style.width  = "100%";
-    link.FIXME_link.style.height = "100%";
+   link.FIXME_link.style.height = "100%";
 
 
     link.FIXME_link.style.position = "absolute";
@@ -56,11 +54,11 @@
 
     return link;
 }
+
 -(void) sizeToFit
 {
   var size = [(_text || " ") sizeWithFont:[self currentValueForThemeAttribute:@"font"]];
   [self setFrameSize:CGSizeMake(size.width + (16.0 * size.width/100.0), size.height + 6)];
-  console.debug(size);
 }
 
 
@@ -71,14 +69,12 @@
 
   [self sizeToFit];
 }
+
 -(void) href: aHref
 {
   _href = aHref;
   FIXME_link.href = aHref;
 }
-
-
-
 
 - (void)viewDidMoveToSuperview
 {

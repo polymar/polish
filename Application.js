@@ -1,6 +1,3 @@
-
-debugger;
-console.debug('in Application');
 app.create({"title" : "CapWaves exps.", "width" : 800, "height" : 580, "color" : red() });
 
   stack = app.stack({"width" : 800, "height" : 500});

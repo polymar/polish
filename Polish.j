@@ -1,4 +1,3 @@
-
 @import "AppBuilder.j"
 @import "Polish/CPObjectAdditions.j"
 @import "Polish/CPViewAdditions.j"
@@ -30,4 +29,4 @@
 @import "Polish/Extras/POSubmit.j"
 @import "Polish/Extras/POForm.j"
 @import "Polish/Extras/POLogin.j"
-console.log('in Application did finish launching');
+@import "Polish/Extras/POPhotoCollection.j"

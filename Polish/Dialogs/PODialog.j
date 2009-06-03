@@ -5,9 +5,9 @@
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
 
-@implementation PODialog : POControl {
-  id      __delegate;
-  CPString  _name;
+@implementation PODialog : CPObject {
+  	id      __delegate;
+  	CPString  _name;
 }
 
 - (id) init {
