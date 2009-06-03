@@ -52,7 +52,7 @@
   list.size(200,22);
   list.on_select( function(x) {alert(x);} );
 
-  stack.login({x : 300, y : 350}).color(darkgray());
+  //stack.login({x : 300, y : 350}).color(darkgray());
 
   form = app.form({"width" : 350, "height" : 350, action : 'http://search.twitter.com/search.json'});
   form.location(400,10);

@@ -6,7 +6,6 @@
  */
 
 @implementation POConfirm : PODialog {
-	id 			__delegate;
 	var			_on_yes_function;
 	var			_on_no_function;
 }

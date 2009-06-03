@@ -9,50 +9,48 @@
 polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:', 'name:'];
 
 @implementation POControl : CPObject {
-  id      __delegate;
-  CPString  _name;
-}
-- (id)withControl:(CPString)aControl withArgs: (id)args
-{
-  var control = [self performSelector: aControl];
-  [self applyMethods:args[0] onControl: control];
-  return control;
+  	id      __delegate;
+  	CPString  _name;
 }
 
-- (id) applyMethods: (id)methodList onControl:(id)aControl
-{
-  for( var memb in methodList) {
-      objj_msgSend(POControl , 'apply_method:to:with:', memb, aControl, methodList[memb] );
-  }
+- (id)withControl:(CPString)aControl withArgs: (id)args {
+	var control = [self performSelector: aControl];
+  	[self applyMethods:args[0] onControl: control];
+  	return control;
+}
+
+- (id) applyMethods: (id)methodList onControl:(id)aControl {
+  	for( var memb in methodList) {
+      	objj_msgSend(POControl , 'apply_method:to:with:', memb, aControl, methodList[memb] );
+  	}
 }
 /*
 * creates a selector and apply to an object.
 */
 + (SEL) apply_method:(CPString) method_name to:(id) obj with:(CPObject) param {
-  cString = method_name+=':';
-  cSel = CPSelectorFromString(cString);
-  objj_msgSend(obj , cSel , param);
+  	cString = method_name+=':';
+  	cSel = CPSelectorFromString(cString);
+  	objj_msgSend(obj , cSel , param);
 }
 
-
 - (id) init {
-  self = [super init];
-  if(self) {
-    [self createJSMethods: polish_methods];
-  }
-  return self;
+  	self = [super init];
+  	if(self) {
+    	[self createJSMethods: polish_methods];
+  	}
+  	return self;
 }
 
 - (void) name:(CPString) n {
-  if(n != undefined)
-    _name = n;
-  else {
-    if(_name == undefined) {
-      return __delegate.__address;
-    } else {
-      return _name;
-    }
-  }
+  	if(n != undefined)
+    	_name = n;
+  	else {
+    	if(_name == undefined) {
+     		return __delegate.__address;
+    	} else {
+      		return _name;
+    	}
+  	}
 }
 
 - (void) addChild:(POControl) child {

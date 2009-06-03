@@ -12,7 +12,6 @@ function ask_color() {
 }
 
 @implementation POAskColor : PODialog {
-	id 			__delegate;
 	var			_choose_function;
 }
 

@@ -18,7 +18,7 @@ function alert(x, t) {
 }
 
 @implementation POAlert : PODialog {
-	id 			__delegate;
+	
 }
 
 - (id) alert {

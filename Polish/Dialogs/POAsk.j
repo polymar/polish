@@ -8,7 +8,7 @@
 //TODO need to implement this. no cpalert with a text field
 
 @implementation POAsk : PODialog {
-	id 			__delegate;
+	
 }
 
 - (id) ask {

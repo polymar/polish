@@ -5,9 +5,8 @@
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
 
-@implementation PODialog : CPObject {
-  	id      __delegate;
-  	CPString  _name;
+@implementation PODialog : POControl {
+ 
 }
 
 - (id) init {
@@ -16,17 +15,6 @@
     //TODO init something here if needed
   }
   return self;
-}
-
-- (void) name:(CPString) n {
-  if(n != undefined)
-    _name = n;
-  else
-    return _name;
-}
-
-- (CPString) name {
-  return _name;
 }
 
 - (void) addSubview:(CPView) v {
