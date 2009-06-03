@@ -13,10 +13,10 @@ polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'lo
   	CPString  _name;
 }
 
-- (id)withControl:(CPString)aControl withArgs: (id)args {
-	var control = [self performSelector: aControl];
-  	[self applyMethods:args[0] onControl: control];
-  	return control;
+- (id) control:(CPString)aControl withArgs: (id)args {
+	self = [self performSelector: aControl];
+  	[self applyMethods:args[0] onControl: self];
+  	return self;
 }
 
 - (id) applyMethods: (id)methodList onControl:(id)aControl {
@@ -24,6 +24,7 @@ polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'lo
       	objj_msgSend(POControl , 'apply_method:to:with:', memb, aControl, methodList[memb] );
   	}
 }
+
 /*
 * creates a selector and apply to an object.
 */

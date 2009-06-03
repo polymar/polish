@@ -10,13 +10,13 @@
 @implementation POFactory : CPObject
 
 
-+ (id)withControl:(CPString)aControl withArgs: (id)args
++ (id)control:(CPString)aControl withArgs: (id)args
 {
   var controlClass = get_class(aControl);
   if(controlClass != nil)
   {
     var cl = [controlClass alloc];
-    return [cl withControl:aControl withArgs: args];
+    return [cl control:aControl withArgs: args];
   } else {
     console.error('@#!Polish Error -> '+aControl+' is not a known message.');
 
