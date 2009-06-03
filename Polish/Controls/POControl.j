@@ -6,7 +6,7 @@
  */
 
 
-polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:'];
+polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:', 'name:'];
 
 @implementation POControl : CPObject {
   id      __delegate;
@@ -15,19 +15,7 @@ polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'lo
 - (id)withControl:(CPString)aControl withArgs: (id)args
 {
   var control = [self performSelector: aControl];
-
   [self applyMethods:args[0] onControl: control];
-
-//      if(args.length > 1){
-//        if(typeof args[1] == 'function')
-//          s['afterInit'] = args[1]; //add the function to call after initializing the object.
-//        else
-//          console.warn('second argument is not a function');
-//      }
-  if(control.afterInit){
-    control.afterInit();
-  }
-
   return control;
 }
 
@@ -54,15 +42,29 @@ polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'lo
   }
   return self;
 }
+
 - (void) name:(CPString) n {
   if(n != undefined)
     _name = n;
-  else
-    return _name;
+  else {
+    if(_name == undefined) {
+      return __delegate.__address;
+    } else {
+      return _name;
+    }
+  }
 }
 
-- (CPString) name {
-  return _name;
+- (void) addChild:(POControl) child {
+  /*
+  if([child isKindOfClass:CPView]) {
+    [self addSubview:child];
+    return;
+  }
+  */
+  if([child isKindOfClass:POControl]) {
+    [self addSubview:[child view]];
+  }
 }
 
 - (void) addSubview:(CPView) v {
@@ -105,19 +107,21 @@ polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'lo
 }
 
 - (void) color:(id) colorName {
-  if (colorName.isa.name == 'CPColor') {
-  [__delegate setBackgroundColor:colorName];
-  return;
-  }
-  if (colorName.isa.name == 'POColor') {
-  [__delegate setBackgroundColor:[colorName color]];
-  return;
-  }
-  c = [POColor colorWithName:colorName];
+  var c = [self sintetize_color:colorName];
   if(c != nil)
     [__delegate setBackgroundColor:c];
   else
     console.log(color + ' is not a supported color.');
+}
+
+- (CPColor) sintetize_color:(id) colorName {
+  if (colorName.isa.name == 'CPColor') {
+    return colorName;
+  }
+  if (colorName.isa.name == 'POColor') {
+    return [colorName color];
+  }
+  return [POColor colorWithName:colorName];
 }
 
 - (void) width:(CGFloat) xxx height:(CGFloat) yyy {

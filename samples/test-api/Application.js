@@ -1,30 +1,27 @@
-
-debugger;
-console.debug('in Application');
-app.create({"title" : "CapWaves exps.", "width" : 800, "height" : 580, "color" : red() });
+  app.create({"title" : "CapWaves exps.", "width" : 800, "height" : 580, "color" : red() });
 
   stack = app.stack({"width" : 800, "height" : 500});
   stack.location(10, 10);
   stack.color('grayColor');
-
+  
   text = stack.text();
   text.location(100, 50);
   text.placeholder('Bank account numbers please');
   text.size(200, 30);
-
+  
   var time = new Date();
 
   time_button = stack.button({title : "Date", width : 100.0, height : 20.0, x : 150, y : 50, on_click : function() {alert(time); }});
-
+  
   time_button.location(100,10);
   //time_button.on_click(function() {alert(time); });
 
   confirm_button = stack.button({title : "Confirm", width : 100.0, height : 20.0, x : 220, y : 10});
-  confirm_button.on_click(function(){
-  c = app.confirm({title : "title", message : "click yes or no"});
-    c.on_yes(function() {console.log('yes')} );
-    c.on_no(function() {console.log('no');} );
-
+  confirm_button.on_click(function(){ 
+	c = app.confirm({title : "title", message : "click yes or no"});
+	  c.on_yes(function() {console.log('yes')} );
+	  c.on_no(function() {console.log('no');} );
+	
   });
 
   check = stack.check({title : "checkbox"});
@@ -41,14 +38,11 @@ app.create({"title" : "CapWaves exps.", "width" : 800, "height" : 580, "color" :
   label.location(200, 50);
   label.value('Bank account numbers please');
   label.size(200, 30);
-link = stack.link('http://github.com/polymar/polish/tree/master', {text: 'Polish'});
-//link.size(250, 25);
-link.location(300, 300);
 
   t = stack.text({x : 100, y: 255, width : 100, height : 30});
   p = stack.password( { x : 100, y: 330, width : 200, height : 30 } );
   p.on_change( function(x) { t.value(x); } );
-
+  
   s = stack.slider();
   s.location(100,300);
   s.on_change(function(x) {t.value(x);} );
@@ -67,6 +61,27 @@ link.location(300, 300);
   form.submit().location(20,100);
   form.text({name : 'q', width : 150, height : 30}).location(20,40);
 
+  /*
+  app { 
+	title: "CapWaves", width: 620, height: 580, color: red, load: alert { text: 'inside' }
+	stack {
+		name: Main Window
+		width: 550, height: 500, x: 10, y: 10, color: gray
+		text { 
+			x: 10, y: 10, height: 200, width: 30,
+			placeholder: Bank account numbers please
+		}
+		ask-color {
+			choose: invoke {
+				object: Main Window, method: color
+			}
+		}
+	}
+  }
+*/
 
+  
 
-//wd = newWindow.create({"title" : "New window", "width" : 220, "height" : 280, x: 200, y:200 });
+  
+  
+

@@ -6,7 +6,6 @@
  */
 
 @import <AppKit/CPButton.j>
-@import "POControl.j"
 
 @implementation POCheck : POControl {
     var       	_select_function;
@@ -20,7 +19,7 @@
   self = [super init];
   if(self) {
 	__delegate = [CPCheckBox checkBoxWithTitle:@""];
-	[self createJSMethods: ['title:', 'on_select:', 'on_deselect', 'enabled:']];
+	[self createJSMethods: ['title:', 'on_select:', 'on_deselect', 'enabled:', 'value']];
     [__delegate setBezelStyle:CPHUDBezelStyle];
     [__delegate setTarget:self];
     [__delegate setAction:@selector(exec)];
@@ -33,6 +32,15 @@
   		[__delegate setTitle:t];
 	else
 		return [__delegate title];
+}
+
+- (CPString) value {
+	var st = objj_msgSend(__delegate, 'state');
+	if(st == 1) {
+		return 'true';
+	} else {
+		return 'false';
+	}
 }
 
 - (void) enabled:(BOOL) state {

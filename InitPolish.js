@@ -7,6 +7,6 @@ function load_file(filename) {
 };
 
 function polish_loaded(){
-  load_file('Application.js');
+  load_file('./samples/tweet-polish/Application.js');
 }
 

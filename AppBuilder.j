@@ -4,7 +4,7 @@
  * Created by Roberto Gamboni on 02/15/2009.
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
-polish_components   =   ['stack', 'ask_color', 'link', 'confirm', 'alert', 'button', 'check', 'radio', 'text', 'progress', 'image', 'video', 'label', 'login', 'form', 'submit', 'friend', 'friend_collection'];
+polish_components   =   ['stack', 'ask_color', 'confirm', 'alert', 'button', 'check', 'radio', 'slider', 'text', 'password', 'list_box', 'progress', 'image', 'video', 'label', 'subtitle', 'login', 'form', 'submit', 'friend', 'friend_collection', 'link'];
 
 @implementation AppBuilder : CPObject {
   CPWindow    _mainWindow;
@@ -65,17 +65,16 @@ polish_components   =   ['stack', 'ask_color', 'link', 'confirm', 'alert', 'butt
     console.error('@#!Polish Error - Valid Syntax: app.create(json_params); ');
     return;
   }
-
-
   polish_control = [AppBuilder sanitize_selector:aSelector];
-
   //Object created.
   var s = [POFactory withControl: polish_control withArgs: args];
-  //  params = s.parse_params(params)
-  var view = [s view];
-  if(view != nil)
-    objj_msgSend( parent, 'addSubview:', view);
-
+  if([parent isKindOfClass:POControl])
+    objj_msgSend( parent, 'addChild:', s);
+  else {
+    var view = objj_msgSend(s, 'view');
+      if(view != nil)
+        objj_msgSend( parent, 'addSubview:', view);
+  }
   return s;
 }
 
