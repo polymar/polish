@@ -33,7 +33,6 @@ polish_components   =   ['stack', 'ask_color', 'confirm', 'alert',
 }
 
 /*
-
 * create the app and set the parameters.
 */
 - (id) create:(CPObject) what, ... //keeping open for future.

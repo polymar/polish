@@ -39,7 +39,7 @@
 
 		_objects = [ ];
 		[_collection_view setContent:_objects];
-		[self createJSMethods:['photos:', 'on_click:', 'on_double_click:', 'add:']];
+		[self createJSMethods:['photos:', 'on_click:', 'on_double_click:', 'add:', 'clear']];
 		
 	}
 	return self;
@@ -56,6 +56,12 @@
 
 - (void) add:(id) obj {
 	_objects.push( [[CPImage alloc] initWithContentsOfFile:obj size:CGSizeMake(100.0, 100.0)] );
+	objj_msgSend( _collection_view, 'reloadContent');
+}
+
+/*! FIXME - this method doesn't seem to work.. the collection still contains all the object !*/
+- (void) clear {
+	_objects = [ ];
 	objj_msgSend( _collection_view, 'reloadContent');
 }
 
@@ -100,7 +106,7 @@
 @implementation PhotoView : CPImageView
 {
     CPImageView _imageView;
-}
+}	
 
 - (void)setSelected:(BOOL)isSelected
 {

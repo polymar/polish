@@ -63,7 +63,6 @@
 	}
 	var req = [self generateRequest];
 	if(req != nil) {
-		console.log('starting request');
 		_connection = [CPJSONPConnection connectionWithRequest:req callback:'callback' delegate:self];
 	}
 }

@@ -30,3 +30,4 @@
 @import "Polish/Extras/POForm.j"
 @import "Polish/Extras/POLogin.j"
 @import "Polish/Extras/POPhotoCollection.j"
+@import "Polish/Extras/POFriendCollection.j"

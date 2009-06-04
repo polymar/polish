@@ -60,7 +60,8 @@ function load_class() {
     "slider"      			: POSlider,
     "list_box"    			: POList,
     "link"        			: POLink,
-	"photo_collection"		: POPhotoCollection
+	"photo_collection"		: POPhotoCollection,
+	"friend_collection"		: POFriendCollection
   };
 };
 
