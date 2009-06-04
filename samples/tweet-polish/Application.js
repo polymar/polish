@@ -18,7 +18,7 @@ public_stack = app.stack({x : 55, y : 220, width : 300, height : 400, color : li
 friend_stack = app.stack({x : 360, y : 220, width : 300, height : 400, color : lightgray()});
 
 search_res = app.stack({x : 665, y : 300, width : 300, height : 320, color : lightgray()});
-search_coll = search_res.friend_collection( { color : red() , x : 2, y : 2, width : 296, height : 316} );
+search_coll = search_res.friend_collection( { color : darkgray() , x : 2, y : 2, width : 296, height : 316} );
 
 search_form = app.form({x : 665, y : 220, width : 300, height : 80, color : lightgray(), action : 'http://search.twitter.com/search.json'});
 search_form.text({name : 'q', x : 5, y : 5, width : 210, height : 40});
@@ -29,4 +29,17 @@ search_form.post( function(x) {
 } );
 
 //test = public_stack.photo_collection( { photos : [ 'Resources/sample.jpg', 'Resources/sample2.jpg', 'Resources/sample3.jpg', 'Resources/sample4.jpg'] , color : red() } );
-test = public_stack.friend_collection( { color : red() , x : 2, y : 2, width : 296, height : 396} );
+//test = public_stack.friend_collection( { color : red() , x : 2, y : 2, width : 296, height : 396} );
+f = function() {
+	var login_y = login_stack.y();
+	login_stack.location(login_stack.x(), login_y - 5);
+};
+animate(20, f, function() { return (login_stack.y() + login_stack.height()) < 0});
+
+b = status_stack.button( {title : 'this is fun', x : 25, y : 70, height : 24, width : 70} );
+bf = function() {
+	b.x( b.x() + 2 );
+}
+b.on_click( function() {
+	animate(30, bf, 1 );
+});

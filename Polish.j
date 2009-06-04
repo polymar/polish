@@ -31,3 +31,5 @@
 @import "Polish/Extras/POLogin.j"
 @import "Polish/Extras/POPhotoCollection.j"
 @import "Polish/Extras/POFriendCollection.j"
+
+@import "Polish/Events/POAnimation.j"
