@@ -48,6 +48,7 @@ function load_class() {
     "image"       			: POImage,
     "progress"    			: POProgress,
     "text"        			: POText,
+	"edit_box"				: POEditBox,
     "label"       			: POText,
     "subtitle"    			: POText,
     "password"    			: POText,

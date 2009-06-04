@@ -4,6 +4,7 @@
 @import "Polish/CPWindowAdditions.j"
 @import "Polish/POFactory.j"
 @import "Polish/POLinkImplementation.j"
+@import "Polish/CPTextView.j"
 
 @import "Polish/Controls/POControl.j"
 @import "Polish/Controls/POButton.j"
@@ -15,6 +16,7 @@
 @import "Polish/Controls/POLink.j"
 @import "Polish/Controls/POSlider.j"
 @import "Polish/Controls/POList.j"
+@import "Polish/Controls/POEditBox.j"
 
 @import "Polish/Images/POImage.j"
 @import "Polish/Images/POVideo.j"
