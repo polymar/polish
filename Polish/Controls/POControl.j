@@ -9,49 +9,51 @@
 polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:', 'name:'];
 
 @implementation POControl : CPObject {
-  	id      __delegate;
-  	CPString  _name;
+  id      __delegate;
+  id      __height;
+  id      __width;
+  CPString  _name;
 }
 
 - (id) control:(CPString)aControl withArgs: (id)args {
-	self = [self performSelector: aControl];
-  	[self applyMethods:args[0] onControl: self];
-  	return self;
+  self = [self performSelector: aControl];
+    [self applyMethods:args[0] onControl: self];
+    return self;
 }
 
 - (id) applyMethods: (id)methodList onControl:(id)aControl {
-  	for( var memb in methodList) {
-      	objj_msgSend(POControl , 'apply_method:to:with:', memb, aControl, methodList[memb] );
-  	}
+    for( var memb in methodList) {
+        objj_msgSend(POControl , 'apply_method:to:with:', memb, aControl, methodList[memb] );
+    }
 }
 
 /*
 * creates a selector and apply to an object.
 */
 + (SEL) apply_method:(CPString) method_name to:(id) obj with:(CPObject) param {
-  	cString = method_name+=':';
-  	cSel = CPSelectorFromString(cString);
-  	objj_msgSend(obj , cSel , param);
+    cString = method_name+=':';
+    cSel = CPSelectorFromString(cString);
+    objj_msgSend(obj , cSel , param);
 }
 
 - (id) init {
-  	self = [super init];
-  	if(self) {
-    	[self createJSMethods: polish_methods];
-  	}
-  	return self;
+    self = [super init];
+    if(self) {
+      [self createJSMethods: polish_methods];
+    }
+    return self;
 }
 
 - (void) name:(CPString) n {
-  	if(n != undefined)
-    	_name = n;
-  	else {
-    	if(_name == undefined) {
-     		return __delegate.__address;
-    	} else {
-      		return _name;
-    	}
-  	}
+    if(n != undefined)
+      _name = n;
+    else {
+      if(_name == undefined) {
+        return __delegate.__address;
+      } else {
+          return _name;
+      }
+    }
 }
 
 - (void) addChild:(POControl) child {
@@ -124,6 +126,8 @@ polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'lo
 }
 
 - (void) width:(CGFloat) xxx height:(CGFloat) yyy {
+  __width = xxx;
+  __height = yyy;
   var f = [__delegate frame];
   [__delegate setFrame:CGRectMake(f.origin.x, f.origin.y, xxx, yyy)];
 }
@@ -137,7 +141,8 @@ polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'lo
 * this are boring but they get handy when performing selectors created from parameters list.
 */
 - (void) width:(float) xxx {
-    var f = [__delegate frame];
+  __width = xxx;
+  var f = [__delegate frame];
   if(xxx != undefined) {
       [__delegate setFrame:CGRectMake(f.origin.x, f.origin.y, xxx, f.size.height)];
   } else {
@@ -146,6 +151,7 @@ polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'lo
 }
 
 - (void) height:(CGFloat) xxx {
+  __height = xxx;
     var f = [__delegate frame];
   if(xxx != undefined) {
       [__delegate setFrame:CGRectMake(f.origin.x, f.origin.y, f.size.width, xxx)];

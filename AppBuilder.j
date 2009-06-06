@@ -4,12 +4,12 @@
  * Created by Roberto Gamboni on 02/15/2009.
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
-polish_components   =   ['stack', 'ask_color', 'confirm', 'alert', 
-						'button', 'check', 'radio', 'slider', 'text', 'password', 'list_box', 'progress', 'link',
-						'image', 'video', 
-						'label', 'subtitle', 
-						'login', 'form', 'submit', 
-						'friend_collection', 'photo_collection'];
+polish_components   =   ['stack', 'ask_color', 'confirm', 'alert',
+            'button', 'check', 'radio', 'slider', 'text', 'password', 'list_box', 'progress', 'link',
+            'image', 'video',
+            'label', 'subtitle',
+            'login', 'form', 'submit',
+            'friend_collection', 'photo_collection'];
 
 @implementation AppBuilder : CPObject {
   CPWindow    _mainWindow;
@@ -55,12 +55,18 @@ polish_components   =   ['stack', 'ask_color', 'confirm', 'alert',
   objj_msgSend(_mainWindow , 'display');
   return self;
 }
+-(void) addChild:(id)aControl
+{
+  var view = objj_msgSend(aControl, 'view');
+  if(view != nil)
+    objj_msgSend( _contentView, 'addSubview:', view);
+}
 
 /*
 * forward all the not implemented methods to polish factory class.
 */
 - (id)forward:(SEL)aSelector :(marg_list)args {
-  return [AppBuilder obj_create:aSelector :args :_contentView];
+  return [AppBuilder obj_create:aSelector :args :self];
 }
 
 + (id) obj_create:(SEL)aSelector :(man_list)args :(id) parent {
@@ -72,13 +78,8 @@ polish_components   =   ['stack', 'ask_color', 'confirm', 'alert',
   polish_control = [AppBuilder sanitize_selector:aSelector];
   //Object created.
   var s = [POFactory control: polish_control withArgs: args];
-  if([parent isKindOfClass:POControl])
-    objj_msgSend( parent, 'addChild:', s);
-  else {
-    var view = objj_msgSend(s, 'view');
-      if(view != nil)
-        objj_msgSend( parent, 'addSubview:', view);
-  }
+  objj_msgSend( parent, 'addChild:', s);
+
   return s;
 }
 
