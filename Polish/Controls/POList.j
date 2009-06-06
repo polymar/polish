@@ -27,9 +27,9 @@
 }
 
 - (void) items:(CPArray) its {
-	for(var x in its) {
-		if(its.hasOwnProperty(x)) {
-			objj_msgSend( __delegate, 'addItemWithTitle:', its[x]);
+	for(var _x in its) {
+		if(its.hasOwnProperty(_x)) {
+			objj_msgSend( __delegate, 'addItemWithTitle:', its[_x]);
 		}
 	}
 }
