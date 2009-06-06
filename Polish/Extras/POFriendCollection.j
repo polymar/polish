@@ -50,7 +50,7 @@
 	var data = anObject.results;
 	for(var i=0; i<data.length; i++) {
 		var json = data[i];
-		var a = { img : json.profile_image_url, name : json.from_user, status : json.text};
+		var a = { img : json.profile_image_url, name : json.from_user, status : json.text };
 	    _objects.push(a);
 	}	
 	objj_msgSend( _collection_view, 'reloadContent');
