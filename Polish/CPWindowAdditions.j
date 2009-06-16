@@ -10,6 +10,81 @@
 @implementation CPWindow (Polish) 
 
 /*
+- (id) initWithContentRect:(CGRect) aContentRect styleMask:(unsigned int) aStyleMask {
+	self = [super initWithContentRect:aContentRect styleMask:aStyleMask];
+	if(self) {
+		[self createJSMethods:['title']];
+	}
+	return self;
+}
+*/
+
+- (void) size:xxx xy:yyy {
+  [self width:xxx height:yyy];
+}
+
+- (void) location:xxx xy:yyy {
+  [self hmargin:xxx vmargin:yyy];
+}
+
+- (void) x:(CGFloat) f {
+  if(f != undefined) {
+    [self hmargin:f];
+  } else {
+    return [self frame].origin.x;
+  }
+}
+
+- (void) y:(CGFloat) f {
+  if(f != undefined) {
+    [self vmargin:f];
+  } else {
+    return [self frame].origin.y;
+  }
+}
+
+/*
+* Forces the content of the view to redraw.
+*/
+- (void) display {
+  [[self contentView] setNeedsDisplayInRect:[[self contentView]	 frame]];
+}
+
+- (void) color:(id) colorName {
+  var c = [self sintetize_color:colorName];
+  if(c != nil)
+    [self setBackgroundColor:c];
+  else
+    console.log(color + ' is not a supported color.');
+}
+
+- (CPColor) sintetize_color:(id) colorName {
+  if (colorName.isa.name == 'CPColor') {
+    return colorName;
+  }
+  if (colorName.isa.name == 'POColor') {
+    return [colorName color];
+  }
+  return [POColor colorWithName:colorName];
+}
+
+- (void) hmargin:(CGFloat) xxx vmargin:(CGFloat) yyy {
+    var f = [self frame];
+  [self setFrame:CGRectMake(xxx, yyy, f.size.width, f.size.height)];
+}
+
+- (void) hmargin:(CGFloat) xxx {
+    f = [self frame];
+    [self setFrame:CGRectMake(xxx, f.origin.y, f.size.width, f.size.height)];
+}
+
+- (void) vmargin:(CGFloat) xxx {
+    f = [self frame];
+    [self setFrame:CGRectMake(f.origin.x, xxx, f.size.width, f.size.height)];
+}
+
+
+/*
 * Set the dimension of the main window.
 */
 - (void) width:(CGFloat) width height:(CGFloat) height {
@@ -31,14 +106,6 @@
 }
 
 /*
-* Forces the content of the window to redraw.
-*/
-- (void) display {
-	cv = [self contentView];
-	[cv setNeedsDisplayInRect:[cv frame]];
-}
-
-/*
 * Set the title of the window.
 */
 - (void) title:(CPString) title {
@@ -50,25 +117,6 @@
 */
 - (void) resizable:(BOOL) flag {
 	[self setShowsResizeIndicator:flag];
-}
-
-/*
-* Change the background color of the main window.
-*/
-- (void) color:(CPString) colorName {
-	if (colorName.isa.name == 'CPColor') {
-		[self setBackgroundColor:colorName];
-		return;
-	}
-	if (colorName.isa.name == 'POColor') {
-		[self setBackgroundColor:[colorName color]];
-		return;
-	}
-	c = [POColor colorWithName:colorName];
-	if(c != nil)
-		[self setBackgroundColor:c];
-	else
-		console.log(color + ' is not a supported color.');
 }
 
 /*
