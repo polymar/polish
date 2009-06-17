@@ -17,11 +17,14 @@ polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'lo
 }
 
 - (id) control:(CPString)aControl withArgs: (id)args parent:(id)aParent{
-  self = [self performSelector: aControl];
-  __parent = aParent;
-  [__parent addChild: self];
-  [self applyMethods:args[0] onControl: self];
-  return self;
+  	self = [self performSelector: aControl];
+    if(self) {
+		__parent = aParent;
+		[__parent addChild: self];
+		[self applyMethods:args[0] onControl: self];//see how to avoid to re-render everything. maybe not displaying anything 
+													//till applying all the parameters
+	}
+  	return self;
 }
 
 - (id) applyMethods: (id)methodList onControl:(id)aControl {

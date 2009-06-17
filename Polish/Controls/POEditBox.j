@@ -11,6 +11,20 @@
   var     _done_function;
 }
 
+- (id) control:(CPString)aControl withArgs: (id)args parent:(id)aParent {
+	if(aControl == 'para')
+    	var control = [self para: args[0]];
+  	else {
+    	console.error('Wrong selector sent to POEditBox');
+    	return nil;
+  	}
+	[aParent addChild: self];
+  	if(args[1]) {
+    	[self applyMethods:args[1] onControl: control];
+  	}
+  	return control;
+}
+
 /*
 * Init an editable text field with hmargin and vmargin = 0;
 */
@@ -19,6 +33,23 @@
 	if(self) {
 		__delegate = [[CPTextView alloc] initWithFrame:CGRectMakeZero()];
 		[self createJSMethods: ['value:', 'placeholder:', 'on_begin:', 'on_change:', 'on_done:']];
+		//[__delegate setFont:[CPFont systemFontOfSize:14]];
+		//[__delegate setBezelStyle:CPTextFieldSquareBezel];
+		//[__delegate setBezeled:YES];
+		//[__delegate setEditable:YES];
+		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(begin_action:) name: "CPControlTextDidBeginEditingNotification" object: nil];
+		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(change_action:) name: "CPControlTextDidChangeNotification" object: nil];
+		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(done_action:) name: "CPControlTextDidEndEditingNotification" object: nil];
+	}
+  	return self;
+}
+
+- (id) para:(CPString) _text {
+	self = [super init];
+	if(self) {
+		__delegate = [[CPTextView alloc] initWithFrame:CGRectMakeZero()];
+		[self createJSMethods: ['value:', 'on_begin:', 'on_change:', 'on_done:']];
+		objj_msgSend( __delegate, 'setStringValue:', _text);
 		//[__delegate setFont:[CPFont systemFontOfSize:14]];
 		//[__delegate setBezelStyle:CPTextFieldSquareBezel];
 		//[__delegate setBezeled:YES];

@@ -40,12 +40,15 @@
   label.size(200, 30);
 
   t = stack.text({x : 100, y: 255, width : 100, height : 30});
-  p = stack.password( { x : 100, y: 330, width : 200, height : 30 } );
-  p.on_change( function(x) { t.value(x); } );
+  //p = stack.password( { x : 100, y: 330, width : 200, height : 30 } );
+  //p.on_change( function(x) { t.value(x); } );
 
   s = stack.slider();
   s.location(100,300);
   s.on_change(function(x) {t.value(x);} );
+
+  li = stack.link( 'http://www.google.com', { text : 'google' } );
+  li.location(100, 330);
 
   list = stack.list_box({items : ['1', '2', '3']});
   list.location(100,150);
@@ -82,7 +85,7 @@
 */
 
 w = Polish.window({"title" : "New window", "width" : 200, "height" : 200, "color" : red(), x: 200, y: 200 });
-w.ask({'message':  'Age : '});
+//w.ask({'message':  'Age : '});
 
 
 

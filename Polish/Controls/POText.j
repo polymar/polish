@@ -91,6 +91,7 @@
 	return self;
 }
 
+/*
 - (id) para {
 	self = [self label];
 	if(self) {
@@ -100,6 +101,7 @@
 	}
 	return self;
 }
+*/
 
 /*
 * Init a label with hmargin and vmargin = 0

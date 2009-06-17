@@ -15,6 +15,8 @@ status_text.on_change( function(x) {
   char_label.value( (140 - x.length).toString() );
 });
 
+status_value = status_stack.para('this is my status', { x : 10, y : 40, width : 200, height : 35} );
+
 public_stack = app.stack({x : 55, y : 220, width : 300, height : 400, color : lightgray()});
 public_coll = public_stack.friend_collection( {color : darkgray() , x : 2, y : 2, width : 296, height : 396} );
 

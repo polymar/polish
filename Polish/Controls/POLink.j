@@ -8,33 +8,31 @@
 @import "POControl.j"
 
 @implementation POLink : POControl {
-  var         _function;
+  //var         _function;
 }
 
-- (id)withControl:(CPString)aControl withArgs: (id)args
-{
-  if(aControl == 'link')
-    var control = [self link: args[0]];
-  else
-  {
-    console.error('Wrong selector sent to POLink');
-    return NO;
-  }
-  if(args[1])
-    [self applyMethods:args[1] onControl: control];
-
-  return control;
+- (id) control:(CPString)aControl withArgs: (id)args parent:(id)aParent {
+	if(aControl == 'link')
+    	var control = [self link: args[0]];
+  	else {
+    	console.error('Wrong selector sent to POLink');
+    	return nil;
+  	}
+  	if(args[1]) {
+    	[self applyMethods:args[1] onControl: control];
+  	}
+	[aParent addChild: self];
+  	return control;
 }
 
 /*
 * Init a cpbutton with hmargin and vmargin = 0;
 */
-- (id) link: (id)aHref
-{
+- (id) link:(id)aHref {
   	self = [super init];
 	if(self) {
-		__delegate = [POLinkImpl linkWithTextValue: aHref href: aHref];
-		[self createJSMethods: ['click:', 'on_click:', 'text:']];
+		__delegate = [POLinkImpl linkWithTextValue:aHref href: aHref];
+		[self createJSMethods: ['click:', 'text:']];
 	}
     return self;
 }
@@ -47,6 +45,7 @@
 	[__delegate href: aLink];
 }
 
+/*
 - (void) on_click:(Function)aFunction {
   	_function = aFunction;
 }
@@ -55,5 +54,6 @@
   if(_function != nil)
     	_function();
 }
+*/
 
 @end

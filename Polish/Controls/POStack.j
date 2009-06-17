@@ -39,8 +39,8 @@
   //First one.
   if(members.length == 0)
     {
-      lastX = self.x() + marginX;
-      lastY = self.y() + marginY;
+      lastX = self.x() + marginX;//this is wrong
+      lastY = self.y() + marginY;//this is wrong
     } else
     {
       var lastMember = members[members.length - 1];
