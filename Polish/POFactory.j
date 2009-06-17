@@ -16,7 +16,6 @@
   if(controlClass != nil)
   {
     var cl = [controlClass alloc];
-
     return [cl control:aControl withArgs: args parent: aParent];
   } else {
     console.error('@#!Polish Error -> '+aControl+' is not a known message.');

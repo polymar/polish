@@ -25,7 +25,8 @@
 	
 	//FIX THIS - we might want to choose if doing local or cross-domain ajax call
 	//CPURLConnection				_connection;
-	CPJSONPConnection 		_connection;
+	//CPJSONPConnection 		_jsonp_connection;
+	var			_connection_delegate;
 }
 
 /*
@@ -64,14 +65,44 @@
 			return;
 		}
 	}
-	if(_connection) {
-		[_connection cancel];	
-	}
+	//if(_jsonp_connection) {
+	//	[_jsonp_connection cancel];	
+	//}
 	var req = [self generateRequest];
-	if(req != nil) {
-		console.log(req);
-		_connection = [CPJSONPConnection connectionWithRequest:req callback:"callback" delegate:self];
+	var _conn_type = _action.search('localhost');
+	if(_conn_type == -1) {
+		_connection_delegate = [[JSONPDelegate alloc] initWithDelegate:self];
+	} else {
+		_connection_delegate = [[URLDelegate alloc] initWithDelegate:self];
 	}
+	[_connection_delegate startRequest:req];
+	//if(req != nil) {
+	//	console.log(req);
+	//	_jsonp_connection = [CPJSONPConnection connectionWithRequest:req callback:"callback" delegate:self];
+	//}
+}
+
+- (void) didReceiveResponse:(CPHTTPURLResponse)resp {
+	
+}
+
+- (void) didFailWithError:(CPString) error {
+	console.log(error);
+	if(_form_error != undefined) {
+		_form_error(error);
+	}
+}
+
+- (void) didReceiveData:(CPString) data {
+	if(data) {
+		if(_postprocess != undefined) {
+			_postprocess(eval(data));
+		}
+	}
+}
+
+- (void) didFinishLoading {
+	
 }
 
 /*
@@ -99,7 +130,7 @@
 	}
 }
 */
-
+/*
 - (void)connection:(CPJSONPConnection)aConnection didReceiveData:(CPString)data {
 	console.log('didReceiveData');
 	if(data) {
@@ -115,6 +146,7 @@
 		_form_error(error);
 	}
 }
+*/
 
 - (CPURLRequest) generateRequest {
 	if(_action == undefined) {

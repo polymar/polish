@@ -4,7 +4,7 @@
  * Created by Roberto Gamboni on 05/20/2009.
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
-@import "../Helpers/twitter_helpers.js"
+//@import "../Helpers/twitter_helpers.js"
 
 @implementation POFriendCollection : POControl {
 		
@@ -52,7 +52,10 @@
 	if (data == undefined) data = anObject;
 	for(var i=0; i<data.length; i++) {
 		var json = data[i];
-		var a = { img : json.profile_image_url, name : json.from_user, status : json.text };
+		if(json.user == nil)
+			var a = { img : json.profile_image_url, name : json.from_user, status : json.text };
+		else
+			var a = { img : json.user.profile_image_url, name : json.user.name, status : json.text };
 	    _objects.push(a);
 	}	
 	objj_msgSend( _collection_view, 'reloadContent');

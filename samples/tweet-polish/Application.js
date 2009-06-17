@@ -1,11 +1,10 @@
-app.create({title : "Tweet Polish.", color : darkgray() });
+app = Polish.app({title : "Tweet Polish.", color : darkgray() });
 
-login_stack = app.login({login_type : 'horizontal', x : 55, y : 15, width : 910, height : 65, color : black(), action : 'http://twitter.com/statuses/friends_timeline.json'});
+login_stack = app.login({x : 55, y : 15, width : 910, height : 65, color : black(), action : 'http://localhost:9001?request_uri=http://twitter.com/statuses/friends_timeline.json'});
 login_stack.on_precondition_failed( function() { alert('please insert username and password') } );
 login_stack.on_error( function(x) { alert('wrong username or password'); } );
 login_stack.post(function(x) { 
 	console.log(x);
-	alert('auth');
 } );
 
 status_stack = app.stack({x : 55, y : 85, width : 910, height : 130, color : black()});

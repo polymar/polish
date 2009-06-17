@@ -84,6 +84,7 @@ BASIC_AUTH = "basic";
 	if(self) {
 		__delegate = [[CPLogin alloc] login];
 		_auth_type = BASIC_AUTH;
+		//_loginType = 'horizontal';
 		_preprocess = function() {
 			var u = objj_msgSend(__delegate, 'getUsername');
 			var p = objj_msgSend(__delegate, 'getPassword');
@@ -100,8 +101,8 @@ BASIC_AUTH = "basic";
 
 - (id) view {
 	if(_loginType == undefined) {
-		_loginType = 'classic';
-		objj_msgSend(__delegate, 'setClassicViewType');
+		_loginType = 'horizontal';
+		objj_msgSend(__delegate, 'setHorizontalViewType');
 	}
 	return __delegate;
 }
@@ -127,6 +128,8 @@ BASIC_AUTH = "basic";
 		console.log('unable to submit a form without action');
 		return nil;
 	}
+	//Content-Type: application/x-www-form-urlencoded
+	//Authorization: Basic cG9seW1hcjpjb2NjaW5lbGxh
 	//GET -> creating tag0=value0?tag1=value1
 	if(_method == 'GET') {
 		var request = [CPURLRequest requestWithURL:_action];
@@ -135,7 +138,8 @@ BASIC_AUTH = "basic";
 		var auth = [CPString stringWithFormat:@"%s:%s", u,p];
 		var base64auth = [CPString stringWithFormat:@"Basic %s", encode(auth)];
 		[request setHTTPMethod:"GET"];
-		[request setValue:base64auth forHTTPHeaderField:"Authentication"];
+		[request setValue:base64auth forHTTPHeaderField:"Authorization"];
+		[request setValue:"application/x-www-form-urlencoded" forHTTPHeaderField:"Content-Type"];
 		return request;
 	} 
 	//POST/PUT -> creating application/x-www-form-urlencoded or multipart/form-data
