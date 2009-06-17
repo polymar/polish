@@ -6,7 +6,7 @@
  */
 
 
-polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:', 'name:', 'remove'];
+polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:', 'name:', 'remove', 'hide', 'show'];
 
 @implementation POControl : CPObject {
   id      __parent;
@@ -52,9 +52,21 @@ polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'lo
 
 - (void) remove {
   if(__delegate) {
-    [__delegate removeFromSuperview];
+	objj_msgSend( __delegate, 'removeFromSuperview' );
   }
   //TODO notify to parent of redrawing.
+}
+
+- (void) hide {
+	if(__delegate) {
+		objj_msgSend( __delegate, 'setAlphaValue:', 0.0);
+	}
+}
+
+- (void) show {
+	if(__delegate) {
+		objj_msgSend( __delegate, 'setAlphaValue:', 1.0);
+	}
 }
 
 - (void) name:(CPString) n {

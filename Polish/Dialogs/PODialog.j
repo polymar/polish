@@ -18,12 +18,16 @@
 }
 
 - (void) addSubview:(CPView) v {
-
+	//Empty... no meaning for a dialog
 }
 
 - (id) view {
   objj_msgSend(__delegate, 'runModal');
   return nil;
+}
+
+- (void) remove {
+  //TODO.. 
 }
 
 /*

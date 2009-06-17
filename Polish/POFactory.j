@@ -19,7 +19,6 @@
     return [cl control:aControl withArgs: args parent: aParent];
   } else {
     console.error('@#!Polish Error -> '+aControl+' is not a known message.');
-
   }
   return NO;
 }
@@ -43,7 +42,7 @@ function load_class() {
     "form"              : POForm,
     "login"             : POLogin,
     "stack"             : POStack,
-    "flow"            : POFlow,
+    "flow"            	: POFlow,
     "button"            : POButton,
     "submit"            : POSubmit,
     "image"             : POImage,

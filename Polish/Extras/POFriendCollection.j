@@ -23,12 +23,12 @@
 		var rect = CGRectMake(0, 0, 300, 200);
 		_collection_view = [[CPCollectionView alloc] initWithFrame:rect];
 		[_collection_view setAutoresizingMask:CPViewWidthSizable];
-	    [_collection_view setMinItemSize:CGSizeMake(200, 70)];
-	    [_collection_view setMaxItemSize:CGSizeMake(300, 100)];
+	    [_collection_view setMinItemSize:CGSizeMake(350, 75)];
+	    [_collection_view setMaxItemSize:CGSizeMake(450, 100)];
 	    [_collection_view setDelegate:self];
 	
 		var itemPrototype = [[CPCollectionViewItem alloc] init];
-		[itemPrototype setView:[[ContactView alloc] initWithFrame:CGRectMake(0,0,200.0, 70.0)]];
+		[itemPrototype setView:[[ContactView alloc] initWithFrame:CGRectMake(0,0,400.0, 74.0)]];
         [_collection_view setItemPrototype:itemPrototype];
 
 		__delegate = [[CPScrollView alloc] initWithFrame:rect];
@@ -40,7 +40,7 @@
 
 		_objects = [  ];
 		[_collection_view setContent:_objects];
-		[self createJSMethods:['on_click:', 'on_double_click:', 'add:', 'contacts:', 'clear:', 'populate:']];
+		[self createJSMethods:['on_click:', 'on_double_click:', 'add:', 'contacts:', 'clear', 'populate:']];
 		
 	}
 	return self;
@@ -77,6 +77,13 @@
 
 /*! FIXME - this method doesn't seem to work.. the collection still contains all the object !*/
 - (void) clear {
+	var subs = [_collection_view subviews];
+	for(var view in subs) {
+		a = subs[view];
+		if (objj_msgSend(a, 'isKindOfClass:', CPView)) {
+			objj_msgSend( a, 'removeFromSuperview');
+		}
+	}
 	_objects = [];
 	objj_msgSend( _collection_view, 'reloadContent');
 }
@@ -123,9 +130,7 @@
 	
 	CPImageView		_contactImage;
 	CPTextField		_contactName;
-	CPTextField		_contactStatus;
-	CPView			_contactView;
-	
+	CPTextView		_contactStatus;
 }
 
 - (id) initWithFrame:(CGRect) frame {
@@ -147,36 +152,27 @@
 	var cname = ( anObject.hasOwnProperty('name') ) ? anObject.name : nil;
 	var cstatus = ( anObject.hasOwnProperty('status') ) ? anObject.status : nil;
 
-	if(_contactView == nil) {
-		_contactView = [[CPView alloc] initWithFrame:[self frame]];
-		[_contactView setBackgroundColor:[CPColor blackColor]];
-		[self addSubview:_contactView];
-	}
-
-	//if(img != nil) {
-		_contactImage = [[CPImageView alloc] initWithFrame:CGRectMake(5.0, 5.0, 64.0, 64.0)];
-		[_contactImage setImage:[[CPImage alloc] initWithContentsOfFile:img size:CGSizeMake(64.0, 64.0)]];
-		[_contactView addSubview:_contactImage];
-	//}
 	
-	//if(cname != nil) {
-		_contactName = [CPTextField labelWithTitle:cname];
-		[_contactName setFont:[CPFont systemFontOfSize:16]];
-	    [_contactName setTextColor:[CPColor whiteColor]];
-	    [_contactName setEditable:NO];
-	    [_contactName sizeToFit];
-	    [_contactName setFrame:CGRectMake(80.0, 5.0, CGRectGetWidth([_contactName bounds]), CGRectGetHeight([_contactName bounds]))];
-		[_contactView addSubview:_contactName];
-	//}
-	//if(cstatus != nil) {
-		_contactStatus = [CPTextField labelWithTitle:cstatus];
-		[_contactStatus setFont:[CPFont systemFontOfSize:14]];
-	    [_contactStatus setTextColor:[CPColor whiteColor]];
-	    [_contactStatus setEditable:NO];
-	    [_contactStatus sizeToFit];
-	    [_contactStatus setFrame:CGRectMake(80.0, 30.0, CGRectGetWidth([_contactStatus bounds]), CGRectGetHeight([_contactStatus bounds]))];
-		[_contactView addSubview:_contactStatus];
-	//}  
+	_contactImage = [[CPImageView alloc] initWithFrame:CGRectMake(2.0, 2.0, 70.0, 70.0)];
+	[_contactImage setImage:[[CPImage alloc] initWithContentsOfFile:img size:CGSizeMake(70.0, 70.0)]];
+	[self addSubview:_contactImage];
+	
+	_contactName = [CPTextField labelWithTitle:cname];
+	[_contactName setFont:[CPFont systemFontOfSize:16]];
+	[_contactName setTextColor:[CPColor whiteColor]];
+	[_contactName setEditable:NO];
+	[_contactName sizeToFit];
+	[_contactName setFrame:CGRectMake(80.0, 0.0, CGRectGetWidth([_contactName bounds]), CGRectGetHeight([_contactName bounds]))];
+	[self addSubview:_contactName];
+	
+	_contactStatus = [[CPTextView alloc] initWithFrame:CGRectMakeZero()];
+	[_contactStatus setStringValue:cstatus];
+		//[_contactStatus setFont:[CPFont systemFontOfSize:14]];
+	    //[_contactStatus setTextColor:[CPColor whiteColor]];
+	    //[_contactStatus setEditable:NO];
+	    //[_contactStatus sizeToFit];
+	[_contactStatus setFrame:CGRectMake(80.0, 23.0, 350, 49)];
+	[self addSubview:_contactStatus]; 
 }
 
 @end

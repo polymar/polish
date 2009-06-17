@@ -241,7 +241,7 @@ BASIC_AUTH = "basic";
 }
 
 - (void) setHorizontalViewType {
-	[self setFrame:CGRectMake(0,0,600,60)];
+	[self setFrame:CGRectMake(0,0,660,60)];
 	
 	_userName = [[CPTextField alloc] initWithFrame:CGRectMake(10, 10, 260, 30 )];
     [_userName setFont:[CPFont systemFontOfSize:14]];

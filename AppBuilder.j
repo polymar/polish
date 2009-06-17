@@ -55,6 +55,7 @@ polish_components   =   ['stack', 'flow', 'ask_color', 'confirm', 'alert',
   objj_msgSend(_mainWindow , 'display');
   return self;
 }
+
 -(void) addChild:(id)aControl
 {
   var view = objj_msgSend(aControl, 'view');
