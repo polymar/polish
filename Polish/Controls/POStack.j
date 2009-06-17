@@ -29,6 +29,16 @@
   return self;
 }
 
+-(void)marginX:(id) margin
+{
+  marginX = margin;
+}
+
+-(void)marginY:(id) margin
+{
+  marginY = margin;
+}
+
 - (void) addChild:(POControl) child {
   if([child isKindOfClass:POControl]) {
     [self addSubview:[child view]];
@@ -41,8 +51,8 @@
   //First one.
   if(members.length == 0)
     {
-      lastX = self.x() + marginX;
-      lastY = self.y() + marginY;
+      lastX =  marginX;
+      lastY =  marginY;
     } else
     {
       var lastMember = members[members.length - 1];

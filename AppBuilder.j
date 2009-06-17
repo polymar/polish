@@ -4,7 +4,7 @@
  * Created by Roberto Gamboni on 02/15/2009.
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
-polish_components   =   ['stack', 'ask_color', 'confirm', 'alert',
+polish_components   =   ['stack', 'flow', 'ask_color', 'confirm', 'alert',
             'button', 'check', 'radio', 'slider', 'text', 'password', 'list_box', 'progress', 'link', 'edit_box',
             'image', 'video',
             'label', 'subtitle',

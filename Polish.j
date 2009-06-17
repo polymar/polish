@@ -9,6 +9,7 @@
 @import "Polish/Controls/POControl.j"
 @import "Polish/Controls/POButton.j"
 @import "Polish/Controls/POStack.j"
+@import "Polish/Controls/POFlow.j"
 @import "Polish/Controls/POProgress.j"
 @import "Polish/Controls/POText.j"
 @import "Polish/Controls/POCheck.j"

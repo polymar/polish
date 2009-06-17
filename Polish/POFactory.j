@@ -44,6 +44,7 @@ function load_class() {
     "form"              : POForm,
     "login"             : POLogin,
     "stack"             : POStack,
+    "flow"            : POFlow,
     "button"            : POButton,
     "submit"            : POSubmit,
     "image"             : POImage,
