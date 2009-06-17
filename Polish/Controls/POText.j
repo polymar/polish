@@ -112,6 +112,7 @@
       [__delegate setFont:[CPFont systemFontOfSize:14]];
       [__delegate setTextColor:[CPColor whiteColor]];
       [__delegate setEditable:NO];
+	  [__delegate setSelectable:YES];
       [__delegate sizeToFit];
       [__delegate setFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([__delegate bounds]), CGRectGetHeight([__delegate bounds]))];
   }

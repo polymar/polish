@@ -34,7 +34,7 @@
   	self = [super init];
 	if(self) {
 		__delegate = [POLinkImpl linkWithTextValue: aHref href: aHref];
-		[self createJSMethods: ['href:', 'on_click:', 'text:']];
+		[self createJSMethods: ['click:', 'on_click:', 'text:']];
 	}
     return self;
 }
@@ -43,7 +43,7 @@
     [__delegate text: aText];
 }
 
-- (void) href:(CPString) aLink {
+- (void) click:(CPString) aLink {
 	[__delegate href: aLink];
 }
 

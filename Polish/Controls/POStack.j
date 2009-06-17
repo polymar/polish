@@ -33,7 +33,7 @@
   if([child isKindOfClass:POControl]) {
     [self addSubview:[child view]];
   }
-  [self place: child];
+  //[self place: child];
 }
 
 - (void) place:(id)aChild

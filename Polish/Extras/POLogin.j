@@ -5,18 +5,94 @@
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
 
+	
+_keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+
+// public method for encoding
+encode = function (input) {
+	var output = "";
+	var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+	var i = 0;
+
+	input = _utf8_encode(input);
+
+	while (i < input.length) {
+
+		chr1 = input.charCodeAt(i++);
+		chr2 = input.charCodeAt(i++);
+		chr3 = input.charCodeAt(i++);
+
+		enc1 = chr1 >> 2;
+		enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+		enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+		enc4 = chr3 & 63;
+
+		if (isNaN(chr2)) {
+			enc3 = enc4 = 64;
+		} else if (isNaN(chr3)) {
+			enc4 = 64;
+		}
+
+		output = output +
+		_keyStr.charAt(enc1) + _keyStr.charAt(enc2) +
+		_keyStr.charAt(enc3) + _keyStr.charAt(enc4);
+
+	}
+
+	return output;
+}
+
+// private method for UTF-8 encoding
+_utf8_encode = function (string) {
+	string = string.replace(/\r\n/g,"\n");
+	var utftext = "";
+
+	for (var n = 0; n < string.length; n++) {
+
+		var c = string.charCodeAt(n);
+
+		if (c < 128) {
+			utftext += String.fromCharCode(c);
+		}
+		else if((c > 127) && (c < 2048)) {
+			utftext += String.fromCharCode((c >> 6) | 192);
+			utftext += String.fromCharCode((c & 63) | 128);
+		}
+		else {
+			utftext += String.fromCharCode((c >> 12) | 224);
+			utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+			utftext += String.fromCharCode((c & 63) | 128);
+		}
+
+	}
+
+	return utftext;
+}
+
+
+BASIC_AUTH = "basic";
+
 @implementation POLogin : POForm {
 	
 	var		_loginType;
-	
 	var		_on_forgot;
+	var 	_auth_type;
 }
 
 - (id) login {
 	self = [super init];
 	if(self) {
 		__delegate = [[CPLogin alloc] login];
-		[self createJSMethods: ['on_forgot:', 'login_type:']];
+		_auth_type = BASIC_AUTH;
+		_preprocess = function() {
+			var u = objj_msgSend(__delegate, 'getUsername');
+			var p = objj_msgSend(__delegate, 'getPassword');
+			if(u == '' || p == '') {
+				return false;
+			}
+			return true;
+		};
+ 		[self createJSMethods: ['on_forgot:', 'login_type:', 'auth_type:']];
 		[self initForm];
 	}
 	return self;
@@ -42,6 +118,32 @@
 				objj_msgSend(__delegate, 'setHorizontalViewType');
 				_loginType = 'horizontal';
 			}
+		}
+	}
+}
+
+- (CPURLRequest) generateRequest {
+	if(_action == undefined) {
+		console.log('unable to submit a form without action');
+		return nil;
+	}
+	//GET -> creating tag0=value0?tag1=value1
+	if(_method == 'GET') {
+		var request = [CPURLRequest requestWithURL:_action];
+		var u = [__delegate getUsername];
+		var p = [__delegate getPassword];
+		var auth = [CPString stringWithFormat:@"%s:%s", u,p];
+		var base64auth = [CPString stringWithFormat:@"Basic %s", encode(auth)];
+		[request setHTTPMethod:"GET"];
+		[request setValue:base64auth forHTTPHeaderField:"Authentication"];
+		return request;
+	} 
+	//POST/PUT -> creating application/x-www-form-urlencoded or multipart/form-data
+	else {
+		if(_enctype == 'x-www-form-urlencoded') {
+			//TODO
+		} else {
+			//TODO
 		}
 	}
 }
@@ -184,6 +286,14 @@
 	if(_delegate) {
 		objj_msgSend(_delegate, 'didPressForgot');
 	}
+}
+
+- (CPString) getUsername {
+	return [_userName stringValue];
+}
+
+- (CPString) getPassword {
+	return [_password stringValue];
 }
 
 @end

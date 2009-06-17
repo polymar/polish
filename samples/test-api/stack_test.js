@@ -1,4 +1,4 @@
-app.create({"title" : "CapWaves exps.", "width" : 800, "height" : 580, "color" : red() });
+app = Polish.app({"title" : "CapWaves exps.", "width" : 800, "height" : 580, "color" : red() });
 
 stack = app.stack({"width" : 800, "height" : 500});
 //stack.location(10, 10);
