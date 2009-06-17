@@ -30,10 +30,8 @@
 }
 
 - (void) addChild:(POControl) child {
-  if([child isKindOfClass:POControl]) {
-    [self addSubview:[child view]];
-  }
-  //[self place: child];
+  [super addChild:child];
+  [self place: child];
 }
 
 - (void) place:(id)aChild
