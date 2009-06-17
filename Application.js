@@ -66,4 +66,5 @@ link.location(300, 300);
 
 
 
-//wd = newWindow.create({"title" : "New window", "width" : 220, "height" : 280, x: 200, y:200 });
+
+// wd = newWindow.create({"title" : "New window", "width" : 220, "height" : 280, x: 200, y:200 });

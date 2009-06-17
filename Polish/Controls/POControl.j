@@ -9,16 +9,19 @@
 polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:', 'name:', 'remove'];
 
 @implementation POControl : CPObject {
+  id      __parent;
   id      __delegate;
   id      __height;
   id      __width;
   CPString  _name;
 }
 
-- (id) control:(CPString)aControl withArgs: (id)args {
+- (id) control:(CPString)aControl withArgs: (id)args parent:(id)aParent{
   self = [self performSelector: aControl];
-    [self applyMethods:args[0] onControl: self];
-    return self;
+  __parent = aParent;
+  [__parent addChild: self];
+  [self applyMethods:args[0] onControl: self];
+  return self;
 }
 
 - (id) applyMethods: (id)methodList onControl:(id)aControl {
@@ -45,10 +48,10 @@ polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'lo
 }
 
 - (void) remove {
-	if(__delegate) {
-		[__delegate removeFromSuperview];
-	}
-	//TODO notify to parent of redrawing.
+  if(__delegate) {
+    [__delegate removeFromSuperview];
+  }
+  //TODO notify to parent of redrawing.
 }
 
 - (void) name:(CPString) n {

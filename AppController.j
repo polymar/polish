@@ -18,15 +18,16 @@
   Polish = new Object();
   var theWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPBorderlessBridgeWindowMask];
 
-      //app is visible outside using objj syntax.
-    //js can interact with app using objj_msgSend(app, message, params..);
-    app = [[AppBuilder alloc] initWithContentView:theWindow];
-    newWindow = [[AppBuilder alloc] init];
 
-    //default stuff... setting background black.
-    [theWindow orderFront:self];
+  //app is visible outside using objj syntax.
+  //js can interact with app using objj_msgSend(app, message, params..);
+  Polish.app = app = [[AppBuilder alloc] initWithContentView:theWindow].create;
+  Polish.window = newWindow = [[AppBuilder alloc] init].create;
 
-    POLISH_NOTIFICATION.call();
+  //default stuff... setting background black.
+  [theWindow orderFront:self];
+
+  POLISH_NOTIFICATION.call();
 }
 
 @end

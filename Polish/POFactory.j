@@ -10,13 +10,14 @@
 @implementation POFactory : CPObject
 
 
-+ (id)control:(CPString)aControl withArgs: (id)args
++ (id)control:(CPString)aControl withArgs: (id)args parent:(id)aParent
 {
   var controlClass = get_class(aControl);
   if(controlClass != nil)
   {
     var cl = [controlClass alloc];
-    return [cl control:aControl withArgs: args];
+
+    return [cl control:aControl withArgs: args parent: aParent];
   } else {
     console.error('@#!Polish Error -> '+aControl+' is not a known message.');
 
@@ -40,29 +41,29 @@
 
 function load_class() {
   return {
-    "form"        			: POForm,
-    "login"       			: POLogin,
-    "stack"       			: POStack,
-    "button"      			: POButton,
-    "submit"      			: POSubmit,
-    "image"       			: POImage,
-    "progress"    			: POProgress,
-    "text"        			: POText,
-	"edit_box"				: POEditBox,
-    "label"       			: POText,
-    "subtitle"    			: POText,
-    "password"    			: POText,
-    "video"      			: POVideo,
-    "alert"       			: POAlert,
-    "confirm"     			: POConfirm,
-    "ask_color"   			: POAskColor,
-    "check"       			: POCheck,
-    "radio"       			: PORadio,
-    "slider"      			: POSlider,
-    "list_box"    			: POList,
-    "link"        			: POLink,
-	"photo_collection"		: POPhotoCollection,
-	"friend_collection"		: POFriendCollection
+    "form"              : POForm,
+    "login"             : POLogin,
+    "stack"             : POStack,
+    "button"            : POButton,
+    "submit"            : POSubmit,
+    "image"             : POImage,
+    "progress"          : POProgress,
+    "text"              : POText,
+  "edit_box"        : POEditBox,
+    "label"             : POText,
+    "subtitle"          : POText,
+    "password"          : POText,
+    "video"           : POVideo,
+    "alert"             : POAlert,
+    "confirm"           : POConfirm,
+    "ask_color"         : POAskColor,
+    "check"             : POCheck,
+    "radio"             : PORadio,
+    "slider"            : POSlider,
+    "list_box"          : POList,
+    "link"              : POLink,
+  "photo_collection"    : POPhotoCollection,
+  "friend_collection"   : POFriendCollection
   };
 };
 

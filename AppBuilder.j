@@ -77,8 +77,7 @@ polish_components   =   ['stack', 'ask_color', 'confirm', 'alert',
   }
   polish_control = [AppBuilder sanitize_selector:aSelector];
   //Object created.
-  var s = [POFactory control: polish_control withArgs: args];
-  objj_msgSend( parent, 'addChild:', s);
+  var s = [POFactory control: polish_control withArgs: args parent: parent];
 
   return s;
 }

@@ -7,8 +7,9 @@ function load_file(filename) {
 };
 
 function polish_loaded(){
-  	load_file('./samples/tweet-polish/Application.js');
-	//load_file('./samples/test-api/Application.js');
-	//load_file('./samples/slideshow/Application.js');
+  //load_file('./samples/stack_test.js');
+  //load_file('./samples/tweet-polish/Application.js');
+  load_file('./samples/test-api/Application.js');
+  //load_file('./samples/slideshow/Application.js');
 }
 
