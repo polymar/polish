@@ -17,12 +17,16 @@
 	var			_postprocess;
 	//function performed in case of error.
 	var			_form_error;
+	//function performed if the precondition fails
+	var			_pre_failed;
 	
+	//list of children of the form
 	var			_children;
 	
-	//FIX THIS - now this is specific for JSON API
-	//CPURLConnection		_connection;
-	CPJSONPConnection 		_connection;
+	//FIX THIS - we might want to choose if doing local or cross-domain ajax call
+	//CPURLConnection				_connection;
+	//CPJSONPConnection 		_jsonp_connection;
+	var			_connection_delegate;
 }
 
 /*
@@ -39,7 +43,7 @@
 }
 
 - (void) initForm {
-	[self createJSMethods:['action:', 'enctype:', 'pre:', 'post:', 'form_error:', 'http_method:']];
+	[self createJSMethods:['action:', 'enctype:', 'pre:', 'on_precondition_failed:', 'post:', 'on_error:', 'http_method:']];
 	_children = [];
 	objj_msgSend(__delegate, 'setDelegate:', self);
 	_method = 'GET';
@@ -55,19 +59,80 @@
 	if(_preprocess != undefined) {
 		var t = _preprocess();
 		if(t == false) {
+			if(_pre_failed != nil) {
+				_pre_failed();
+			}
 			return;
 		}
 	}
-	if(_connection) {
-		[_connection cancel];	
-	}
+	//if(_jsonp_connection) {
+	//	[_jsonp_connection cancel];	
+	//}
 	var req = [self generateRequest];
-	if(req != nil) {
-		_connection = [CPJSONPConnection connectionWithRequest:req callback:'callback' delegate:self];
+	var _conn_type = _action.search('localhost');
+	if(_conn_type == -1) {
+		_connection_delegate = [[JSONPDelegate alloc] initWithDelegate:self];
+	} else {
+		_connection_delegate = [[URLDelegate alloc] initWithDelegate:self];
+	}
+	[_connection_delegate startRequest:req];
+	//if(req != nil) {
+	//	console.log(req);
+	//	_jsonp_connection = [CPJSONPConnection connectionWithRequest:req callback:"callback" delegate:self];
+	//}
+}
+
+- (void) didReceiveResponse:(CPHTTPURLResponse)resp {
+	
+}
+
+- (void) didFailWithError:(CPString) error {
+	console.log(error);
+	if(_form_error != undefined) {
+		_form_error(error);
 	}
 }
 
+- (void) didReceiveData:(CPString) data {
+	if(data) {
+		if(_postprocess != undefined) {
+			_postprocess(eval(data));
+		}
+	}
+}
+
+- (void) didFinishLoading {
+	
+}
+
+/*
+-(void)connection:(CPURLConnection)connection didReceiveResponse:(CPHTTPURLResponse)response {
+	
+}
+
+-(void)connection:(CPURLConnection)connection didReceiveData:(CPString)data {
+	if(data) {
+		if(_postprocess != undefined) {
+			_postprocess(eval(data));
+		}
+	}
+}
+
+-(void)connectionDidFinishLoading:(CPURLConnection)connection {
+	console.log('connectionDidFinishLoading');
+}
+
+-(void)connection:(CPURLConnection)connection didFailWithError:(id)error {
+	console.log('didFailWithError');
+	console.log(error);
+	if(_form_error != undefined) {
+		_form_error(error);
+	}
+}
+*/
+/*
 - (void)connection:(CPJSONPConnection)aConnection didReceiveData:(CPString)data {
+	console.log('didReceiveData');
 	if(data) {
 		if(_postprocess != undefined) {
 			_postprocess(data);
@@ -76,10 +141,12 @@
 }
 
 - (void)connection:(CPJSONPConnection)aConnection didFailWithError:(CPString)error {
+	console.log('didFailWithError');
 	if(_form_error != undefined) {
 		_form_error(error);
 	}
 }
+*/
 
 - (CPURLRequest) generateRequest {
 	if(_action == undefined) {
@@ -118,7 +185,11 @@
 	return params;
 }
 
-- (void) form_error:(Function)aFunction {
+- (void) on_precondition_failed:(Function)aFunction {
+	_pre_failed = aFunction;
+}
+
+- (void) on_error:(Function)aFunction {
 	_form_error = aFunction;
 }
 

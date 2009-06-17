@@ -16,7 +16,6 @@
   if(controlClass != nil)
   {
     var cl = [controlClass alloc];
-
     return [cl control:aControl withArgs: args parent: aParent];
   } else {
     console.error('@#!Polish Error -> '+aControl+' is not a known message.');
@@ -50,11 +49,12 @@ function load_class() {
     "image"             : POImage,
     "progress"          : POProgress,
     "text"              : POText,
-  "edit_box"        : POEditBox,
+  	"edit_box"       	: POEditBox,
+	"para"				: POEditBox,
     "label"             : POText,
     "subtitle"          : POText,
     "password"          : POText,
-    "video"           : POVideo,
+    "video"           	: POVideo,
     "alert"             : POAlert,
     "confirm"           : POConfirm,
     "ask_color"         : POAskColor,

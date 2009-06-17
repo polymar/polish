@@ -36,3 +36,7 @@
 @import "Polish/Extras/POFriendCollection.j"
 
 @import "Polish/Events/POAnimation.j"
+
+@import "Polish/Url/POUrl.j"
+@import "Polish/Url/JSONPDelegate.j"
+@import "Polish/Url/URLDelegate.j"

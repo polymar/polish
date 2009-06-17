@@ -4,6 +4,7 @@
  * Created by Roberto Gamboni on 05/20/2009.
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
+//@import "../Helpers/twitter_helpers.js"
 
 @implementation POFriendCollection : POControl {
 		
@@ -39,7 +40,7 @@
 
 		_objects = [  ];
 		[_collection_view setContent:_objects];
-		[self createJSMethods:['on_click:', 'on_double_click:', 'add:', 'contacts:', 'clear', 'populate:']];
+		[self createJSMethods:['on_click:', 'on_double_click:', 'add:', 'contacts:', 'clear:', 'populate:']];
 		
 	}
 	return self;
@@ -48,9 +49,13 @@
 - (void) populate:(id) anObject {
 	//assuming for now anObject is a twitter search result
 	var data = anObject.results;
+	if (data == undefined) data = anObject;
 	for(var i=0; i<data.length; i++) {
 		var json = data[i];
-		var a = { img : json.profile_image_url, name : json.from_user, status : json.text };
+		if(json.user == nil)
+			var a = { img : json.profile_image_url, name : json.from_user, status : json.text };
+		else
+			var a = { img : json.user.profile_image_url, name : json.user.name, status : json.text };
 	    _objects.push(a);
 	}	
 	objj_msgSend( _collection_view, 'reloadContent');
@@ -119,6 +124,7 @@
 	CPImageView		_contactImage;
 	CPTextField		_contactName;
 	CPTextField		_contactStatus;
+	CPView			_contactView;
 	
 }
 
@@ -141,30 +147,36 @@
 	var cname = ( anObject.hasOwnProperty('name') ) ? anObject.name : nil;
 	var cstatus = ( anObject.hasOwnProperty('status') ) ? anObject.status : nil;
 
-	if(img != nil) {
+	if(_contactView == nil) {
+		_contactView = [[CPView alloc] initWithFrame:[self frame]];
+		[_contactView setBackgroundColor:[CPColor blackColor]];
+		[self addSubview:_contactView];
+	}
+
+	//if(img != nil) {
 		_contactImage = [[CPImageView alloc] initWithFrame:CGRectMake(5.0, 5.0, 64.0, 64.0)];
 		[_contactImage setImage:[[CPImage alloc] initWithContentsOfFile:img size:CGSizeMake(64.0, 64.0)]];
-		[self addSubview:_contactImage];
-	}
+		[_contactView addSubview:_contactImage];
+	//}
 	
-	if(cname != nil) {
+	//if(cname != nil) {
 		_contactName = [CPTextField labelWithTitle:cname];
 		[_contactName setFont:[CPFont systemFontOfSize:16]];
 	    [_contactName setTextColor:[CPColor whiteColor]];
 	    [_contactName setEditable:NO];
 	    [_contactName sizeToFit];
 	    [_contactName setFrame:CGRectMake(80.0, 5.0, CGRectGetWidth([_contactName bounds]), CGRectGetHeight([_contactName bounds]))];
-		[self addSubview:_contactName];
-	}
-	if(cstatus != nil) {
+		[_contactView addSubview:_contactName];
+	//}
+	//if(cstatus != nil) {
 		_contactStatus = [CPTextField labelWithTitle:cstatus];
 		[_contactStatus setFont:[CPFont systemFontOfSize:14]];
 	    [_contactStatus setTextColor:[CPColor whiteColor]];
 	    [_contactStatus setEditable:NO];
 	    [_contactStatus sizeToFit];
 	    [_contactStatus setFrame:CGRectMake(80.0, 30.0, CGRectGetWidth([_contactStatus bounds]), CGRectGetHeight([_contactStatus bounds]))];
-		[self addSubview:_contactStatus];
-	}   
+		[_contactView addSubview:_contactStatus];
+	//}  
 }
 
 @end

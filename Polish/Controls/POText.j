@@ -91,6 +91,7 @@
 	return self;
 }
 
+/*
 - (id) para {
 	self = [self label];
 	if(self) {
@@ -100,6 +101,7 @@
 	}
 	return self;
 }
+*/
 
 /*
 * Init a label with hmargin and vmargin = 0
@@ -112,6 +114,7 @@
       [__delegate setFont:[CPFont systemFontOfSize:14]];
       [__delegate setTextColor:[CPColor whiteColor]];
       [__delegate setEditable:NO];
+	  [__delegate setSelectable:YES];
       [__delegate sizeToFit];
       [__delegate setFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([__delegate bounds]), CGRectGetHeight([__delegate bounds]))];
   }

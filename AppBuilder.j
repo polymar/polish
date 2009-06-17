@@ -5,7 +5,7 @@
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
 polish_components   =   ['stack', 'flow', 'ask_color', 'confirm', 'alert',
-            'button', 'check', 'radio', 'slider', 'text', 'password', 'list_box', 'progress', 'link', 'edit_box',
+            'button', 'check', 'radio', 'slider', 'text', 'password', 'list_box', 'progress', 'link', 'edit_box', 'para',
             'image', 'video',
             'label', 'subtitle',
             'login', 'form', 'submit',
