@@ -25,6 +25,7 @@
 		[__delegate setBezelStyle:CPTextFieldSquareBezel];
 		[__delegate setBezeled:YES];
 		[__delegate setEditable:YES];
+		[__delegate setFrame:CGRectMake(0,0,250,30)];
 		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(begin_action:) name: "CPControlTextDidBeginEditingNotification" object: nil];
 		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(change_action:) name: "CPControlTextDidChangeNotification" object: nil];
 		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(done_action:) name: "CPControlTextDidEndEditingNotification" object: nil];
@@ -116,7 +117,9 @@
       [__delegate setEditable:NO];
 	  [__delegate setSelectable:YES];
       [__delegate sizeToFit];
-      [__delegate setFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([__delegate bounds]), CGRectGetHeight([__delegate bounds]))];
+	  //FIXME - why this resizing does not work???
+      //[__delegate setFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([__delegate bounds]), CGRectGetHeight([__delegate bounds]))];
+  	  [__delegate setFrame:CGRectMake(0,0,80,CGRectGetHeight([__delegate bounds]))];
   }
   return self;
 }

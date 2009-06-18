@@ -5,7 +5,6 @@
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
 
-
 polish_methods    = [ 'color:', 'width:', 'height:', 'x:', 'y:', 'size:xy:', 'location:xy:', 'name:', 'remove', 'hide', 'show'];
 
 @implementation POControl : CPObject {

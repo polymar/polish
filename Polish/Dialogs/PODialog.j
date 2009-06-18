@@ -27,8 +27,17 @@
 }
 
 - (void) remove {
-  //TODO.. 
+  	//TODO.. 
 }
+
+- (void) hide {
+	//TODO..
+}
+
+- (void) show {
+	//TODO..
+}
+
 
 /*
 * forward the missing method to embedded object.

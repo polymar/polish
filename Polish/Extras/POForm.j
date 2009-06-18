@@ -96,7 +96,7 @@
 - (void) didReceiveData:(CPString) data {
 	if(data) {
 		if(_postprocess != undefined) {
-			_postprocess(eval(data));
+			_postprocess(data);
 		}
 	}
 }

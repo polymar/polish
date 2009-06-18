@@ -93,10 +93,14 @@ BASIC_AUTH = "basic";
 			}
 			return true;
 		};
- 		[self createJSMethods: ['on_forgot:', 'login_type:', 'auth_type:']];
+ 		[self createJSMethods: ['on_forgot:', 'login_type:', 'auth_type:', 'username']];
 		[self initForm];
 	}
 	return self;
+}
+
+- (void) username {
+	return objj_msgSend(__delegate, 'getUsername');
 }
 
 - (id) view {

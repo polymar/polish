@@ -17,7 +17,7 @@
 - (id) list_box {
   self = [super init];
   if(self) {
-	__delegate = [[CPPopUpButton alloc] initWithFrame:CGRectMakeZero() pullsDown:NO];
+	__delegate = [[CPPopUpButton alloc] initWithFrame:CGRectMake(0,0,50,24) pullsDown:NO];
 	[self createJSMethods: ['title:', 'on_select:', 'items:', 'value']];
     [__delegate setBezelStyle:CPHUDBezelStyle];
     [__delegate setTarget:self];

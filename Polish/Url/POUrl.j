@@ -6,6 +6,10 @@ function download(_url, _aFunction1, _aFunction2) {
 	objj_msgSend( POUrl, 'invokeAtURL:callback:error:', _url, _aFunction1, _aFunction2);
 }
 
+function doPost(_url, _body, _aFunction1, _aFunction2) {
+	objj_msgSend( POUrl, 'postAtURL:body:callback:error:', _url, _body, _aFunction1, _aFunction2);
+}
+
 @implementation POUrl : CPObject {
 	
 	var		_callback_function;
@@ -14,6 +18,11 @@ function download(_url, _aFunction1, _aFunction2) {
 	var		_connection_delegate;
 	
 } 
+
++ (void) postAtURL:(CPString) _url body:_b callback:_function1 error:_function2 {
+	var _poUrl = [[POUrl alloc] initWithCallback:_function1 error:_function2];
+	[_poUrl post:_b at:_url];
+}
 
 + (void) invokeAtURL:(CPString) _url callback:_function1 error:_function2 {
 	var _poUrl = [[POUrl alloc] initWithCallback:_function1 error:_function2];
@@ -27,6 +36,16 @@ function download(_url, _aFunction1, _aFunction2) {
 		_error_function = _aFunction2;
 	}
 	return self;
+}
+
+- (void) post:(CPString) b at:u {
+	var request = [CPURLRequest requestWithURL:u];
+	[request setHTTPMethod:'POST'];
+	[request setHTTPBody:encodeURI(b)];
+	[request setValue:"application/x-www-form-urlencoded" forHTTPHeaderField:"Content-Type"];
+	
+	_connection_delegate = [[URLDelegate alloc] initWithDelegate:self];
+	[_connection_delegate startRequest:request];
 }
 
 - (void) invoke:(CPString) u {

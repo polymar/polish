@@ -28,6 +28,12 @@ def forward
     end
   end
   client = HTTPClient.new
-  return client.get_content( request.params['request_uri'], request.params, headers ) if request.method == :get
-  return client.post_content( request.params['request_uri'], request.params, headers ) if request.method == :post
+  begin
+    return client.get_content( request.params['request_uri'], request.params, headers ) if request.method == :get
+    return client.post_content( request.params['request_uri'], request.params, headers ) if request.method == :post
+  rescue Object => e
+    p e
+    response.status = 401
+    ''
+  end
 end
