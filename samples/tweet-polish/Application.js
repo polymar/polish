@@ -2,44 +2,45 @@
 app = Polish.app({title : "Tweet Polish.", color : darkgray() });
 
 //search window
-search_app = Polish.window({"title" : "Search", "width" : 400, "height" : 480, "color" : black(), x: 850, y: 50 });
+search_app = Polish.window({"title" : "Search", "width" : 400, "height" : 480, "color" : black(), x: 965, y: 16 });
 search_coll = search_app.friend_collection( { color : darkgray() , x : 2, y : 42, width : 396, height : 410} );
 search_form = search_app.form({x : 2, y : 2, width : 396, height : 38, color : lightgray(), action : 'http://search.twitter.com/search.json'});
 search_form.text({name : 'q', x : 2, y : 2, width : 200, height : 36});
-search_form.submit({x : 222, y : 10, width : 70, height : 24});
-
+search_form.submit({x : 222, y : 10, width : 70, height : 24});	
 search_form.post( function(x) { 
+	//search_coll.clear();
 	search_coll.populate(x) 
 } );
 
 //top stack
-//login
 top_stack = app.stack( { x : 50, y : 15, width : 910, height : 200, color : black() } );
-login = top_stack.login({x : 125, y : 15, height : 65, color : black(), action : 'http://localhost:9001?request_uri=http://twitter.com/statuses/friends_timeline.json'});
 //status after login
 status = top_stack.stack( { x : 30, y : 20, width : 850, height : 165, color : black() } );
-status_text = status.text({x : 10, y : 15, width : 730, height : 40});
+status.hide();
+status_text = status.text({x : 10, y : 15, width : 730, height : 40, placeholder : 'What are you doing?'});
 char_label = status.label( {x : 757, y : 21, width : 40, height : 25, value : 140, color : black(), textcolor : red(), font : 20} );
-
 status_text.on_change( function(x) {
   char_label.value( (140 - x.length).toString() );
 });
-
 status_value = status.para('this is my status', { x : 14, y : 75, width : 660, height : 70} );
 status_update = status.button( {x : 720, y : 95, width : 100, height : 24, title : 'Update Status'} );
-var toggle = 1;
-status_update.on_click( function() { 
-	if(toggle == 1) {
-		toggle = 0;
-		status_value.hide(); 
-	} else {
-		toggle = 1;
-		status_value.show(); 
-	}
+status_update.on_click( function() {
+	doPost( 'http://localhost:9010?request_uri=http://twitter.com/statuses/update.json', 'status='+status_text.value(), function(x) {debugger; a = eval(x); status_text.value(a.text); }, function(x) {console.log(x)} );
+});
+
+//login
+login = top_stack.login({x : 125, y : 15, height : 65, color : black(), action : 'http://localhost:9010?request_uri=http://twitter.com/statuses/friends_timeline.json'});
+login.on_precondition_failed( function() { alert('please insert username and password') } );
+login.on_error( function(x) { alert('wrong username or password'); } );
+login.post( function(x) { 
+	login.remove();
+	status.show();
+	personal_info_coll.populate(eval(x));
+	download( 'http://twitter.com/users/show.json?id='+login.username(), function(x) { status_value.value(x.status.text) }, function(x) { console.log(x); } );
 } );
 
 //center stack
-center_stack = app.stack( {x : 50, y : 220, width : 910, height : 450, color : lightgray() } );
+center_stack = app.stack( {x : 50, y : 220, width : 910, height : 600, color : lightgray() } );
 //left side - public timeline
 public_info_stack = center_stack.stack( { x : 2, y : 2, height : 36, width : 450, color : darkgray() } );
 public_refresh_button = public_info_stack.button( { x : 165, y : 6, width : 120, height : 24, title : 'Refresh'} );
@@ -47,7 +48,7 @@ public_refresh_button.on_click( function() {
 	public_info_coll.clear();
 	download_public();
 });
-public_info_coll = center_stack.friend_collection( {color : darkgray() , x : 2, y : 40, width : 450, height : 408} );
+public_info_coll = center_stack.friend_collection( {color : darkgray() , x : 2, y : 40, width : 450, height : 558} );
 
 //right side - personal friends
 personal_stack = center_stack.stack( { x : 454, y : 2, height : 36, width : 452, color : darkgray() } );
@@ -55,7 +56,7 @@ personal_refresh_button = personal_stack.button( { x : 166, y : 6, width : 120, 
 personal_refresh_button.on_click( function() {
 	personal_info_coll.clear();
 });
-personal_info_coll = center_stack.friend_collection( {color : darkgray() , x : 454, y : 40, width : 452, height : 408} );
+personal_info_coll = center_stack.friend_collection( {color : darkgray(), x : 454, y : 40, width : 452, height : 558} );
 
 //download function for public timeline
 function download_public() {
