@@ -45,7 +45,6 @@
 	return _name;
 }
 
-/*
 - (void) fade_out:(CPImage) aImg1 in:(CPImage) aImg2 {
 	if(_fade_out_time > 0) {
 		var fade_out_timer_time = _fade_out_time / 20;
@@ -60,6 +59,10 @@
 	if(_fade_in_time > 0) {
 		[__delegate setAlphaValue:0.5];
 		[__delegate setImage:aImg];
+		[CPTimer scheduledTimerWithTimeInterval:(_fade_in_time / 20)
+								 target:self 
+								 selector:@selector(increase_alpha:) 
+								 userInfo:nil repeats:YES];
 	} else {
 		[__delegate setImage:aImg];
 	}
@@ -68,48 +71,51 @@
 - (void) decrease_alpha:(CPTimer)aTimer {
 	if([__delegate alphaValue] <= 0.5) {
 		[__delegate setAlphaValue:0.5];
-		[__delegate setImage:[aTimer userInfo]];
+		//[__delegate setImage:[aTimer userInfo]];
+		[self fade_in:[aTimer userInfo]];
 		[aTimer invalidate];
+		return;
 	}
 	[__delegate setAlphaValue:[__delegate alphaValue] - 0.025];
 }
 
 - (void) increase_alpha:(CPTimer)aTimer {
 	if([__delegate alphaValue] >= 1.0) {
+		[__delegate setAlphaValue:1.0];
 		[aTimer invalidate];
+		return;
 	}
 	[__delegate setAlphaValue:[__delegate alphaValue] + 0.025];
 }
-*/
 
 - (void) url:(CPString) path {
 	if(path != undefined) {
 		_img = [[CPImage alloc] initWithContentsOfFile:path size:CGSizeMake([__delegate frame].size.width, [__delegate frame].size.height)];
 		[_img setDelegate:self];
-		[__delegate setImage:_img];
-		/*
+		
 		var old_img = [__delegate image];
 		if(old_img != nil) {
 			[self fade_out:old_img in:_img];
+		} else {
+			[self fade_in:_img];	
 		}
-		else {
-			[self fade_in:_img];
-		}
-		*/
 	} else {
 		return [_img filename];
 	}
 }
 
+//I removed this because the callback happpens a lot after the image is loaded and visible
+/*
 - (void)imageDidLoad:(CPNotification)aNotification {
-	/*
+	[__delegate setAlphaValue:1.0];
+	
 	[CPTimer scheduledTimerWithTimeInterval:(_fade_in_time / 20)
 							 target:self 
 							 selector:@selector(increase_alpha:) 
 							 userInfo:nil repeats:YES];
-	*/
+	
 	[__delegate display];
 }
-
+*/
 
 @end

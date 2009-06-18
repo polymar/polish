@@ -14,7 +14,7 @@ function animate(fps, f, stop) {
 	} else {
 		[an setDuration:stop];
 	}
-	[an startAnimation];
+	return an;
 }
 
 DEFAULT_FPS = 4;
@@ -30,6 +30,14 @@ DEFAULT_DURATION = 5;
 	float 					_progress;
 }
 
+- (void) start_animation {
+	[self startAnimation];
+}
+
+- (void) cancel_animation {
+	[self cancelAnimation];
+}
+
 - (id) animate {
 	self = [super init];
 	if(self) {	
@@ -37,6 +45,7 @@ DEFAULT_DURATION = 5;
 		_fps = DEFAULT_FPS;
 		_duration = DEFAULT_DURATION;
 		_progress = 0;
+		[self createJSMethods: ['start_animation', 'cancel_animation']];
 	}
 	return self;
 }
@@ -57,6 +66,13 @@ DEFAULT_DURATION = 5;
 - (void) stop_function:(Function) aFunction {
 	_stop_condition = aFunction;
 	_duration = -1;
+}
+
+- (void) cancelAnimation {
+	if(_timer) {
+		[_timer invalidate];
+		_timer = nil;
+	}
 }
 
 - (void) startAnimation {
