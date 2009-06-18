@@ -19,7 +19,7 @@
   if(self) {
 	__delegate = [CPButton buttonWithTitle:@""];
 	[self createJSMethods: ['title:', 'on_click:']];
-	self.size(80,20);
+	self.size(80,24);
     [__delegate setBezelStyle:CPHUDBezelStyle];
     [__delegate setTarget:self];
     [__delegate setAction:@selector(exec)];
