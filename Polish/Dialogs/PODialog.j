@@ -27,15 +27,15 @@
 }
 
 - (void) remove {
-  	//TODO.. 
+  	objj_msgSend(__delegate, 'orderOut:', __delegate); 
 }
 
 - (void) hide {
-	//TODO..
+	objj_msgSend(__delegate, 'orderOut:', __delegate);
 }
 
 - (void) show {
-	//TODO..
+	objj_msgSend(__delegate, 'orderFront:', __delegate);
 }
 
 

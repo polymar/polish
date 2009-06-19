@@ -34,9 +34,18 @@ polish_components   =   ['stack', 'flow', 'ask_color', 'confirm', 'alert',
 
 +(id) create:(id) attrs
 {
-  var win = [[self alloc] init];
+  var win = [[AppBuilder alloc] init];
   return [win create: attrs];
 }
+
+- (void) hide {
+	objj_msgSend(_mainWindow, 'orderOut:', _mainWindow);
+}
+
+- (void) show {
+	objj_msgSend(_mainWindow, 'orderFront:', _mainWindow);
+}
+
 /*
 * create the app and set the parameters.
 */
@@ -44,7 +53,7 @@ polish_components   =   ['stack', 'flow', 'ask_color', 'confirm', 'alert',
 {
     if (_mainWindow == nil)
     {
-      _mainWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:(CPTitledWindowMask | CPClosableWindowMask | CPResizableWindowMask)];
+      _mainWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:(CPHUDBackgroundWindowMask | CPClosableWindowMask | CPResizableWindowMask)];
       _contentView = [_mainWindow contentView];
       [_mainWindow orderFront:self];
     }

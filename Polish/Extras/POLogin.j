@@ -105,8 +105,8 @@ BASIC_AUTH = "basic";
 
 - (id) view {
 	if(_loginType == undefined) {
-		_loginType = 'horizontal';
-		objj_msgSend(__delegate, 'setHorizontalViewType');
+		_loginType = 'classic';
+		objj_msgSend(__delegate, 'setClassicViewType');
 	}
 	return __delegate;
 }
@@ -187,21 +187,21 @@ BASIC_AUTH = "basic";
 
 - (void) setClassicViewType {
 	[self setFrame:CGRectMake(0,0,400,150)];
-	_title = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
-	[_title setFont:[CPFont systemFontOfSize:16]];
-    [_title setBezelStyle:CPTextFieldSquareBezel];
-	[_title setTextColor:[CPColor whiteColor]];
-	[_title setStringValue:"Credentials here"];
-    [_title setEditable:NO];
-	[_title sizeToFit];
-	[_title setFrame:CGRectMake(200 - ([_title bounds].size.width / 2), 5, CGRectGetWidth([_title bounds]), CGRectGetHeight([_title bounds]))]
+	//_title = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
+	//[_title setFont:[CPFont systemFontOfSize:16]];
+    //[_title setBezelStyle:CPTextFieldSquareBezel];
+	//[_title setTextColor:[CPColor whiteColor]];
+	//[_title setStringValue:"Credentials here"];
+    //[_title setEditable:NO];
+	//[_title sizeToFit];
+	//[_title setFrame:CGRectMake(200 - ([_title bounds].size.width / 2), 5, CGRectGetWidth([_title bounds]), CGRectGetHeight([_title bounds]))]
 
     var emailLabel = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
     [emailLabel setFont:[CPFont systemFontOfSize:14]];
-    [emailLabel setStringValue:"Email Address:"];
+    [emailLabel setStringValue:"Username:"];
     [emailLabel setTextColor:[CPColor whiteColor]];
     [emailLabel sizeToFit];
-    [emailLabel setFrame:CGRectMake(30, 36, CGRectGetWidth([emailLabel bounds]), CGRectGetHeight([emailLabel bounds]))];
+    [emailLabel setFrame:CGRectMake(60, 36, CGRectGetWidth([emailLabel bounds]), CGRectGetHeight([emailLabel bounds]))];
 
     var passwordLabel = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
     [passwordLabel setFont:[CPFont systemFontOfSize:14]];
@@ -222,26 +222,26 @@ BASIC_AUTH = "basic";
     [_password setBezeled:YES];
     [_password setEditable:YES];
 
-    _login = [[CPButton alloc] initWithFrame:CGRectMake(265, 120, 110, 24)];
+    _login = [[CPButton alloc] initWithFrame:CGRectMake(255, 120, 110, 24)];
     [_login setTitle:"Login"];
     [_login setTarget:self];
     [_login setAction:@selector(loginButtonPressed:)];
     [_login setBezelStyle:CPHUDBezelStyle];
 
-    _forgot = [[CPButton alloc] initWithFrame:CGRectMake(145, 120, 110, 24)];
-    [_forgot setTitle:"Forgot Password"];
-    [_forgot setTarget:self];
-    [_forgot setAction:@selector(cancelButtonPressed:)];
-    [_forgot setBezelStyle:CPHUDBezelStyle];
+    //_forgot = [[CPButton alloc] initWithFrame:CGRectMake(145, 120, 110, 24)];
+    //[_forgot setTitle:"Forgot Password"];
+    //[_forgot setTarget:self];
+    //[_forgot setAction:@selector(cancelButtonPressed:)];
+    //[_forgot setBezelStyle:CPHUDBezelStyle];
 
-	[self addSubview:_title];
+	//[self addSubview:_title];
     [self addSubview:emailLabel];
     [self addSubview:_userName];
     [self addSubview:passwordLabel];
     [self addSubview:_password];
 
     [self addSubview:_login];
-    [self addSubview:_forgot];
+    //[self addSubview:_forgot];
 }
 
 - (void) setHorizontalViewType {

@@ -18,7 +18,6 @@
   Polish = new Object();
   var theWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPBorderlessBridgeWindowMask];
 
-
   //app is visible outside using objj syntax.
   //js can interact with app using objj_msgSend(app, message, params..);
   Polish.app = [[AppBuilder alloc] initWithContentView:theWindow].create;

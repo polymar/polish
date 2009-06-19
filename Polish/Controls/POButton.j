@@ -18,13 +18,26 @@
   self = [super init];
   if(self) {
 	__delegate = [CPButton buttonWithTitle:@""];
-	[self createJSMethods: ['title:', 'on_click:']];
+	[self createJSMethods: ['title:', 'on_click:', 'enabled:']];
 	self.size(80,24);
     [__delegate setBezelStyle:CPHUDBezelStyle];
     [__delegate setTarget:self];
     [__delegate setAction:@selector(exec)];
   }
   return self;
+}
+
+- (void) enabled:(boolean) _status {
+	if(_status != undefined) {
+		if(_status == false) {
+			[__delegate setAlphaValue:0.5];
+		} else {
+			[__delegate setAlphaValue:1.0];
+		}
+		[__delegate setEnabled:_status];
+	} else {
+		return [__delegate isEnabled];
+	}
 }
 
 - (void) title:(CPString) t {

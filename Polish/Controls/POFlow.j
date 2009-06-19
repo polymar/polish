@@ -29,7 +29,6 @@
     __delegate = [[CPView alloc] initWithFrame:CGRectMakeZero()];
     [self createForwardJSMethods: polish_components];
     [self createArtMethods];
-
   }
   return self;
 }
@@ -70,7 +69,7 @@
         lastY = lastY + currentRowHeight + marginY;
       }
     }
-  console.log("X : " + lastX + "Y : " + lastY);
+  //console.log("X : " + lastX + "Y : " + lastY);
   aChild.x(lastX);
   aChild.y(lastY);
   members.push(aChild);
