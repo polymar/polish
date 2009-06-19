@@ -4,8 +4,11 @@ stack = app.stack({"width" : 800, "height" : 500, marginX: 15, marginY: 15});
 stack.stroke(red());
 stack.fill(yellow());
 stack.strokewidth(5.0);
-stack.oval({left:120, top:2, width:200, height:200});
-stack.rect({left:2, top:2, width:400, height:400, curve:4});
+stack.rect({left:1, top:2, width:400, height:400, curve:14});
+stack.stroke(green());
+stack.fill(blue());
+stack.strokewidth(3.0);
+stack.oval({left:400, top:2, width:200, height:200});
 //stack.location(10, 10);
 stack.color('grayColor');
 

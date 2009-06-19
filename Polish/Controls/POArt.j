@@ -1,6 +1,9 @@
 @implementation POArt: CPView
 {
   (id) __parent;
+  (id) __stroke;
+  (id) __fill;
+  (id) __strokewidth;
   (id) obj;
 }
 
@@ -13,21 +16,22 @@
 
 -(void) setBrush
 {
-  var st = __parent.__stroke;
-  var fl = __parent.__fill;
-  var sw = __parent.__strokewidth;
-  if(st)
-    objj_msgSend(st.__delegate,  'setStroke');
-  if(fl)
-    objj_msgSend(fl.__delegate,  'setFill');
-  if(sw)
-    objj_msgSend(obj, 'setLineWidth:', sw);
+  if(__stroke)
+    objj_msgSend(__stroke.__delegate,  'setStroke');
+  if(__fill)
+    objj_msgSend(__fill.__delegate,  'setFill');
+  if(__strokewidth)
+    objj_msgSend(obj, 'setLineWidth:', __strokewidth);
+
 }
 
 -(id) initWithParent:(id) aParent
 {
   self = [super init];
   __parent = aParent;
+  var __stroke = __parent.__stroke;
+  var __fill = __parent.__fill;
+  var __strokewidth = __parent.__strokewidth;
   return self;
 }
 
@@ -43,7 +47,7 @@
 {
   var sw = __parent.__strokewidth;
   var fr = [self frame];
-  return CGRectMake(fr.origin.x, fr.origin.y, fr.size.width - 2 * sw, fr.size.height - 2 * sw);
+  return CGRectMake(sw / 2.0, sw / 2.0, fr.size.width - sw, fr.size.height -   sw);
 }
 -(id) rect:(id) params
 {
@@ -53,7 +57,7 @@
   if(params['curve'])
     [obj appendBezierPathWithRoundedRect:[self frameSizeAfterStroke] xRadius: params['curve'] yRadius:params['curve']];
   else
-    [obj appendBezierPathWithRect:rect];
+    [obj appendBezierPathWithRect:[self frameSizeAfterStroke]];
 }
 
 +(id) artMethods
