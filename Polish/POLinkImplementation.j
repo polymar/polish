@@ -85,8 +85,10 @@
 - (void)setFrameSize:(CGSize)aSize
 {
     [super setFrameSize:aSize];
+}
 
-    // [self scrollToCaret];
+- (void) setTextColor:(CPColor) _col {
+	FIXME_link.style.color = [_col cssString];
 }
 
 @end

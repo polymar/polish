@@ -32,7 +32,7 @@
   	self = [super init];
 	if(self) {
 		__delegate = [POLinkImpl linkWithTextValue:aHref href: aHref];
-		[self createJSMethods: ['click:', 'text:']];
+		[self createJSMethods: ['click:', 'text:', 'textcolor:']];
 	}
     return self;
 }
@@ -45,6 +45,7 @@
 	[__delegate href: aLink];
 }
 
+//TODO implement this if you want an hook before following the link
 /*
 - (void) on_click:(Function)aFunction {
   	_function = aFunction;
@@ -55,5 +56,12 @@
     	_function();
 }
 */
+
+- (void) textcolor:(id) colorName {
+	var c = [self sintetize_color:colorName];
+	if(c != nil) {
+		[__delegate setTextColor:c];
+	}
+}
 
 @end
