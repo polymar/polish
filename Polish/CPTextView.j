@@ -171,6 +171,10 @@
 	FIXME_textArea.style.color = [_col cssString];
 }
 
+- (void) setFontSize:(int) _size {
+	FIXME_textArea.style.fontSize = (_size +"px");
+}
+
 - (CPString)stringValue
 {
     return FIXME_textArea.value;
