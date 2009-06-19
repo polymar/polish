@@ -53,7 +53,7 @@
 
   img = stack.image({width : 64, height : 64, x : 100, y : 173, fade : 4, url : 'Resources/img1.png'});
 
-  area = stack.para('this is a test', {x : 300, y : 350, width : 300, height : 200});
+  area = stack.para('this is a test', {x : 300, y : 350, width : 300, height : 200, color : red(), textcolor : blue() });
 
   form = app.form({"width" : 350, "height" : 350, action : 'http://search.twitter.com/search.json'});
   form.location(400,10);

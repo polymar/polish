@@ -163,6 +163,14 @@
 	FIXME_textArea.removeAttribute('disabled');
 }
 
+- (void) setBackgroundColor:(CPColor) _col {
+	FIXME_textArea.style.backgroundColor = [_col cssString];
+}
+
+- (void) setTextColor:(CPColor) _col {
+	FIXME_textArea.style.color = [_col cssString];
+}
+
 - (CPString)stringValue
 {
     return FIXME_textArea.value;

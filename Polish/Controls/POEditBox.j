@@ -48,7 +48,7 @@
 	self = [super init];
 	if(self) {
 		__delegate = [[CPTextView alloc] initWithFrame:CGRectMakeZero()];
-		[self createJSMethods: ['value:', 'on_begin:', 'on_change:', 'on_done:']];
+		[self createJSMethods: ['value:', 'on_begin:', 'on_change:', 'on_done:','textcolor:']];
 		objj_msgSend( __delegate, 'setStringValue:', _text);
 		//[__delegate setFont:[CPFont systemFontOfSize:14]];
 		//[__delegate setBezelStyle:CPTextFieldSquareBezel];
