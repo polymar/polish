@@ -32,11 +32,11 @@
   	self = [super init];
 	if(self) {
 		__delegate = [[CPTextView alloc] initWithFrame:CGRectMakeZero()];
-		[self createJSMethods: ['value:', 'placeholder:', 'on_begin:', 'on_change:', 'on_done:']];
+		[self createJSMethods: ['value:', 'placeholder:', 'on_begin:', 'on_change:', 'on_done:', 'disable', 'enable']];
 		//[__delegate setFont:[CPFont systemFontOfSize:14]];
 		//[__delegate setBezelStyle:CPTextFieldSquareBezel];
 		//[__delegate setBezeled:YES];
-		//[__delegate setEditable:YES];
+		[__delegate enable];
 		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(begin_action:) name: "CPControlTextDidBeginEditingNotification" object: nil];
 		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(change_action:) name: "CPControlTextDidChangeNotification" object: nil];
 		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(done_action:) name: "CPControlTextDidEndEditingNotification" object: nil];
@@ -53,7 +53,7 @@
 		//[__delegate setFont:[CPFont systemFontOfSize:14]];
 		//[__delegate setBezelStyle:CPTextFieldSquareBezel];
 		//[__delegate setBezeled:YES];
-		//[__delegate setEditable:YES];
+		[__delegate disable];
 		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(begin_action:) name: "CPControlTextDidBeginEditingNotification" object: nil];
 		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(change_action:) name: "CPControlTextDidChangeNotification" object: nil];
 		[[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(done_action:) name: "CPControlTextDidEndEditingNotification" object: nil];
@@ -93,6 +93,14 @@
 
 - (void) placeholder:(CPString)aString {
  	[__delegate setPlaceholderString:aString];
+}
+
+- (void) disable {
+	[__delegate disable];
+}
+
+- (void) enable {
+	[__delegate enable];
 }
 
 - (void) value:(CPString) v {
