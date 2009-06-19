@@ -5,7 +5,7 @@
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
 
-@implementation POFlow : POControl {
+@implementation POFlow : POSlot {
   id members;
   id marginY;
   id marginX;
@@ -28,6 +28,8 @@
   if(self) {
     __delegate = [[CPView alloc] initWithFrame:CGRectMakeZero()];
     [self createForwardJSMethods: polish_components];
+    [self createArtMethods];
+
   }
   return self;
 }

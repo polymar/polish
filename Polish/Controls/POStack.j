@@ -4,8 +4,10 @@
  * Created by Roberto Gamboni on 02/17/2009.
  * Copyright 2008 Roberto Gamboni. All rights reserved.
  */
+@import <AppKit/CPBezierPath.j>
+@import <AppKit/CPGraphicsContext.j>
 
-@implementation POStack : POControl {
+@implementation POStack : POSlot {
   id members;
   id marginY;
   id marginX;
@@ -25,8 +27,14 @@
   if(self) {
     __delegate = [[CPView alloc] initWithFrame:CGRectMakeZero()];
     [self createForwardJSMethods: polish_components];
+    [self createArtMethods];
   }
   return self;
+}
+
+-(void) stroke:(id) aColor
+{
+  __stroke = aColor;
 }
 
 -(void)marginX:(id) margin

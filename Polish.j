@@ -7,6 +7,7 @@
 @import "Polish/CPTextView.j"
 
 @import "Polish/Controls/POControl.j"
+@import "Polish/Controls/POSlot.j"
 @import "Polish/Controls/POButton.j"
 @import "Polish/Controls/POStack.j"
 @import "Polish/Controls/POFlow.j"
@@ -18,6 +19,7 @@
 @import "Polish/Controls/POSlider.j"
 @import "Polish/Controls/POList.j"
 @import "Polish/Controls/POEditBox.j"
+@import "Polish/Controls/POArt.j"
 
 @import "Polish/Images/POImage.j"
 @import "Polish/Images/POVideo.j"
