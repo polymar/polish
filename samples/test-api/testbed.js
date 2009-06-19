@@ -18,7 +18,7 @@
 
   confirm_button = stack.button({title : "Confirm", width : 100.0, height : 20.0, x : 220, y : 10});
   confirm_button.on_click(function(){ 
-	c = app.confirm({title : "title", message : "click yes or no"});
+	  c = app.confirm({title : "title", message : "click yes or no"});
 	  c.on_yes(function() {console.log('yes')} );
 	  c.on_no(function() {console.log('no');} );
 	
@@ -28,7 +28,6 @@
   check.size(20,20);
   check.location(20,80);
 
-  //col = stack.ask_color();
   ask_color().on_choose(function(x) {stack.color(x)});
 
   rad1 = stack.radio({title : "radio button", width : 20.0, height : 20.0, x : 20, y : 120, group : 'sample'});
@@ -54,7 +53,7 @@
 
   img = stack.image({width : 64, height : 64, x : 100, y : 173, fade : 4, url : 'Resources/img1.png'});
 
-  //stack.login({x : 300, y : 350}).color(darkgray());
+  area = stack.para('this is a test', {x : 300, y : 350, width : 300, height : 200, color : red(), textcolor : blue() });
 
   form = app.form({"width" : 350, "height" : 350, action : 'http://search.twitter.com/search.json'});
   form.location(400,10);
@@ -63,27 +62,8 @@
   form.submit().location(20,100);
   form.text({name : 'q', width : 150, height : 30}).location(20,40);
 
-  download( 'http://www.twitter.com/statuses/public_timeline.json' , function(x) { console.log(x) }, function(x) {console.log(x)} );
-  
+  //download( 'http://www.twitter.com/statuses/public_timeline.json' , function(x) { console.log(x) }, function(x) {console.log(x)} );
 
-  /*
-  app { 
-	title: "CapWaves", width: 620, height: 580, color: red, load: alert { text: 'inside' }
-	stack {
-		name: Main Window
-		width: 550, height: 500, x: 10, y: 10, color: gray
-		text { 
-			x: 10, y: 10, height: 200, width: 30,
-			placeholder: Bank account numbers please
-		}
-		ask-color {
-			choose: invoke {
-				object: Main Window, method: color
-			}
-		}
-	}
-  }
-*/
 
   
 

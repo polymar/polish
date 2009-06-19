@@ -155,6 +155,22 @@
     [self scrollRectToVisible:CGRectMake(1, caretOffsetTop, 1, caretHeight)];
 }
 
+- (void) disable {
+	FIXME_textArea.disabled = "yes";
+}
+
+- (void) enable {
+	FIXME_textArea.removeAttribute('disabled');
+}
+
+- (void) setBackgroundColor:(CPColor) _col {
+	FIXME_textArea.style.backgroundColor = [_col cssString];
+}
+
+- (void) setTextColor:(CPColor) _col {
+	FIXME_textArea.style.color = [_col cssString];
+}
+
 - (CPString)stringValue
 {
     return FIXME_textArea.value;
