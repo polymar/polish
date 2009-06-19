@@ -85,6 +85,9 @@
 */
 
 w = Polish.window({"title" : "New window", "width" : 200, "height" : 200, "color" : red(), x: 200, y: 200 });
+
+w = Polish.window({"title" : "Second window", "width" : 200, "height" : 200, "color" : yellow(), x: 300, y: 200 });
+
 //w.ask({'message':  'Age : '});
 
 

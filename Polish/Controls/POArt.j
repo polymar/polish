@@ -1,3 +1,4 @@
+@import <AppKit/CPBezierPath.j>
 @implementation POArt: CPView
 {
   (id) __parent;
@@ -37,6 +38,10 @@
 
 -(id) oval:(id) params
 {
+  if(params['radius']){
+    params['width'] = 2 * params['radius'];
+    params['height'] = 2 * params['radius'];
+  }
   var rect = CGRectMake(params['left'], params['top'], params['width'], params['height']);
   [self setFrame:rect];
   obj = [CPBezierPath  bezierPath];

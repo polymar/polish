@@ -32,12 +32,17 @@ polish_components   =   ['stack', 'flow', 'ask_color', 'confirm', 'alert',
   return self;
 }
 
++(id) create:(id) attrs
+{
+  var win = [[self alloc] init];
+  return [win create: attrs];
+}
 /*
 * create the app and set the parameters.
 */
 - (id) create:(CPObject) what, ... //keeping open for future.
 {
-  if (_mainWindow == nil)
+    if (_mainWindow == nil)
     {
       _mainWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:(CPTitledWindowMask | CPClosableWindowMask | CPResizableWindowMask)];
       _contentView = [_mainWindow contentView];

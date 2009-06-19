@@ -22,7 +22,9 @@
   //app is visible outside using objj syntax.
   //js can interact with app using objj_msgSend(app, message, params..);
   Polish.app = [[AppBuilder alloc] initWithContentView:theWindow].create;
-  Polish.window = newWindow = [[AppBuilder alloc] init].create;
+  Polish.window = function(attrs){
+    return  objj_msgSend(AppBuilder, 'create:', attrs) ;
+  }
 
   //default stuff... setting background black.
   [theWindow orderFront:self];
