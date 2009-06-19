@@ -31,6 +31,10 @@
   [__delegate addSubview: viewObj];
 }
 
+-(void) stroke:(id) aColor
+{
+  __stroke = aColor;
+}
 
 -(void) fill:(id) aFillColor
 {

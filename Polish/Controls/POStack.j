@@ -32,11 +32,6 @@
   return self;
 }
 
--(void) stroke:(id) aColor
-{
-  __stroke = aColor;
-}
-
 -(void)marginX:(id) margin
 {
   marginX = margin;

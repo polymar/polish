@@ -1,14 +1,10 @@
 app = Polish.app({"title" : "CapWaves exps.", "width" : 800, "height" : 580, "color" : red() });
 
-stack = app.stack({"width" : 800, "height" : 500, marginX: 15, marginY: 15});
-stack.stroke(red());
-stack.fill(yellow());
-stack.strokewidth(5.0);
-stack.oval({left:120, top:2, width:200, height:200});
-stack.rect({left:2, top:2, width:400, height:400, curve:4});
-//stack.location(10, 10);
+stack = app.flow({"width" : 800, "height" : 500, marginX: 20, marginY: 20});
+          //stack.location(10, 10);
+stack.stroke('redColor');
+stack.fill(red());
 stack.color('grayColor');
-
 
 text = stack.text();
 //text.location(100, 50);
