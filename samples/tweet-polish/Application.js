@@ -15,15 +15,15 @@ search_form.post( function(x) {
 //top stack
 top_stack = app.stack( { x : 50, y : 15, width : 910, height : 200, color : black() } );
 //status after login
-status = top_stack.stack( { x : 30, y : 20, width : 850, height : 165, color : black() } );
-status.hide();
-status_text = status.text({x : 10, y : 15, width : 730, height : 40, placeholder : 'What are you doing?'});
-char_label = status.label( {x : 757, y : 21, width : 40, height : 25, value : 140, color : black(), textcolor : red(), font : 20} );
+sta = top_stack.stack( { x : 30, y : 20, width : 850, height : 165, color : black() } );
+sta.hide();
+status_text = sta.text({x : 10, y : 15, width : 730, height : 40, placeholder : 'What are you doing?'});
+char_label = sta.label( {x : 757, y : 21, width : 40, height : 25, value : 140, color : black(), textcolor : red(), font : 20} );
 status_text.on_change( function(x) {
   char_label.value( (140 - x.length).toString() );
 });
-status_value = status.para('this is my status', { x : 14, y : 75, width : 660, height : 70} );
-status_update = status.button( {x : 720, y : 95, width : 100, height : 24, title : 'Update Status'} );
+status_value = sta.para('this is my status', { x : 14, y : 75, width : 660, height : 70} );
+status_update = sta.button( {x : 720, y : 95, width : 100, height : 24, title : 'Update Status'} );
 status_update.on_click( function() {
 	doPost( 'http://localhost:9010?request_uri=http://twitter.com/statuses/update.json', 'status='+status_text.value(), function(x) {debugger; a = eval(x); status_text.value(a.text); }, function(x) {console.log(x)} );
 });
