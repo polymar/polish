@@ -6,7 +6,7 @@ function download(_url, _aFunction1, _aFunction2) {
 	objj_msgSend( POUrl, 'invokeAtURL:callback:error:', _url, _aFunction1, _aFunction2);
 }
 
-function doPost(_url, _body, _aFunction1, _aFunction2) {
+function do_post(_url, _body, _aFunction1, _aFunction2) {
 	objj_msgSend( POUrl, 'postAtURL:body:callback:error:', _url, _body, _aFunction1, _aFunction2);
 }
 

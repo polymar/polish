@@ -46,6 +46,10 @@ polish_components   =   ['stack', 'flow', 'ask_color', 'confirm', 'alert',
 	objj_msgSend(_mainWindow, 'orderFront:', _mainWindow);
 }
 
+- (void) remove {
+	objj_msgSend(_mainWindow, 'close');
+}
+
 /*
 * create the app and set the parameters.
 */
