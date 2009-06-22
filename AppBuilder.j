@@ -24,7 +24,7 @@ polish_components   =   ['stack', 'flow', 'ask_color', 'confirm', 'alert',
 - (id) initWithContentView:(CPWindow) mainWindow {
   self = [super init];
   if(self) {
-    [self createJSMethods: ['create:']];
+    [self createJSMethods: ['create:', 'hide', 'remove']];
     [self createForwardJSMethods: polish_components];
     _mainWindow = mainWindow;
     _contentView = [_mainWindow contentView];
@@ -46,6 +46,10 @@ polish_components   =   ['stack', 'flow', 'ask_color', 'confirm', 'alert',
 	objj_msgSend(_mainWindow, 'orderFront:', _mainWindow);
 }
 
+- (void) remove {
+	objj_msgSend(_mainWindow, 'close');
+}
+
 /*
 * create the app and set the parameters.
 */
@@ -53,7 +57,7 @@ polish_components   =   ['stack', 'flow', 'ask_color', 'confirm', 'alert',
 {
     if (_mainWindow == nil)
     {
-      _mainWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:(CPHUDBackgroundWindowMask | CPClosableWindowMask | CPResizableWindowMask)];
+      _mainWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:(CPHUDBackgroundWindowMask | /*CPClosableWindowMask | */CPResizableWindowMask)];
       _contentView = [_mainWindow contentView];
       [_mainWindow orderFront:self];
     }

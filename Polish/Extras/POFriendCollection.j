@@ -23,12 +23,12 @@
 		var rect = CGRectMake(0, 0, 300, 200);
 		_collection_view = [[CPCollectionView alloc] initWithFrame:rect];
 		[_collection_view setAutoresizingMask:CPViewWidthSizable];
-	    [_collection_view setMinItemSize:CGSizeMake(350, 75)];
-	    [_collection_view setMaxItemSize:CGSizeMake(450, 100)];
+	    [_collection_view setMinItemSize:CGSizeMake(298, 90)];
+	    [_collection_view setMaxItemSize:CGSizeMake(450, 150)];
 	    [_collection_view setDelegate:self];
 	
 		var itemPrototype = [[CPCollectionViewItem alloc] init];
-		[itemPrototype setView:[[ContactView alloc] initWithFrame:CGRectMake(0,0,400.0, 74.0)]];
+		[itemPrototype setView:[[ContactView alloc] initWithFrame:CGRectMake(0,0, 298, 90)]];
         [_collection_view setItemPrototype:itemPrototype];
 
 		__delegate = [[CPScrollView alloc] initWithFrame:rect];
@@ -38,29 +38,29 @@
 
         [[__delegate contentView] setBackgroundColor:[CPColor whiteColor]];
 
-		_objects = [  ];
+		_objects = [];
 		[_collection_view setContent:_objects];
-		[self createJSMethods:['on_click:', 'on_double_click:', 'add:', 'contacts:', 'clear', 'populate:']];
+		[self createJSMethods:['on_click:', 'on_double_click:', 'add:', 'clear', 'populate:']];
 		
 	}
 	return self;
 }
 
 - (void) populate:(id) anObject {
-	//assuming for now anObject is a twitter search result
-	var data = anObject.results;
-	if (data == undefined) data = anObject;
-	for(var i=0; i<data.length; i++) {
-		var json = data[i];
+	for(var i=0; i<anObject.length; i++) {
+		var json = anObject[i];
+		/*
 		if(json.user == nil)
 			var a = { img : json.profile_image_url, name : json.from_user, status : json.text };
 		else
 			var a = { img : json.user.profile_image_url, name : json.user.name, status : json.text };
-	    _objects.push(a);
+		*/
+	    _objects.push(json);
 	}	
 	objj_msgSend( _collection_view, 'reloadContent');
 }
 
+/*
 - (void) contacts:(id) list {
 	for(var x in list) {
 		if(list.hasOwnProperty(x)) {
@@ -69,22 +69,16 @@
 	}
 	objj_msgSend( _collection_view, 'reloadContent');
 }
+*/
 
 - (void) add:(id) obj {
 	_objects.push( obj );
 	objj_msgSend( _collection_view, 'reloadContent');
 }
 
-/*! FIXME - this method doesn't seem to work.. the collection still contains all the object !*/
 - (void) clear {
-	var subs = [_collection_view subviews];
-	for(var view in subs) {
-		a = subs[view];
-		if (objj_msgSend(a, 'isKindOfClass:', CPView)) {
-			objj_msgSend( a, 'removeFromSuperview');
-		}
-	}
 	_objects = [];
+	[_collection_view setContent:_objects];
 	objj_msgSend( _collection_view, 'reloadContent');
 }
 
@@ -109,13 +103,13 @@
 }
 
 -(void)collectionViewDidChangeSelection:(CPCollectionView)collectionView {
-	console.log('collection collectionViewDidChangeSelection');
 	//TODO call the on_click function
 }
 
 -(void)collectionView:(CPCollectionView)collectionView didDoubleClickOnItemAtIndex:(int)index {
-	console.log('collection didDoubleClickOnItemAtIndex');
-	//TODO call the double click function
+	if(_double_click_function != nil) {
+		_double_click_function(_objects[index]);
+	}
 }
 
 -(CPData)collectionView:(CPCollectionView)collectionView dataForItemsAtIndexes:(CPIndexSet)indices forType:(CPString)aType
@@ -128,9 +122,11 @@
 
 @implementation ContactView : CPView {
 	
-	CPImageView		_contactImage;
-	CPTextField		_contactName;
-	CPTextView		_contactStatus;
+	//POStack			_stack;
+	//CPImageView		_contactImage;
+	//CPTextField		_contactName;
+	//CPTextField		_date;
+	//CPTextView		_contactStatus;
 }
 
 - (id) initWithFrame:(CGRect) frame {
@@ -143,16 +139,43 @@
 
 - (void)setSelected:(BOOL)isSelected
 {
-    [self setBackgroundColor:isSelected ? [CPColor grayColor] : [CPColor blackColor]];
+    [self setBackgroundColor:isSelected ? [CPColor redColor] : [CPColor blackColor]];
 }
 
 - (void)setRepresentedObject:(id)anObject
 {
-	var img = ( anObject.hasOwnProperty('img') ) ? anObject.img : nil;
-	var cname = ( anObject.hasOwnProperty('name') ) ? anObject.name : nil;
-	var cstatus = ( anObject.hasOwnProperty('status') ) ? anObject.status : nil;
-
+	var img = ( anObject.hasOwnProperty('user') ) ? anObject.user.profile_image_url : nil;
+	if(img == nil) {
+		img = anObject.profile_image_url;
+	}
+	var cname = ( anObject.hasOwnProperty('user') ) ? anObject.user.name : nil;
+	if(cname == nil) {
+		cname = anObject.from_user;
+	}
+	var cstatus = ( anObject.hasOwnProperty('text') ) ? anObject.text : nil;
+	var cdate = ( anObject.hasOwnProperty('created_at') ) ? anObject.created_at : nil;
 	
+	var s = [[POStack alloc] stack];
+	s.size(300,90);
+	s.location(0,0);
+	[s marginY:5];
+	
+	s.stroke(white());
+	s.fill(darkgray());
+	s.strokewidth(5.0);
+	s.rect({left:1, top:2, width:296, height:86, curve:14});
+
+	var flow1 = s.flow( {width : 270, height : 52, marginX : 3, marginY : 3});
+	var flow2 = s.flow( {width : 270, height : 20, marginX : 3, marginY : 0});
+	flow1.image( { url : img, width : 50, height : 50} );
+	flow1.para( cstatus, { width : 218, height : 58, color : darkgray(), textcolor : white()});
+
+	flow2.label( { value : cname, font : 12 });
+	flow2.label( { value : cdate, width : 180, font : 12 });
+	
+	[self addSubview:[s view]];
+	
+	/*
 	_contactImage = [[CPImageView alloc] initWithFrame:CGRectMake(2.0, 2.0, 70.0, 70.0)];
 	[_contactImage setImage:[[CPImage alloc] initWithContentsOfFile:img size:CGSizeMake(70.0, 70.0)]];
 	[self addSubview:_contactImage];
@@ -173,6 +196,7 @@
 	    //[_contactStatus sizeToFit];
 	[_contactStatus setFrame:CGRectMake(80.0, 23.0, 350, 49)];
 	[self addSubview:_contactStatus]; 
+	*/
 }
 
 @end
