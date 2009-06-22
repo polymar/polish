@@ -49,14 +49,6 @@
 	return self;
 }
 
-- (id) link {
-	self = [super init];
-	if(self) {
-		//TODO
-	}
-	return self;
-}
-
 - (id) caption {
 	self = [self label];
 	return self;
@@ -93,18 +85,6 @@
 }
 
 /*
-- (id) para {
-	self = [self label];
-	if(self) {
-		[__delegate setFont:[CPFont systemFontOfSize:12]];
-		[__delegate sizeToFit];
-	    [__delegate setFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([__delegate bounds]), CGRectGetHeight([__delegate bounds]))];
-	}
-	return self;
-}
-*/
-
-/*
 * Init a label with hmargin and vmargin = 0
 */
 - (id) label {
@@ -117,9 +97,8 @@
       [__delegate setEditable:NO];
 	  [__delegate setSelectable:YES];
       [__delegate sizeToFit];
-	  //FIXME - why this resizing does not work???
-      //[__delegate setFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([__delegate bounds]), CGRectGetHeight([__delegate bounds]))];
-  	  [__delegate setFrame:CGRectMake(0,0,80,CGRectGetHeight([__delegate bounds]))];
+      [__delegate setFrame:CGRectMake(0.0, 0.0, CGRectGetWidth([__delegate bounds]), CGRectGetHeight([__delegate bounds]))];
+  	  //[__delegate setFrame:CGRectMake(0,0,80,CGRectGetHeight([__delegate bounds]))];
   }
   return self;
 }
@@ -159,15 +138,19 @@
 }
 
 - (void) value:(CPString) v {
-  if(v != undefined)
+  if(v != undefined) {
     [__delegate setStringValue:v];
-  else
+	[__delegate sizeToFit];
+    [__delegate setFrame:CGRectMake([__delegate frame].origin.x, [__delegate frame].origin.y, CGRectGetWidth([__delegate bounds]), CGRectGetHeight([__delegate bounds]))];
+  } else
     return [__delegate stringValue];
 }
 
 - (void) font:(int) f {
 	if(f != undefined) {
 		[__delegate setFont:[CPFont systemFontOfSize:f]];
+		[__delegate sizeToFit];
+	    [__delegate setFrame:CGRectMake([__delegate frame].origin.x, [__delegate frame].origin.y, CGRectGetWidth([__delegate bounds]), CGRectGetHeight([__delegate bounds]))];
 	} 
 }
 
