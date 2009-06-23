@@ -2,6 +2,7 @@
 {
     DOMElement      FIXME_textArea;
 	CPString		_text;
+	var				_fontSize;
     
     id              _delegate;
     
@@ -36,6 +37,7 @@
     FIXME_textArea.style.padding = "0";
     
     FIXME_textArea.style.backgroundColor = "rgb(245, 245, 245)";
+	_fontSize = 14;
     FIXME_textArea.style.fontSize = "14px";
     FIXME_textArea.style.fontFamily = "Arial";
      
@@ -80,7 +82,7 @@
 
 -(void) sizeToFit
 {
-  	var size = [_text sizeWithFont:[self currentValueForThemeAttribute:@"font"] inWidth:[self frame].size.width],
+  	var size = [_text sizeWithFont:_fontSize inWidth:[self frame].size.width],
 	    minSize = [self currentValueForThemeAttribute:@"min-size"],
 	    maxSize = [self currentValueForThemeAttribute:@"max-size"];
 	 
@@ -197,6 +199,7 @@
 }
 
 - (void) setFontSize:(int) _size {
+	_fontSize = _size;
 	FIXME_textArea.style.fontSize = (_size +"px");
 	[self sizeToFit];
 }
