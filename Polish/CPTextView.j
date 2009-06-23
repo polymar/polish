@@ -83,16 +83,11 @@
 -(void) sizeToFit
 {
   	var size = [_text sizeWithFont:[CPFont systemFontOfSize:_fontSize] inWidth:[self frame].size.width],
-	    minSize = [self currentValueForThemeAttribute:@"min-size"],
-	    maxSize = [self currentValueForThemeAttribute:@"max-size"];
-	 
-	if (maxSize.width >= 0.0)
-		size.width = MIN(size.width, maxSize.width);
-	if (maxSize.height >= 0.0)
-	    size.height = MIN(size.height, maxSize.height);
-	
+	    minSize = { width : 100, height : 30};	
 	if (FIXME_textArea.getAttribute("disable") == nil)
     	size.width = CGRectGetWidth([self frame]);
+	size.width = (size.width < minSize.width) ? minSize.width : size.width;
+	size.height = (size.height < minSize.height) ? minSize.height : size.height;
 	[super setFrameSize:size];
 }
 
@@ -109,6 +104,7 @@
 - (void)textDidChange:(id)sender
 {
     [_delegate textViewDidChange: self];
+	_text = FIXME_textArea.value;
 	[self sizeToFit];
 	/*
     if (!_contentView)
