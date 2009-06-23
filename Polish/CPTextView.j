@@ -1,6 +1,7 @@
-@implementation CPTextView : CPView
+@implementation CPTextView : CPControl
 {
     DOMElement      FIXME_textArea;
+	CPString		_text;
     
     id              _delegate;
     
@@ -71,6 +72,28 @@
     return self;
 }
 
+- (void)setFrame:(CGRect)aFrame
+{
+	[super setFrame:aFrame];
+	[self sizeToFit];
+}
+
+-(void) sizeToFit
+{
+  	var size = [_text sizeWithFont:[self currentValueForThemeAttribute:@"font"] inWidth:[self frame].size.width],
+	    minSize = [self currentValueForThemeAttribute:@"min-size"],
+	    maxSize = [self currentValueForThemeAttribute:@"max-size"];
+	 
+	if (maxSize.width >= 0.0)
+		size.width = MIN(size.width, maxSize.width);
+	if (maxSize.height >= 0.0)
+	    size.height = MIN(size.height, maxSize.height);
+	
+	if (FIXME_textArea.getAttribute("disable") == nil)
+    	size.width = CGRectGetWidth([self frame]);
+	[super setFrameSize:size];
+}
+
 - (void)setDelegate:(id)delegate
 {
     _delegate = delegate;
@@ -84,7 +107,8 @@
 - (void)textDidChange:(id)sender
 {
     [_delegate textViewDidChange: self];
-
+	[self sizeToFit];
+	/*
     if (!_contentView)
         return;
     
@@ -97,6 +121,7 @@
     [self scrollToCaret];
     
     [[CPRunLoop currentRunLoop] performSelectors];
+	*/
 }
 
 - (void)scrollToCaret
@@ -173,6 +198,7 @@
 
 - (void) setFontSize:(int) _size {
 	FIXME_textArea.style.fontSize = (_size +"px");
+	[self sizeToFit];
 }
 
 - (CPString)stringValue
@@ -182,10 +208,14 @@
 
 - (void)setStringValue:(CPString)aString
 {    
-    if(aString)
+    if(aString) {
         FIXME_textArea.value = aString;
-    else
+		_text = aString;
+	}
+    else {
         FIXME_textArea.value = "";    
+		_text = "";
+	}
     
     [self textDidChange: self];
 }
