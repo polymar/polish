@@ -50,7 +50,6 @@ function do_post(_url, _body, _aFunction1, _aFunction2) {
 
 - (void) invoke:(CPString) u {
 	var request = [CPURLRequest requestWithURL:u];
-	
 	var _conn_type = u.search('localhost');
 	if(_conn_type == -1) {
 		_connection_delegate = [[JSONPDelegate alloc] initWithDelegate:self];

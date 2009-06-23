@@ -2,7 +2,7 @@
 load_file('./samples/tweet-polish/window_function.js');
 
 //main app
-app = Polish.app({title : "Tweet Polish.", color : darkgray() });
+app = Polish.app({title : "Tweet Polish.", color : rgb( 0.1, 0.1, 0.1, 0.9 ) });
 
 //TODO do we have auto-resizing of stack and flow?
 toolbar = app.flow( { x : 20, y : 20, width : 800, height : 42, marginX : 20 });
@@ -57,7 +57,6 @@ function create_status_stack(_status) {
 	flow2 = status_stack.flow( {width : 770, height : 100, marginX : 20, marginY : 8} );
 	
 	st_text = flow1.text( { width : 590, height : 40, placeholder : 'What are you doing?'} );
-	//FIXME width of label does not work well - in this case the default value is much bigger than the required.
 	st_label = flow1.label( {y : 13,height : 25, width : 40, value : 140, color : lightgray(), textcolor : red(), font : 20} );
 	st_text.on_change( function(x) {
 	  st_label.value( (140 - x.length).toString() );
@@ -66,7 +65,7 @@ function create_status_stack(_status) {
 		do_post( 'http://localhost:4000?request_uri=http://twitter.com/statuses/update.json', //the uri
 				'status='+st_text.value(), //the body
 				//TODO fix this... x is not parsable!!
-				function(x) { status_para.value(x);}, //the success function
+				function(x) { /*console.log(eval(x));*/ status_para.value(x); }, //the success function
 				function(x) {console.log(x)} ); //the error function
 	});
 	

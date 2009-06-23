@@ -46,6 +46,7 @@ function load_class() {
     "button"            : POButton,
     "submit"            : POSubmit,
     "image"             : POImage,
+	"bimage"			: POBorderedImage,
     "progress"          : POProgress,
     "text"              : POText,
   	"edit_box"       	: POEditBox,

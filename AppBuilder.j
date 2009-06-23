@@ -6,7 +6,7 @@
  */
 polish_components   =   ['stack', 'flow', 'ask_color', 'confirm', 'alert',
             'button', 'check', 'radio', 'slider', 'text', 'password', 'list_box', 'progress', 'link', 'edit_box', 'para',
-            'image', 'video',
+            'image', 'video', 'bimage',
             'label', 'subtitle',
             'login', 'form', 'submit',
             'friend_collection', 'photo_collection'];
@@ -57,7 +57,7 @@ polish_components   =   ['stack', 'flow', 'ask_color', 'confirm', 'alert',
 {
     if (_mainWindow == nil)
     {
-      _mainWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:(CPHUDBackgroundWindowMask | /*CPClosableWindowMask | */CPResizableWindowMask)];
+      _mainWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:(CPHUDBackgroundWindowMask | CPClosableWindowMask | CPResizableWindowMask)];
       _contentView = [_mainWindow contentView];
       [_mainWindow orderFront:self];
     }

@@ -22,6 +22,7 @@
 @import "Polish/Controls/POArt.j"
 
 @import "Polish/Images/POImage.j"
+@import "Polish/Images/POBorderedImage.j"
 @import "Polish/Images/POVideo.j"
 
 @import "Polish/Colors/POColor.j"

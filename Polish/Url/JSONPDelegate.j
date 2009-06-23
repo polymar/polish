@@ -13,7 +13,16 @@
 }
 
 - (void) startRequest:(CPURLRequest) _req {
-	[CPJSONPConnection connectionWithRequest:_req callback:"callback" delegate:self];
+	//HACK - FIXME
+	var callback = '';
+	var _url = [_req URL];
+	var _conn_type = _url.search('twitter');
+	if(_conn_type == -1) {
+		callback = 'jsoncallback';
+	} else {
+		callback = 'callback';
+	}
+	[CPJSONPConnection connectionWithRequest:_req callback:callback delegate:self];
 }
 
 -(void)connection:(CPURLConnection)connection didReceiveResponse:(CPHTTPURLResponse)response {
