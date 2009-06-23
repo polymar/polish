@@ -82,7 +82,7 @@
 
 -(void) sizeToFit
 {
-  	var size = [_text sizeWithFont:_fontSize inWidth:[self frame].size.width],
+  	var size = [_text sizeWithFont:[CPFont systemFontOfSize:_fontSize] inWidth:[self frame].size.width],
 	    minSize = [self currentValueForThemeAttribute:@"min-size"],
 	    maxSize = [self currentValueForThemeAttribute:@"max-size"];
 	 
