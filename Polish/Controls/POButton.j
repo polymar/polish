@@ -61,9 +61,9 @@
 
 - (void)sizeToFit {
 	var size = [([__delegate title] || " ") sizeWithFont:[__delegate currentValueForThemeAttribute:@"font"]],
-	contentInset = [self currentValueForThemeAttribute:@"content-inset"],
-	minSize = [self currentValueForThemeAttribute:@"min-size"],
-    maxSize = [self currentValueForThemeAttribute:@"max-size"];
+	contentInset = [__delegate currentValueForThemeAttribute:@"content-inset"],
+	minSize = [__delegate currentValueForThemeAttribute:@"min-size"],
+    maxSize = [__delegate currentValueForThemeAttribute:@"max-size"];
 
 	size.width = MAX(size.width + contentInset.left + contentInset.right, minSize.width);
 	size.height = MAX(size.height + contentInset.top + contentInset.bottom, minSize.height);
