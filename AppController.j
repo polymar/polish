@@ -16,6 +16,7 @@
 - (void)applicationDidFinishLaunching:(CPNotification)aNotification
 {
   Polish = new Object();
+  Polish.args = [aNotification object]._namedArgs._buckets;
   var theWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPBorderlessBridgeWindowMask];
 
   //app is visible outside using objj syntax.
