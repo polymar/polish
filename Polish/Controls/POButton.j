@@ -41,8 +41,10 @@
 }
 
 - (void) title:(CPString) t {
-	if(t != undefined)
+	if(t != undefined) {
   		[__delegate setTitle:t];
+		[__delegate sizeToFit];
+	}
 	else
 		return [__delegate title];
 }
