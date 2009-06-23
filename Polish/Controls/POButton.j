@@ -43,7 +43,7 @@
 - (void) title:(CPString) t {
 	if(t != undefined) {
   		[__delegate setTitle:t];
-		[__delegate sizeToFit];
+		[self sizeToFit];
 	}
 	else
 		return [__delegate title];
@@ -57,5 +57,25 @@
   if(_function != nil)
     _function();
 }
+
+
+- (void)sizeToFit {
+	var size = [([__delegate title] || " ") sizeWithFont:[__delegate currentValueForThemeAttribute:@"font"]],
+	contentInset = [self currentValueForThemeAttribute:@"content-inset"],
+	minSize = [self currentValueForThemeAttribute:@"min-size"],
+    maxSize = [self currentValueForThemeAttribute:@"max-size"];
+
+	size.width = MAX(size.width + contentInset.left + contentInset.right, minSize.width);
+	size.height = MAX(size.height + contentInset.top + contentInset.bottom, minSize.height);
+
+	if (maxSize.width >= 0.0)
+		size.width = MIN(size.width, maxSize.width);
+	if (maxSize.height >= 0.0)
+		size.height = MIN(size.height, maxSize.height);
+
+	size.width = (size.width < 80) ? 80 : size.width;
+	[__delegate setFrameSize:size];
+}
+
 
 @end
