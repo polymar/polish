@@ -30,6 +30,7 @@
   [theWindow orderFront:self];
 
   POLISH_NOTIFICATION.call();
+  objj_msgSend(theWindow, 'display');
 }
 
 @end
