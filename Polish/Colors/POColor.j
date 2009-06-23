@@ -100,11 +100,11 @@ function lightgray() {
 	return [[POColor alloc] initWithColorName:'lightGrayColor'];
 }
 
-+ (id) r:r g:g b:b {
++ (id) r:(float)r g:(float)g b:(float)b {
 	return [[POColor alloc] initWithRed:r green:g blue:b alpha:1.0];
 }
 
-+ (id) r:r g:g b:b a:a {
++ (id) r:(float)r g:(float)g b:(float)b a:(float)a {
 	return [[POColor alloc] initWithRed:r green:g blue:b alpha:a];
 }
 
@@ -112,11 +112,11 @@ function lightgray() {
 	return [[POColor alloc] initWithCalibrateWhite:b alpha:1.0];
 }
 
-+ (id) gray:b alpha:a {
++ (id) gray:(float)b alpha:(float)a {
 	return [[POColor alloc] initWithCalibrateWhite:b alpha:a];
 }
 
-- (id) initWithRed:(float) red green:(float) green blue:(float) blue alpha:alpha {
+- (id) initWithRed:(float) red green:(float) green blue:(float) blue alpha:(float) alpha {
 	self = [super init];
 	if(self) {
 		__delegate = [CPColor colorWithRed:red green:green blue:blue alpha:alpha];
