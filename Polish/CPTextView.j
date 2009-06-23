@@ -3,6 +3,8 @@
     DOMElement      FIXME_textArea;
 	CPString		_text;
 	var				_fontSize;
+	
+	var 			_type;
     
     id              _delegate;
     
@@ -18,6 +20,7 @@
 {
     self = [super initWithFrame: aFrame];
     
+	_type = 'editbox';
     FIXME_textArea = document.createElement("textarea");
     
     FIXME_textArea.style.width  = "100%";
@@ -74,6 +77,10 @@
     return self;
 }
 
+- (void) setPara {
+	_type = 'para';
+}
+
 - (void)setFrame:(CGRect)aFrame
 {
 	[super setFrame:aFrame];
@@ -82,6 +89,7 @@
 
 -(void) sizeToFit
 {
+	if(_type == 'editbox') return;
   	var size = [_text sizeWithFont:[CPFont systemFontOfSize:_fontSize] inWidth:[self frame].size.width],
 	    minSize = { width : 100, height : 30};	
 	if (FIXME_textArea.getAttribute("disable") == nil)
