@@ -53,11 +53,12 @@
   if(self) {
     __delegate = [[CPTextView alloc] initWithFrame:CGRectMakeZero()];
     [self createJSMethods: ['value:', 'on_begin:', 'on_change:', 'on_done:','textcolor:', 'enable']];
+
     objj_msgSend( __delegate, 'setStringValue:', _text);
     //[__delegate setFont:[CPFont systemFontOfSize:14]];
     //[__delegate setBezelStyle:CPTextFieldSquareBezel];
     //[__delegate setBezeled:YES];
-    [__delegate enable];
+    [__delegate disable];
     [[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(begin_action:) name: "CPControlTextDidBeginEditingNotification" object: nil];
     [[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(change_action:) name: "CPControlTextDidChangeNotification" object: nil];
     [[CPNotificationCenter defaultCenter] addObserver: self selector: @selector(done_action:) name: "CPControlTextDidEndEditingNotification" object: nil];

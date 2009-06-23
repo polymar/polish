@@ -1,6 +1,6 @@
 app = Polish.app({"title" : "CapWaves exps.", "width" : 800, "height" : 580, "color" : red() });
 
-stack = app.stack({"width" : 800, "height" : 500, marginX: 15, marginY: 15});
+stack = app.flow({"width" : 420, "height" : 500, marginX: 15, marginY: 15});
 stack.stroke(red());
 stack.fill(yellow());
 stack.strokewidth(5.0);
