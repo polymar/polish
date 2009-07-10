@@ -65,7 +65,7 @@ function create_status_stack(_status) {
 		do_post( 'http://localhost:4000?request_uri=http://twitter.com/statuses/update.json', //the uri
 				'status='+st_text.value(), //the body
 				//TODO fix this... x is not parsable!!
-				function(x) { /*console.log(eval(x));*/ status_para.value(x); }, //the success function
+				function(x) { var t = (objj_msgSend(x, 'objectFromJSON')); status_para.value(t.text); }, //the success function
 				function(x) {console.log(x)} ); //the error function
 	});
 	

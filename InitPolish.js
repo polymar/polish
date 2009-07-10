@@ -8,10 +8,10 @@ function load_file(filename) {
 
 function polish_loaded(){
   load_file('./samples/test-api/wiki.js');
-//  load_file('./samples/test-api/testbed.js');
-  //load_file('./samples/test-api/stack_test.js');
+  //load_file('./samples/test-api/testbed.js');
+//  load_file('./samples/test-api/stack_test.js');
 // load_file('./samples/test-api/art.js');
- //load_file('./samples/tweet-polish/Application.js');
+//load_file('./samples/tweet-polish/tweet.js');
  // load_file('./samples/test-api/Application.js');
   //load_file('./samples/slideshow/Application.js');
 }

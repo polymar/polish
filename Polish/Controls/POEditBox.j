@@ -52,6 +52,7 @@
   self = [super init];
   if(self) {
     __delegate = [[CPTextView alloc] initWithFrame:CGRectMakeZero()];
+	objj_msgSend(__delegate, 'setPara');
     [self createJSMethods: ['value:', 'on_begin:', 'on_change:', 'on_done:','textcolor:', 'enable']];
 
     objj_msgSend( __delegate, 'setStringValue:', _text);

@@ -48,7 +48,7 @@
 - (void) photos:(id) list {
 	for(var x in list) {
 		if(list.hasOwnProperty(x)) {
-			_objects.push( [[CPImage alloc] initWithContentsOfFile:list[x] size:CGSizeMake(100.0, 100.0)] );
+			_objects.push( list[x] );
 		}
 	}
 	objj_msgSend( _collection_view, 'reloadContent');
@@ -59,9 +59,9 @@
 	objj_msgSend( _collection_view, 'reloadContent');
 }
 
-/*! FIXME - this method doesn't seem to work.. the collection still contains all the object !*/
 - (void) clear {
-	_objects = [ ];
+	_objects = [];
+	[_collection_view setContent:_objects];
 	objj_msgSend( _collection_view, 'reloadContent');
 }
 
@@ -86,13 +86,13 @@
 }
 
 -(void)collectionViewDidChangeSelection:(CPCollectionView)collectionView {
-	console.log('collection collectionViewDidChangeSelection');
 	//TODO call the on_click function
 }
 
 -(void)collectionView:(CPCollectionView)collectionView didDoubleClickOnItemAtIndex:(int)index {
-	console.log('collection didDoubleClickOnItemAtIndex');
-	//TODO call the double click function
+	if(_double_click_function != nil) {
+		_double_click_function(_objects[index]);
+	}
 }
 
 -(CPData)collectionView:(CPCollectionView)collectionView dataForItemsAtIndexes:(CPIndexSet)indices forType:(CPString)aType
@@ -115,6 +115,7 @@
 
 - (void)setRepresentedObject:(id)anObject
 {
+	var img = [[CPImage alloc] initWithContentsOfFile:anObject size:CGSizeMake(100.0, 100.0)]
     if (!_imageView)
     {
         _imageView = [[CPImageView alloc] initWithFrame:CGRectInset([self bounds], 5.0, 5.0)];
@@ -125,7 +126,7 @@
         [self addSubview:_imageView];
     }
     
-    [_imageView setImage:anObject];
+    [_imageView setImage:img];
 }
 
 @end

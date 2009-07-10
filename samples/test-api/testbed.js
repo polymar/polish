@@ -51,17 +51,17 @@
   list.size(200,22);
   list.on_select( function(x) {alert(x);} );
 
-  img = stack.image({width : 64, height : 64, x : 100, y : 173, fade : 4, url : 'Resources/img1.png'});
+  img = stack.bimage({width : 100, height : 100, x : 100, y : 173, fade : 4, url : 'Resources/failwhale.png', border : 2});
 
-  area = stack.para('this is a test', {x : 300, y : 350, width : 300, height : 200, color : red(), textcolor : blue() });
-
+  area = stack.edit_box({value : 'testing', x : 300, y : 350, width : 300, height : 200, color : red(), textcolor : blue() });
+/*
   form = app.form({"width" : 350, "height" : 350, action : 'http://search.twitter.com/search.json'});
   form.location(400,10);
   form.color(green());
 
   form.submit().location(20,100);
   form.text({name : 'q', width : 150, height : 30}).location(20,40);
-
+*/
   //download( 'http://www.twitter.com/statuses/public_timeline.json' , function(x) { console.log(x) }, function(x) {console.log(x)} );
 
 

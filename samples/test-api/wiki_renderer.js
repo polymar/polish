@@ -24,12 +24,15 @@ Wiki.renderContent = function(parent_stack, cbody)
       {
         if(code_started == true)
           {
-            console.log('encountered % again');
-            code_para = parent_stack.para(code_block, {textcolor: rgb(0.1, 0.1, 0.1, 1.0), width: 760});
+            var code_para = parent_stack.para(code_block, {textcolor: rgb(0.1, 0.1, 0.1, 1.0), width: 760});
             code_run_button = parent_stack.button({title: 'Run', y: code_para.y(), x: 500});
-            code_run_button.on_click(function(){
-                                       eval(code_block);
-                                     });
+            code_run_button.on_click( function( _code ) {
+										return function( ){
+                                       		eval( _code );
+                                     	}
+									  }(code_para.value())
+								   );
+			code_block = '';										
             code_started = false;
           } else
             {

@@ -1,11 +1,11 @@
 @import <AppKit/CPBezierPath.j>
 @implementation POArt: CPView
 {
-  (id) __parent;
-  (id) __stroke;
-  (id) __fill;
-  (id) __strokewidth;
-  (id) obj;
+  var __parent;
+  var __stroke;
+  var __fill;
+  var __strokewidth;
+  var obj;
 }
 
 -(void) drawRect:(CPRect)aRect
@@ -23,16 +23,19 @@
     objj_msgSend(__fill.__delegate,  'setFill');
   if(__strokewidth)
     objj_msgSend(obj, 'setLineWidth:', __strokewidth);
-
 }
 
 -(id) initWithParent:(id) aParent
 {
   self = [super init];
-  __parent = aParent;
-  var __stroke = __parent.__stroke;
-  var __fill = __parent.__fill;
-  var __strokewidth = __parent.__strokewidth;
+  	eval("self.x = function(_x) { return objj_msgSend( self, 'x:', _x)};");
+	eval("self.y = function(_y) { return objj_msgSend( self, 'y:', _y)};");
+	eval("self.width = function(_w) { return objj_msgSend( self, 'width:', _w)};");
+	eval("self.height = function(_h) { return objj_msgSend( self, 'height:', _h)};");
+  	__parent = aParent;
+  	__stroke = __parent.__stroke;
+  	__fill = __parent.__fill;
+  	__strokewidth = __parent.__strokewidth;
   return self;
 }
 
@@ -52,7 +55,7 @@
 {
   var sw = __parent.__strokewidth;
   var fr = [self frame];
-  return CGRectMake(sw / 2.0, sw / 2.0, fr.size.width - sw, fr.size.height -   sw);
+  return CGRectMake(sw / 2.0, sw / 2.0, fr.size.width - sw, fr.size.height - sw);
 }
 -(id) rect:(id) params
 {

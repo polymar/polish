@@ -14,6 +14,7 @@ function animate(fps, f, stop) {
 	} else {
 		[an setDuration:stop];
 	}
+	//[an startAnimation];
 	return an;
 }
 
@@ -83,13 +84,13 @@ DEFAULT_DURATION = 5;
 }
 
 - (void)animationTimerDidFire:(CPTimer)aTimer {
-	_progress += (1.0 / _fps);
-	if(_animation_function != nil) {
-		_animation_function(_progress);
-	}
 	if((_progress >= _duration && _duration != -1) || (_stop_condition != nil && _stop_condition())) {
 		[_timer invalidate];
 		_timer = nil;
+	}
+	_progress += (1.0 / _fps);
+	if(_animation_function != nil) {
+		_animation_function(_progress);
 	}
 }
 
