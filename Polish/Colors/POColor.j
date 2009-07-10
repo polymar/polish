@@ -108,7 +108,7 @@ function lightgray() {
 	return [[POColor alloc] initWithRed:r green:g blue:b alpha:a];
 }
 
-+ (id) gray:b {
++ (id) gray:(float)b {
 	return [[POColor alloc] initWithCalibrateWhite:b alpha:1.0];
 }
 
